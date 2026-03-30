@@ -290,6 +290,68 @@ body{background:radial-gradient(ellipse at top, #2d1b69 0%, #1a0a3e 60%, #0f0628
 /* card transition */
 #card-body{display:contents;transition:opacity .25s;}
 
+/* ===== ANIMATED STARFIELD ===== */
+#starfield{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden;}
+.star{position:absolute;border-radius:50%;background:#fff;animation:twinkle var(--dur) ease-in-out infinite alternate;}
+@keyframes twinkle{0%{opacity:.1;transform:scale(.5);}100%{opacity:var(--bright);transform:scale(1);}}
+
+/* ===== HINT BUTTON ===== */
+#hint-btn{
+  position:fixed;bottom:16px;right:14px;z-index:59;
+  width:48px;height:48px;border-radius:50%;border:2px solid #fbbf24;
+  background:linear-gradient(135deg,rgba(251,191,36,.2),rgba(245,158,11,.1));
+  color:#fbbf24;font-size:22px;cursor:pointer;
+  display:none;align-items:center;justify-content:center;
+  box-shadow:0 4px 16px rgba(251,191,36,.3);
+  animation:hintPulse 2s ease infinite alternate;
+  font-family:inherit;
+}
+#hint-btn.on{display:flex;}
+@keyframes hintPulse{from{box-shadow:0 4px 8px rgba(251,191,36,.2);}to{box-shadow:0 4px 20px rgba(251,191,36,.5);}}
+#hint-bubble{
+  position:fixed;bottom:72px;right:14px;z-index:59;
+  background:rgba(26,10,62,.95);border:2px solid #fbbf24;border-radius:16px;
+  padding:14px 16px;max-width:280px;color:#fef3c7;font-size:14px;font-weight:700;
+  line-height:1.6;display:none;
+  box-shadow:0 8px 32px rgba(0,0,0,.5);
+  animation:fadeInUp .3s ease;
+}
+#hint-bubble::after{
+  content:'';position:absolute;bottom:-8px;right:20px;
+  border:8px solid transparent;border-top-color:#fbbf24;
+}
+#hint-bubble.on{display:block;}
+
+/* ===== ACHIEVEMENT TOAST ===== */
+.ach-toast{
+  position:fixed;top:-80px;left:50%;transform:translateX(-50%);z-index:500;
+  background:linear-gradient(135deg,#fbbf24,#f59e0b);color:#1c1917;
+  padding:12px 24px;border-radius:20px;font-size:15px;font-weight:900;
+  display:flex;align-items:center;gap:10px;white-space:nowrap;
+  box-shadow:0 8px 32px rgba(251,191,36,.5);
+  animation:achSlide 3s cubic-bezier(.175,.885,.32,1.275) forwards;
+}
+@keyframes achSlide{
+  0%{top:-80px;opacity:0;}
+  15%{top:20px;opacity:1;}
+  80%{top:20px;opacity:1;}
+  100%{top:-80px;opacity:0;}
+}
+.ach-toast .ach-icon{font-size:24px;}
+
+/* ===== IMPROVED INTRO ===== */
+.name-features{
+  display:flex;gap:10px;margin-bottom:24px;flex-wrap:wrap;justify-content:center;
+  max-width:320px;
+}
+.name-feat{
+  background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.15);
+  border-radius:12px;padding:6px 12px;font-size:12px;color:rgba(255,255,255,.7);
+  font-weight:700;display:flex;align-items:center;gap:4px;
+}
+.name-logo{animation:logoFloat 3s ease-in-out infinite !important;}
+@keyframes logoFloat{0%,100%{transform:translateY(0) rotate(-3deg);}50%{transform:translateY(-12px) rotate(3deg);}}
+
 /* Block count-in animation */
 @keyframes blockIn{from{opacity:0;transform:scale(.5);}to{opacity:1;transform:scale(1);}}
 #shape-area svg rect.animated, #shape-area svg text.animated{
@@ -720,8 +782,11 @@ body{background:radial-gradient(ellipse at top, #2d1b69 0%, #1a0a3e 60%, #0f0628
 </head>
 <body>
 <canvas id="confetti"></canvas>
+<div id="starfield"></div>
 <div id="score-pop"></div>
 <div id="speed-pop"></div>
+<button id="hint-btn" onclick="showHint()">💡</button>
+<div id="hint-bubble"></div>
 <div id="char-wrap"><div id="char-bubble"></div><div id="char-emoji">🤓</div></div>
 
 <!-- LEVEL CUT -->
@@ -739,11 +804,18 @@ body{background:radial-gradient(ellipse at top, #2d1b69 0%, #1a0a3e 60%, #0f0628
 <div id="name-screen" class="screen">
   <div class="name-logo">📐</div>
   <div class="name-title">Math Arena</div>
-  <div class="name-sub">גיאומטריה — כיתה ו׳</div>
-  <div class="name-input-wrap">
-    <input id="name-input" type="text" placeholder="הכנס את שמך..." maxlength="16" autocomplete="off"/>
+  <div class="name-sub">גיאומטריה — כיתה ו׳ 🎮</div>
+  <div class="name-features">
+    <div class="name-feat">🔥 רצפים</div>
+    <div class="name-feat">⚡ בונוס מהירות</div>
+    <div class="name-feat">✂️ כוחות מיוחדים</div>
+    <div class="name-feat">⚔️ דו-קרב עם חברים</div>
+    <div class="name-feat">🏆 טבלת שיאים</div>
   </div>
-  <button id="btn-start" onclick="submitName()">▶ התחל לשחק</button>
+  <div class="name-input-wrap">
+    <input id="name-input" type="text" placeholder="מה השם שלך? ✏️" maxlength="16" autocomplete="off"/>
+  </div>
+  <button id="btn-start" onclick="submitName()">🚀 יאללה מתחילים!</button>
 </div>
 
 <!-- LEADERBOARD OVERLAY -->
@@ -907,7 +979,79 @@ body{background:radial-gradient(ellipse at top, #2d1b69 0%, #1a0a3e 60%, #0f0628
     <button onclick="document.getElementById('share-popup').style.display='none'" style="width:100%;margin-top:8px;padding:11px;background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.2);border-radius:14px;color:#aaa;font-size:15px;cursor:pointer;">סגור</button>
   </div>
 </div>
-<script>function legoBlock(x,y,w,h,fill,stroke,num){
+<script>
+// ===== ANIMATED STARFIELD =====
+(function(){
+  var sf=document.getElementById('starfield');
+  for(var i=0;i<60;i++){
+    var s=document.createElement('div');
+    s.className='star';
+    var size=Math.random()*3+1;
+    s.style.cssText='width:'+size+'px;height:'+size+'px;left:'+Math.random()*100+'%;top:'+Math.random()*100+'%;--dur:'+(2+Math.random()*4)+'s;--bright:'+(0.3+Math.random()*0.7)+';animation-delay:-'+Math.random()*5+'s;';
+    sf.appendChild(s);
+  }
+})();
+
+// ===== HINT SYSTEM =====
+var hintUsed=false;
+var HINTS={
+  'ra':'💡 טיפ: כפלו את שני המספרים שרואים על הצורה!',
+  'rp':'💡 טיפ: חברו אורך + רוחב, ואז כפלו ב-2!',
+  'sq':'💡 טיפ: בריבוע כל הצלעות שוות! לשטח — כפלו צלע בעצמה. להיקף — כפלו ב-4!',
+  'tri-p':'💡 טיפ: פשוט חברו את כל 3 המספרים על הצלעות!',
+  'rs':'💡 טיפ: להיקף — חלקו ב-4. לשטח — חפשו מספר שכפול עצמו נותן את השטח!',
+  'rr':'💡 טיפ: לשטח — חלקו שטח באורך. להיקף — חלקו ב-2 ואז תורידו את מה שיודעים!',
+  'par':'💡 טיפ: השתמשו בגובה, לא בצלע הנטויה! בסיס × גובה!',
+  'tr':'💡 טיפ: חשבו מלבן ותחלקו ב-2! (בסיס × גובה) ÷ 2',
+  'wd':'💡 טיפ: שטיח/דשא = שטח (כפל). גדר/מסגרת = היקף (חיבור)!',
+  'combo':'💡 טיפ: חשבו שטח והיקף בנפרד, ואז השוו ביניהם!',
+  'dec':'💡 טיפ: אותן נוסחאות! אל תפחדו מהנקודה העשרונית 😊'
+};
+
+function showHint(){
+  if(answered) return;
+  var tp=LV[lvlIdx].topics[tIdx];
+  var hint=HINTS[tp.id]||'💡 קראו את השאלה שוב לאט!';
+  var el=document.getElementById('hint-bubble');
+  if(el.classList.contains('on')){el.classList.remove('on');return;}
+  el.textContent=hint;
+  el.classList.add('on');
+  hintUsed=true;
+  charBubble('בהצלחה! 🍀');
+  setTimeout(function(){el.classList.remove('on');},4000);
+}
+
+function hideHintBubble(){
+  document.getElementById('hint-bubble').classList.remove('on');
+}
+
+// ===== ACHIEVEMENT SYSTEM =====
+var achievements={};
+function showAchievement(id,icon,text){
+  if(achievements[id]) return;
+  achievements[id]=true;
+  var t=document.createElement('div');
+  t.className='ach-toast';
+  t.innerHTML='<span class="ach-icon">'+icon+'</span><span>'+text+'</span>';
+  document.body.appendChild(t);
+  sfxPowerUp();
+  setTimeout(function(){t.remove();},3500);
+}
+
+function checkAchievements(){
+  if(totR>=1 && !achievements['first']) showAchievement('first','🎯','תשובה ראשונה נכונה!');
+  if(gStr>=5 && !achievements['streak5']) showAchievement('streak5','🔥','רצף של 5! אש!');
+  if(gStr>=10 && !achievements['streak10']) showAchievement('streak10','👑','רצף של 10! מלך/ת!');
+  if(score>=500 && !achievements['score500']) showAchievement('score500','💰','500 נקודות!');
+  if(score>=1000 && !achievements['score1000']) showAchievement('score1000','🏆','1000 נקודות!');
+  if(score>=2000 && !achievements['score2000']) showAchievement('score2000','💎','2000 נקודות! יהלום!');
+  if(lvlIdx>=1 && !achievements['lvl2']) showAchievement('lvl2','⭐','עברת לשלב 2!');
+  if(lvlIdx>=2 && !achievements['lvl3']) showAchievement('lvl3','🌟','עברת לשלב 3! מתקדם!');
+  var spd=getSpeedBonus();
+  if(spd.cls==='fast' && !achievements['flash']) showAchievement('flash','⚡','בזק! ענית תוך 3 שניות!');
+}
+
+function legoBlock(x,y,w,h,fill,stroke,num){
   var r='<rect x="'+(x+2)+'" y="'+(y+2)+'" width="'+w+'" height="'+h+'" fill="'+stroke+'" rx="3"/>';
   r+='<rect x="'+x+'" y="'+y+'" width="'+w+'" height="'+h+'" fill="'+fill+'" rx="3"/>';
   r+='<rect x="'+(x+1)+'" y="'+(y+1)+'" width="'+(w-2)+'" height="'+(Math.round(h*0.35))+'" fill="rgba(255,255,255,.18)" rx="2"/>';
@@ -932,8 +1076,8 @@ function mR(w,h,wLabel,hLabel){
   var bw=Math.max(10,Math.floor(190/cols)-1);
   var bh=Math.max(9,Math.floor(130/rows)-1);
   var gw=cols*(bw+2)-2, gh=rows*(bh+2)-2;
-  var svgW=gw+70, svgH=gh+44;
-  var ox=32, oy=6;
+  var svgW=gw+80, svgH=gh+44;
+  var ox=46, oy=6;
   var wl=wLabel?wLabel+' ס"מ':(typeof w==='number'?w+' ס"מ':'?');
   var hl=hLabel?hLabel+' ס"מ':(typeof h==='number'?h+' ס"מ':'?');
   var r='<svg width="'+svgW+'" height="'+svgH+'">';
@@ -971,7 +1115,9 @@ function mR(w,h,wLabel,hLabel){
   r+='<line x1="'+(ox-8)+'" y1="'+oy+'" x2="'+(ox-8)+'" y2="'+(oy+gh)+'" stroke="#fda4af" stroke-width="1.5"/>';
   r+='<polygon points="'+(ox-11)+','+oy+' '+(ox-8)+','+(oy+6)+' '+(ox-5)+','+oy+'" fill="#fda4af"/>';
   r+='<polygon points="'+(ox-11)+','+(oy+gh)+' '+(ox-8)+','+(oy+gh-6)+' '+(ox-5)+','+(oy+gh)+'" fill="#fda4af"/>';
-  r+='<text x="14" y="'+(oy+gh/2+4)+'" fill="#fda4af" font-size="12" text-anchor="middle" font-family="Nunito" font-weight="800">'+hl+'</text>';
+  var hLblY=oy+gh/2+4;
+  r+='<rect x="0" y="'+(hLblY-11)+'" width="36" height="15" rx="4" fill="rgba(26,10,62,.75)"/>';
+  r+='<text x="18" y="'+hLblY+'" fill="#fda4af" font-size="12" text-anchor="middle" font-family="Nunito" font-weight="800">'+hl+'</text>';
   r+='</svg>';
   return r;
 }
@@ -981,8 +1127,8 @@ function mRP(w,h,wLabel,hLabel){
   var bw=Math.max(10,Math.floor(190/cols)-1);
   var bh=Math.max(9,Math.floor(130/rows)-1);
   var gw=cols*(bw+2)-2, gh=rows*(bh+2)-2;
-  var svgW=gw+80, svgH=gh+44;
-  var ox=40, oy=6;
+  var svgW=gw+86, svgH=gh+44;
+  var ox=48, oy=6;
   var wl=wLabel?wLabel+' ס"מ':(typeof w==='number'?w+' ס"מ':'?');
   var hl=hLabel?hLabel+' ס"מ':(typeof h==='number'?h+' ס"מ':'?');
   var r='<svg width="'+svgW+'" height="'+svgH+'">';
@@ -1023,7 +1169,9 @@ function mRP(w,h,wLabel,hLabel){
   r+='<line x1="'+(ox-8)+'" y1="'+oy+'" x2="'+(ox-8)+'" y2="'+(oy+gh)+'" stroke="#fbbf24" stroke-width="1.5"/>';
   r+='<polygon points="'+(ox-11)+','+oy+' '+(ox-8)+','+(oy+6)+' '+(ox-5)+','+oy+'" fill="#fbbf24"/>';
   r+='<polygon points="'+(ox-11)+','+(oy+gh)+' '+(ox-8)+','+(oy+gh-6)+' '+(ox-5)+','+(oy+gh)+'" fill="#fbbf24"/>';
-  r+='<text x="'+(ox-14)+'" y="'+(oy+gh/2+4)+'" fill="#fbbf24" font-size="12" text-anchor="end" font-family="Nunito" font-weight="800">'+hl+'</text>';
+  var hLblYrp=oy+gh/2+4;
+  r+='<rect x="0" y="'+(hLblYrp-11)+'" width="38" height="15" rx="4" fill="rgba(26,10,62,.75)"/>';
+  r+='<text x="19" y="'+hLblYrp+'" fill="#fbbf24" font-size="12" text-anchor="middle" font-family="Nunito" font-weight="800">'+hl+'</text>';
   r+='</svg>';
   return r;
 }
@@ -1032,8 +1180,8 @@ function mS(a,aLabel){
   var bw=Math.max(9,Math.floor(150/n)-1);
   var bh=bw;
   var gs=n*(bw+2)-2;
-  var svgS=gs+60;
-  var ox=36,oy=6;
+  var svgS=gs+70;
+  var ox=46,oy=6;
   var lbl=aLabel?aLabel+' ס"מ':(typeof a==='number'?a+' ס"מ':'?');
   var r='<svg width="'+svgS+'" height="'+(svgS+10)+'">';
   for(var row=0;row<n;row++){
@@ -1065,37 +1213,100 @@ function mS(a,aLabel){
   r+='<line x1="'+(ox-8)+'" y1="'+oy+'" x2="'+(ox-8)+'" y2="'+(oy+gs)+'" stroke="#fda4af" stroke-width="1.5"/>';
   r+='<polygon points="'+(ox-11)+','+oy+' '+(ox-8)+','+(oy+6)+' '+(ox-5)+','+oy+'" fill="#fda4af"/>';
   r+='<polygon points="'+(ox-11)+','+(oy+gs)+' '+(ox-8)+','+(oy+gs-6)+' '+(ox-5)+','+(oy+gs)+'" fill="#fda4af"/>';
-  r+='<text x="'+(ox-14)+'" y="'+(oy+gs/2+4)+'" fill="#fda4af" font-size="12" text-anchor="end" font-family="Nunito" font-weight="800">'+lbl+'</text>';
+  var hLblYs=oy+gs/2+4;
+  r+='<rect x="0" y="'+(hLblYs-11)+'" width="36" height="15" rx="4" fill="rgba(26,10,62,.75)"/>';
+  r+='<text x="18" y="'+hLblYs+'" fill="#fda4af" font-size="12" text-anchor="middle" font-family="Nunito" font-weight="800">'+lbl+'</text>';
   r+='</svg>';
   return r;
 }
 function mT(b,h){
-  var svgW=200,svgH=120;
-  var x1=30,y1=10,x2=170,y2=96,x3=30,y3=96; // right-angle triangle base
-  var cx=100; // apex x
+  var svgW=230,svgH=145;
+  var triLeft=28,triRight=202,triTop=14,triBot=112;
+  var apex=(triLeft+triRight)/2;
   var r='<svg width="'+svgW+'" height="'+svgH+'">';
-  // Lego pattern
   r+='<defs><pattern id="lp" x="0" y="0" width="16" height="14" patternUnits="userSpaceOnUse">';
   r+='<rect x="1" y="1" width="14" height="12" fill="#f97316" rx="3"/>';
   r+='<rect x="1" y="1" width="14" height="5" fill="rgba(255,255,255,.15)" rx="2"/>';
   r+='<ellipse cx="8" cy="7" rx="3" ry="2.5" fill="rgba(0,0,0,.15)"/>';
   r+='</pattern>';
-  r+='<clipPath id="tc"><polygon points="'+cx+','+y1+' '+x2+','+y2+' '+x3+','+y3+'"/></clipPath></defs>';
-  // Filled triangle
-  r+='<polygon points="'+cx+','+y1+' '+x2+','+y2+' '+x3+','+y3+'" fill="url(#lp)" clip-path="url(#tc)"/>';
-  r+='<polygon points="'+cx+','+y1+' '+x2+','+y2+' '+x3+','+y3+'" fill="none" stroke="#fb923c" stroke-width="2.5"/>';
-  // Height line — OUTSIDE right side, white solid
-  var hx=x2+16;
-  r+='<line x1="'+hx+'" y1="'+y1+'" x2="'+hx+'" y2="'+y2+'" stroke="#fff" stroke-width="2" opacity=".8"/>';
-  r+='<polygon points="'+(hx-3)+','+y1+' '+hx+','+(y1+5)+' '+(hx+3)+','+y1+'" fill="#fff" opacity=".8"/>';
-  r+='<polygon points="'+(hx-3)+','+y2+' '+hx+','+(y2-5)+' '+(hx+3)+','+y2+'" fill="#fff" opacity=".8"/>';
-  // Height label outside
-  r+='<text x="'+(hx+8)+'" y="'+((y1+y2)/2+4)+'" fill="#fdba74" font-size="12" font-family="Nunito" font-weight="800">'+h+' ס"מ</text>';
-  // Right angle indicator at base
-  var sq=8;
-  r+='<rect x="'+cx+'" y="'+(y2-sq)+'" width="'+sq+'" height="'+sq+'" fill="none" stroke="#fff" stroke-width="1.5" opacity=".6"/>';
-  // Base label
-  r+='<text x="'+((x3+x2)/2)+'" y="'+(y2+14)+'" fill="#fdba74" font-size="12" text-anchor="middle" font-family="Nunito" font-weight="800">'+b+' ס"מ</text>';
+  r+='<clipPath id="tc"><polygon points="'+apex+','+triTop+' '+triRight+','+triBot+' '+triLeft+','+triBot+'"/></clipPath></defs>';
+  r+='<polygon points="'+apex+','+triTop+' '+triRight+','+triBot+' '+triLeft+','+triBot+'" fill="url(#lp)" clip-path="url(#tc)"/>';
+  r+='<polygon points="'+apex+','+triTop+' '+triRight+','+triBot+' '+triLeft+','+triBot+'" fill="none" stroke="#fb923c" stroke-width="2.5"/>';
+  // Height line INSIDE
+  r+='<line x1="'+apex+'" y1="'+(triTop+2)+'" x2="'+apex+'" y2="'+triBot+'" stroke="#fff" stroke-width="2.5"/>';
+  // Right angle square
+  var sq=9;
+  r+='<polyline points="'+(apex+sq)+','+triBot+' '+(apex+sq)+','+(triBot-sq)+' '+apex+','+(triBot-sq)+'" fill="none" stroke="#fff" stroke-width="2" stroke-linejoin="miter"/>';
+  // Height label — white bold with bg
+  var hLblY=(triTop+triBot)/2;
+  r+='<rect x="'+(apex+6)+'" y="'+(hLblY-9)+'" width="48" height="20" rx="5" fill="rgba(0,0,0,.55)"/>';
+  r+='<text x="'+(apex+30)+'" y="'+(hLblY+5)+'" fill="#fff" font-size="14" text-anchor="middle" font-family="system-ui,sans-serif" font-weight="900">'+h+' ס"מ</text>';
+  // Base label — white bold
+  r+='<text x="'+((triLeft+triRight)/2)+'" y="'+(triBot+20)+'" fill="#fff" font-size="14" text-anchor="middle" font-family="system-ui,sans-serif" font-weight="900">'+b+' ס"מ</text>';
+  r+='</svg>';
+  return r;
+}
+// Perimeter triangle — 3 sides labeled, no height
+function mTP(a,b,c){
+  var svgW=240,svgH=150;
+  var ax=svgW/2,ay=18,bx=32,by=112,cx=svgW-32,cy=112;
+  var r='<svg width="'+svgW+'" height="'+svgH+'">';
+  r+='<defs><pattern id="lpp" x="0" y="0" width="16" height="14" patternUnits="userSpaceOnUse">';
+  r+='<rect x="1" y="1" width="14" height="12" fill="#f97316" rx="3"/>';
+  r+='<rect x="1" y="1" width="14" height="5" fill="rgba(255,255,255,.15)" rx="2"/>';
+  r+='<ellipse cx="8" cy="7" rx="3" ry="2.5" fill="rgba(0,0,0,.15)"/>';
+  r+='</pattern>';
+  r+='<clipPath id="tcp"><polygon points="'+ax+','+ay+' '+cx+','+cy+' '+bx+','+by+'"/></clipPath></defs>';
+  r+='<polygon points="'+ax+','+ay+' '+cx+','+cy+' '+bx+','+by+'" fill="url(#lpp)" clip-path="url(#tcp)"/>';
+  // Colored edges
+  var colA='#60a5fa',colB='#5eead4',colC='#f9a8d4';
+  r+='<line x1="'+ax+'" y1="'+ay+'" x2="'+bx+'" y2="'+by+'" stroke="'+colA+'" stroke-width="3" stroke-linecap="round"/>';
+  r+='<line x1="'+bx+'" y1="'+by+'" x2="'+cx+'" y2="'+cy+'" stroke="'+colB+'" stroke-width="3" stroke-linecap="round"/>';
+  r+='<line x1="'+cx+'" y1="'+cy+'" x2="'+ax+'" y2="'+ay+'" stroke="'+colC+'" stroke-width="3" stroke-linecap="round"/>';
+  // Side labels with bg
+  function sLbl(x,y,text,col){
+    var tw=text.length*8+16;
+    r+='<rect x="'+(x-tw/2)+'" y="'+(y-10)+'" width="'+tw+'" height="20" rx="6" fill="rgba(0,0,0,.55)"/>';
+    r+='<text x="'+x+'" y="'+(y+5)+'" fill="'+col+'" font-size="14" text-anchor="middle" font-family="system-ui,sans-serif" font-weight="900">'+text+'</text>';
+  }
+  sLbl((ax+bx)/2-26,(ay+by)/2,a,colA);
+  sLbl((bx+cx)/2,by+20,b,colB);
+  sLbl((ax+cx)/2+26,(ay+cy)/2,c,colC);
+  r+='</svg>';
+  return r;
+}
+// Perimeter equilateral triangle
+function mTPeq(side){
+  var svgW=240,svgH=150;
+  var ax=svgW/2,ay=18,bx=42,by=112,cx=svgW-42,cy=112;
+  var r='<svg width="'+svgW+'" height="'+svgH+'">';
+  r+='<defs><pattern id="lpe" x="0" y="0" width="16" height="14" patternUnits="userSpaceOnUse">';
+  r+='<rect x="1" y="1" width="14" height="12" fill="#f97316" rx="3"/>';
+  r+='<rect x="1" y="1" width="14" height="5" fill="rgba(255,255,255,.15)" rx="2"/>';
+  r+='<ellipse cx="8" cy="7" rx="3" ry="2.5" fill="rgba(0,0,0,.15)"/>';
+  r+='</pattern>';
+  r+='<clipPath id="tce"><polygon points="'+ax+','+ay+' '+cx+','+cy+' '+bx+','+by+'"/></clipPath></defs>';
+  r+='<polygon points="'+ax+','+ay+' '+cx+','+cy+' '+bx+','+by+'" fill="url(#lpe)" clip-path="url(#tce)"/>';
+  var col='#5eead4';
+  r+='<line x1="'+ax+'" y1="'+ay+'" x2="'+bx+'" y2="'+by+'" stroke="'+col+'" stroke-width="3" stroke-linecap="round"/>';
+  r+='<line x1="'+bx+'" y1="'+by+'" x2="'+cx+'" y2="'+cy+'" stroke="'+col+'" stroke-width="3" stroke-linecap="round"/>';
+  r+='<line x1="'+cx+'" y1="'+cy+'" x2="'+ax+'" y2="'+ay+'" stroke="'+col+'" stroke-width="3" stroke-linecap="round"/>';
+  // Tick marks for equal sides
+  function tick(x1,y1,x2,y2){
+    var mx=(x1+x2)/2,my=(y1+y2)/2,dx=x2-x1,dy=y2-y1,len=Math.sqrt(dx*dx+dy*dy);
+    var nx=-dy/len*7,ny=dx/len*7;
+    r+='<line x1="'+(mx+nx)+'" y1="'+(my+ny)+'" x2="'+(mx-nx)+'" y2="'+(my-ny)+'" stroke="#fff" stroke-width="2.5" stroke-linecap="round"/>';
+  }
+  tick(ax,ay,bx,by);tick(bx,by,cx,cy);tick(cx,cy,ax,ay);
+  // Labels
+  function sLbl(x,y,text){
+    var tw=text.length*8+14;
+    r+='<rect x="'+(x-tw/2)+'" y="'+(y-10)+'" width="'+tw+'" height="20" rx="6" fill="rgba(0,0,0,.55)"/>';
+    r+='<text x="'+x+'" y="'+(y+5)+'" fill="#fff" font-size="14" text-anchor="middle" font-family="system-ui,sans-serif" font-weight="900">'+text+'</text>';
+  }
+  sLbl((ax+bx)/2-26,(ay+by)/2,side);
+  sLbl((bx+cx)/2,by+20,side);
+  sLbl((ax+cx)/2+26,(ay+cy)/2,side);
   r+='</svg>';
   return r;
 }
@@ -1146,66 +1357,66 @@ function mPar(b,h){
 
 const LV=[
   {name:'שלב 1',emoji:'🟦',bonus:300,topics:[
-    {id:'ra',label:'שטח מלבן',ex:{title:'שטח מלבן',body:'שטח = כמה מקום בתוך הצורה.<br>כופלים אורך ברוחב.',formula:'שטח = אורך × רוחב'},
+    {id:'ra',label:'שטח מלבן',ex:{title:'שטח מלבן',body:'שטח = כמה מקום יש בתוך הצורה 📦<br>תחשבו על זה כמו ריצפה של חדר — כמה אריחים נכנסים?<br>פשוט כופלים את האורך ברוחב!',formula:'שטח = אורך × רוחב'},
      pool:[{t:'מלבן 8×5 — מה השטח?',s:mR(8,5),o:['30 סמ"ר','40 סמ"ר','26 סמ"ר','80 סמ"ר'],a:1,p:100,e:'8×5=40'},
            {t:'מלבן 6×4 — מה השטח?',s:mR(6,4),o:['20 סמ"ר','10 סמ"ר','24 סמ"ר','48 סמ"ר'],a:2,p:100,e:'6×4=24'},
            {t:'מלבן 9×3 — מה השטח?',s:mR(9,3),o:['12 סמ"ר','27 סמ"ר','24 סמ"ר','18 סמ"ר'],a:1,p:100,e:'9×3=27'},
            {t:'מלבן 7×6 — מה השטח?',s:mR(7,6),o:['42 סמ"ר','13 סמ"ר','36 סמ"ר','26 סמ"ר'],a:0,p:100,e:'7×6=42'},
            {t:'מלבן 10×4 — מה השטח?',s:mR(10,4),o:['28 סמ"ר','14 סמ"ר','80 סמ"ר','40 סמ"ר'],a:3,p:100,e:'10×4=40'}]},
-    {id:'rp',label:'היקף מלבן',ex:{title:'היקף מלבן',body:'היקף = הקו מסביב לצורה.',formula:'היקף = 2 × (אורך + רוחב)'},
+    {id:'rp',label:'היקף מלבן',ex:{title:'היקף מלבן',body:'היקף = אורך הקו שמקיף את כל הצורה מסביב 🔄<br>דמיינו שאתם הולכים לאורך כל הדפנות — כמה מטר תעברו?<br>יש 2 צלעות ארוכות ו-2 קצרות, אז מחברים ומכפילים ב-2!',formula:'היקף = 2 × (אורך + רוחב)'},
      pool:[{t:'מלבן 8×5 — מה ההיקף?',s:mRP(8,5),o:['13 ס״מ','40 ס״מ','26 ס״מ','20 ס״מ'],a:2,p:100,e:'2×(8+5)=26'},
            {t:'מלבן 7×3 — מה ההיקף?',s:mRP(7,3),o:['21 ס״מ','10 ס״מ','20 ס״מ','24 ס״מ'],a:2,p:100,e:'2×(7+3)=20'},
            {t:'מלבן 9×4 — מה ההיקף?',s:mRP(9,4),o:['36 ס״מ','13 ס״מ','26 ס״מ','20 ס״מ'],a:2,p:100,e:'2×(9+4)=26'},
            {t:'מלבן 5×5 — מה ההיקף?',s:mRP(5,5),o:['25 ס״מ','10 ס״מ','20 ס״מ','15 ס״מ'],a:2,p:100,e:'2×(5+5)=20'}]},
-    {id:'sq',label:'ריבוע',ex:{title:'ריבוע',body:'ריבוע — כל צלעות שוות.<br>שטח=צלע², היקף=4×צלע.',formula:'שטח=a² | היקף=4a'},
+    {id:'sq',label:'ריבוע',ex:{title:'ריבוע',body:'ריבוע = כל הצלעות שוות באורך! ⬛<br>שטח: כופלים צלע בעצמה (זה מה שנקרא "בריבוע" 😉)<br>היקף: יש 4 צלעות שוות, אז פשוט צלע כפול 4!',formula:'שטח = צלע × צלע | היקף = 4 × צלע'},
      pool:[{t:'ריבוע צלע 7 — השטח?',s:mS(7),o:['28 סמ"ר','49 סמ"ר','14 סמ"ר','42 סמ"ר'],a:1,p:100,e:'7²=49'},
            {t:'ריבוע צלע 5 — ההיקף?',s:mSP(5),o:['25 ס״מ','10 ס״מ','20 ס״מ','15 ס״מ'],a:2,p:100,e:'4×5=20'},
            {t:'ריבוע צלע 4 — השטח?',s:mS(4),o:['8 סמ"ר','12 סמ"ר','16 סמ"ר','20 סמ"ר'],a:2,p:100,e:'4²=16'},
            {t:'ריבוע צלע 6 — ההיקף?',s:mSP(6),o:['12 ס״מ','36 ס״מ','24 ס״מ','18 ס״מ'],a:2,p:100,e:'4×6=24'},
            {t:'ריבוע צלע 8 — השטח?',s:mS(8),o:['32 סמ"ר','64 סמ"ר','16 סמ"ר','48 סמ"ר'],a:1,p:100,e:'8²=64'}]},
-    {id:'tri-p',label:'היקף משולש',ex:{title:'היקף משולש',body:'היקף = סכום כל הצלעות.<br>חבר את שלוש הצלעות יחד.',formula:'היקף = צלע א + צלע ב + צלע ג'},
-     pool:[{t:'משולש צלעות 5, 7, 8 — ההיקף?',s:mT(8,5),o:['35 ס"מ','20 ס"מ','40 ס"מ','56 ס"מ'],a:1,p:100,e:'5+7+8=20'},
-           {t:'משולש צלעות 6, 6, 8 — ההיקף?',s:mT(8,6),o:['48 ס"מ','20 ס"מ','14 ס"מ','28 ס"מ'],a:1,p:100,e:'6+6+8=20'},
-           {t:'משולש שווה צלעות, צלע 9 — ההיקף?',s:mT(9,8),o:['18 ס"מ','81 ס"מ','27 ס"מ','36 ס"מ'],a:2,p:100,e:'9+9+9=27'},
-           {t:'משולש צלעות 4, 5, 6 — ההיקף?',s:mT(6,4),o:['120 ס"מ','14 ס"מ','15 ס"מ','20 ס"מ'],a:2,p:100,e:'4+5+6=15'},
-           {t:'משולש צלעות 3, 4, 5 — ההיקף?',s:mT(5,3),o:['60 ס"מ','7 ס"מ','12 ס"מ','15 ס"מ'],a:2,p:100,e:'3+4+5=12'}]}
+    {id:'tri-p',label:'היקף משולש',ex:{title:'היקף משולש',body:'היקף משולש = לחבר את כל 3 הצלעות ביחד 📐<br>דמיינו חוט שעוטף את המשולש — כמה חוט צריך?<br>פשוט מחברים צלע + צלע + צלע!',formula:'היקף = צלע א + צלע ב + צלע ג'},
+     pool:[{t:'משולש צלעות 5, 7, 8 — ההיקף?',s:mTP('5','8','7'),o:['35 ס"מ','20 ס"מ','40 ס"מ','56 ס"מ'],a:1,p:100,e:'5+7+8=20'},
+           {t:'משולש צלעות 6, 6, 8 — ההיקף?',s:mTP('6','8','6'),o:['48 ס"מ','20 ס"מ','14 ס"מ','28 ס"מ'],a:1,p:100,e:'6+6+8=20'},
+           {t:'משולש שווה צלעות, צלע 9 — ההיקף?',s:mTPeq('9'),o:['18 ס"מ','81 ס"מ','27 ס"מ','36 ס"מ'],a:2,p:100,e:'9+9+9=27'},
+           {t:'משולש צלעות 4, 5, 6 — ההיקף?',s:mTP('4','6','5'),o:['120 ס"מ','14 ס"מ','15 ס"מ','20 ס"מ'],a:2,p:100,e:'4+5+6=15'},
+           {t:'משולש צלעות 3, 4, 5 — ההיקף?',s:mTP('3','5','4'),o:['60 ס"מ','7 ס"מ','12 ס"מ','15 ס"מ'],a:2,p:100,e:'3+4+5=12'}]}
   ]},
   {name:'שלב 2',emoji:'🔄',bonus:400,topics:[
-    {id:'rs',label:'ריבוע הפוך',ex:{title:'חשבון הפוך — ריבוע',body:'היקף נתון: צלע=היקף÷4<br>שטח נתון: צלע=√שטח',formula:'צלע=היקף÷4 | צלע=√שטח'},
+    {id:'rs',label:'ריבוע הפוך',ex:{title:'חשבון הפוך — ריבוע',body:'פה עובדים הפוך! 🔄 נותנים לכם את התוצאה ושואלים מה הצלע.<br>אם נתנו היקף: מחלקים ב-4 (כי יש 4 צלעות שוות)<br>אם נתנו שטח: מחפשים מספר שכפול עצמו נותן את השטח (שורש)',formula:'צלע = היקף ÷ 4 | צלע = √שטח'},
      pool:[{t:'לריבוע היקף 36 — הצלע?',s:mS('?'),o:['6 ס״מ','9 ס״מ','12 ס״מ','4 ס״מ'],a:1,p:150,e:'36÷4=9'},
            {t:'לריבוע היקף 20 — הצלע?',s:mS('?'),o:['4 ס״מ','10 ס״מ','5 ס״מ','8 ס״מ'],a:2,p:150,e:'20÷4=5'},
            {t:'לריבוע שטח 64 — הצלע?',s:mS('?'),o:['16 ס״מ','32 ס״מ','8 ס״מ','4 ס״מ'],a:2,p:150,e:'√64=8'},
            {t:'לריבוע שטח 25 — הצלע?',s:mS('?'),o:['5 ס״מ','12.5 ס״מ','10 ס״מ','6 ס״מ'],a:0,p:150,e:'√25=5'}]},
-    {id:'rr',label:'מלבן הפוך',ex:{title:'חשבון הפוך — מלבן',body:'שטח+אורך נתונים: רוחב=שטח÷אורך<br>היקף+אורך נתונים: רוחב=(היקף÷2)−אורך',formula:'רוחב = שטח ÷ אורך | רוחב = (היקף÷2) − אורך'},
+    {id:'rr',label:'מלבן הפוך',ex:{title:'חשבון הפוך — מלבן',body:'גם פה עובדים הפוך! 🔄<br>אם נותנים שטח ואורך → מחלקים: רוחב = שטח ÷ אורך<br>אם נותנים היקף ואורך → קודם מחלקים היקף ב-2, ואז מורידים את האורך!',formula:'רוחב = שטח ÷ אורך | רוחב = (היקף ÷ 2) − אורך'},
      pool:[{t:'מלבן: שטח 48, אורך 8 — הרוחב?',s:mR(8,'?'),o:['4 ס״מ','8 ס״מ','6 ס״מ','12 ס״מ'],a:2,p:150,e:'48÷8=6'},
            {t:'מלבן: שטח 30, רוחב 5 — האורך?',s:mR('?',5),o:['6 ס״מ','10 ס״מ','25 ס״מ','15 ס״מ'],a:0,p:150,e:'30÷5=6'},
            {t:'מלבן: היקף 22, אורך 7 — הרוחב?',s:mRP(7,'?'),o:['15 ס״מ','8 ס״מ','4 ס״מ','11 ס״מ'],a:2,p:150,e:'(22÷2)−7=4'},
            {t:'מלבן: היקף 28, אורך 9 — הרוחב?',s:mRP(9,'?'),o:['19 ס״מ','5 ס״מ','7 ס״מ','14 ס״מ'],a:1,p:150,e:'(28÷2)−9=5'}]},
-    {id:'par',label:'מקבילית',ex:{title:'מקבילית',body:'מקבילית — 2 זוגות צלעות מקבילות.<br>שטח = בסיס × גובה (לא הצלע הנטויה!)',formula:'שטח = בסיס × גובה'},
+    {id:'par',label:'מקבילית',ex:{title:'מקבילית',body:'מקבילית = מלבן "מוטה" הצידה 🔶<br>טריק חשוב: השטח הוא לא צלע כפול צלע!<br>צריך בסיס × גובה (הגובה הוא הקו הישר שיורד מלמעלה — לא הצלע הנטויה!)',formula:'שטח = בסיס × גובה'},
      pool:[{t:'מקבילית: בסיס 8, גובה 5 — השטח?',s:mPar(8,5),o:['26 סמ"ר','40 סמ"ר','13 סמ"ר','80 סמ"ר'],a:1,p:150,e:'8×5=40'},
            {t:'מקבילית: בסיס 7, גובה 4 — השטח?',s:mPar(7,4),o:['11 סמ"ר','22 סמ"ר','28 סמ"ר','42 סמ"ר'],a:2,p:150,e:'7×4=28'},
            {t:'מקבילית: בסיס 9, גובה 6 — השטח?',s:mPar(9,6),o:['30 סמ"ר','54 סמ"ר','15 סמ"ר','45 סמ"ר'],a:1,p:150,e:'9×6=54'},
            {t:'מקבילית שטח 36, בסיס 9 — מה הגובה?',s:mPar(9,'?'),o:['3 ס"מ','4 ס"מ','27 ס"מ','9 ס"מ'],a:1,p:150,e:'36÷9=4'}]}
   ]},
   {name:'שלב 3',emoji:'⚡',bonus:500,topics:[
-    {id:'tr',label:'משולש',ex:{title:'שטח משולש',body:'שטח = חצי משטח המלבן שמכיל אותו.',formula:'שטח = (בסיס × גובה) ÷ 2'},
+    {id:'tr',label:'משולש',ex:{title:'שטח משולש',body:'משולש = חצי מלבן! ✂️<br>דמיינו שיש מלבן ואתם חותכים אותו באלכסון — מקבלים 2 משולשים.<br>לכן: מחשבים שטח מלבן (בסיס × גובה) ומחלקים ב-2!',formula:'שטח = (בסיס × גובה) ÷ 2'},
      pool:[{t:'משולש: בסיס 10, גובה 6 — שטח?',s:mT(10,6),o:['60 סמ"ר','16 סמ"ר','30 סמ"ר','48 סמ"ר'],a:2,p:200,e:'(10×6)÷2=30'},
            {t:'משולש: בסיס 8, גובה 5 — שטח?',s:mT(8,5),o:['40 סמ"ר','13 סמ"ר','20 סמ"ר','16 סמ"ר'],a:2,p:200,e:'(8×5)÷2=20'},
            {t:'משולש: בסיס 12, גובה 4 — שטח?',s:mT(12,4),o:['48 סמ"ר','16 סמ"ר','24 סמ"ר','32 סמ"ר'],a:2,p:200,e:'(12×4)÷2=24'},
            {t:'משולש: בסיס 6, גובה 8 — שטח?',s:mT(6,8),o:['48 סמ"ר','14 סמ"ר','24 סמ"ר','32 סמ"ר'],a:2,p:200,e:'(6×8)÷2=24'},
            {t:'משולש: בסיס 14, גובה 5 — שטח?',s:mT(14,5),o:['70 סמ"ר','19 סמ"ר','35 סמ"ר','42 סמ"ר'],a:2,p:200,e:'(14×5)÷2=35'}]},
-    {id:'wd',label:'מילוליות',ex:{title:'שאלות מילוליות',body:'שטיח/דשא/צבע = שטח<br>גדר/מסגרת = היקף',formula:'שטח=כיסוי | היקף=קו מסביב'},
+    {id:'wd',label:'מילוליות',ex:{title:'שאלות מילוליות',body:'הטריק: לזהות אם שואלים שטח או היקף! 🧠<br>שטיח / דשא / צבע / ריצוף = כיסוי פנים = שטח 🟩<br>גדר / מסגרת / חוט / סרט = מסביב = היקף 🔲<br>קראו טוב מה המילה המפתח!',formula:'כיסוי = שטח | מסביב = היקף'},
      pool:[{t:'חדר 6×4 מ — כמה שטיח?',s:mR(6,4),o:['10','20','24','48'],a:2,p:200,e:'6×4=24 מ"ר'},
            {t:'חדר 6×4 מ — כמה מסגרת?',s:mR(6,4),o:['24 מ','10 מ','20 מ','16 מ'],a:2,p:200,e:'2×(6+4)=20 מ'},
            {t:'חצר ריבועית צלע 9 מ — דשא?',s:mS(9),o:['36','81','72','18'],a:1,p:200,e:'9²=81 מ"ר'},
            {t:'גינה משולשת: בסיס 12, גובה 5 — שטח?',s:mT(12,5),o:['60','17','30','34'],a:2,p:200,e:'(12×5)÷2=30 מ"ר'},
            {t:'גינה 10×5 מ — כמה גדר?',s:mR(10,5),o:['50 מ','15 מ','30 מ','20 מ'],a:2,p:200,e:'2×(10+5)=30 מ'}]},
-    {id:'combo',label:'שאלות משולבות',ex:{title:'שטח והיקף ביחד',body:'לפעמים צריך לחשב גם שטח וגם היקף.<br>קרא טוב מה שואלים!',formula:'שטח = כפל | היקף = חיבור'},
+    {id:'combo',label:'שאלות משולבות',ex:{title:'שטח והיקף ביחד',body:'פה צריך לחשב גם שטח וגם היקף ולהשוות ביניהם! 🤯<br>שטח = כפל (כמה מקום בפנים)<br>היקף = חיבור (כמה הקו מסביב)<br>קראו את השאלה פעמיים — מה בדיוק שואלים?',formula:'שטח = אורך × רוחב | היקף = 2 × (אורך + רוחב)'},
      pool:[{t:'מלבן 5×3. מה ההפרש בין השטח להיקף?',s:mR(5,3),o:['1','3','15','16'],a:0,p:200,e:'שטח=15, היקף=16, הפרש=1'},
            {t:'ריבוע: השטח גדול מההיקף ב-5. הצלע היא?',s:mS('?'),o:['5 ס"מ','6 ס"מ','7 ס"מ','8 ס"מ'],a:0,p:200,e:'צלע 5: שטח=25, היקף=20, הפרש=5'},
            {t:'מלבן 6×4. כמה פעמים השטח גדול מההיקף?',s:mR(6,4),o:['פי 2','פי 1.2','פי 3','פי 1.5'],a:1,p:200,e:'שטח=24, היקף=20, 24÷20=1.2'},
            {t:'לריבוע שטח=היקף. מה הצלע?',s:mS('?'),o:['2 ס"מ','3 ס"מ','4 ס"מ','5 ס"מ'],a:2,p:250,e:'צלע 4: שטח=16, היקף=16'}]},
-    {id:'dec',label:'שברים ועשרוניים',ex:{title:'מספרים לא שלמים',body:'עובדים בדיוק אותו דבר!<br>מכפילים אורך ברוחב גם עם עשרוניים.',formula:'שטח = אורך × רוחב (גם עם עשרוניים)'},
+    {id:'dec',label:'שברים ועשרוניים',ex:{title:'מספרים לא שלמים',body:'אל תיבהלו ממספרים עשרוניים! 😎<br>עובדים בדיוק אותו דבר — אותן נוסחאות בדיוק.<br>טיפ: 2.5 × 4 = חשבו על זה כ-2 × 4 + חצי מ-4 = 8 + 2 = 10!',formula:'אותן נוסחאות! רק עם מספרים עשרוניים'},
      pool:[{t:'מלבן 2.5 × 4 ס"מ — השטח?',s:mR(3,4,'2.5','4'),o:['6.5 סמ"ר','8 סמ"ר','10 סמ"ר','12 סמ"ר'],a:2,p:200,e:'2.5×4=10'},
            {t:'ריבוע צלע 3.5 ס"מ — השטח?',s:mS(4,'3.5'),o:['7 סמ"ר','12.25 סמ"ר','10.5 סמ"ר','14 סמ"ר'],a:1,p:200,e:'3.5²=12.25'},
            {t:'מלבן 1.5 × 6 — ההיקף?',s:mR(2,6,'1.5','6'),o:['9 ס"מ','15 ס"מ','7.5 ס"מ','18 ס"מ'],a:1,p:200,e:'2×(1.5+6)=15'},
@@ -1229,8 +1440,8 @@ function mSP(a){
   var bw=Math.max(9,Math.floor(150/n)-1);
   var bh=bw;
   var gs=n*(bw+2)-2;
-  var svgS=gs+60;
-  var ox=36,oy=6;
+  var svgS=gs+70;
+  var ox=46,oy=6;
   var lbl=typeof a==='number'?a+' ס"מ':'?';
   var r='<svg width="'+svgS+'" height="'+(svgS+10)+'">';
   for(var row=0;row<n;row++){
@@ -1252,7 +1463,9 @@ function mSP(a){
   r+='<line x1="'+(ox-8)+'" y1="'+oy+'" x2="'+(ox-8)+'" y2="'+(oy+gs)+'" stroke="#5eead4" stroke-width="1.5"/>';
   r+='<polygon points="'+(ox-11)+','+oy+' '+(ox-8)+','+(oy+6)+' '+(ox-5)+','+oy+'" fill="#5eead4"/>';
   r+='<polygon points="'+(ox-11)+','+(oy+gs)+' '+(ox-8)+','+(oy+gs-6)+' '+(ox-5)+','+(oy+gs)+'" fill="#5eead4"/>';
-  r+='<text x="'+(ox-14)+'" y="'+(oy+gs/2+4)+'" fill="#99f6e4" font-size="12" text-anchor="end" font-family="Nunito" font-weight="800">'+lbl+'</text>';
+  var hLblYsp=oy+gs/2+4;
+  r+='<rect x="0" y="'+(hLblYsp-11)+'" width="36" height="15" rx="4" fill="rgba(26,10,62,.75)"/>';
+  r+='<text x="18" y="'+hLblYsp+'" fill="#99f6e4" font-size="12" text-anchor="middle" font-family="Nunito" font-weight="800">'+lbl+'</text>';
   r+='</svg>';
   return r;
 }
@@ -1390,13 +1603,13 @@ function charBubble(text){
   charTimerID=setTimeout(function(){el.classList.remove('on');},2200);
 }
 function charReactCorrect(streak){
-  if(streak>=5){charSet('🤩','dance');charBubble('אלוף/ה! 👑');}
-  else if(streak>=3){charSet('🥳','dance');charBubble(['מטורף!','אש!','וואו!'][Math.floor(Math.random()*3)]);}
-  else{charSet(['😎','🤓','💪','🙌'][Math.floor(Math.random()*4)],'bounce');charBubble(['נכון!','יש!','מעולה!','בול!'][Math.floor(Math.random()*4)]);}
+  if(streak>=5){charSet('🤩','dance');charBubble(['אלוף/ה אמיתי/ת! 👑','בלתי ניתן לעצירה!','LEGEND! 🏆','מכונה! 🤖'][Math.floor(Math.random()*4)]);}
+  else if(streak>=3){charSet('🥳','dance');charBubble(['מטורף!','אש! 🔥','ON FIRE!','רצף! 💪'][Math.floor(Math.random()*4)]);}
+  else{charSet(['😎','🤓','💪','🙌','🎯','✨'][Math.floor(Math.random()*6)],'bounce');charBubble(['נכון!','יש!','מעולה!','בול!','בדיוק!','קלע!','יופי!'][Math.floor(Math.random()*7)]);}
 }
 function charReactWrong(nearMiss){
-  if(nearMiss){charSet('😬','sad');charBubble('כמעט! 🤏');}
-  else{charSet('😅','sad');charBubble(['אופס...','לא נורא!','בפעם הבאה!','קדימה!'][Math.floor(Math.random()*4)]);}
+  if(nearMiss){charSet('😬','sad');charBubble(['כמעט! 🤏','קרוב מאוד!','עוד קצת!'][Math.floor(Math.random()*3)]);}
+  else{charSet('😅','sad');charBubble(['אופס... לא נורא!','בפעם הבאה!','קדימה, לא מוותרים!','טעויות זה חלק מהלמידה!'][Math.floor(Math.random()*4)]);}
 }
 function charThinking(){charSet('🤔','think');}
 function charTimeout(){charSet('😱','sad');charBubble('נגמר הזמן!');}
@@ -1744,7 +1957,7 @@ function closeLB(){
   _lbContinue = null;
 }
 
-function startGame(){score=0;lives=3;answered=false;lvlIdx=0;tIdx=0;pIdx=0;tStr=0;gStr=0;maxStr=0;totR=0;totA=0;resetPowerUps();showChar();showScreen('game-screen');updHUD();loadQ();}
+function startGame(){score=0;lives=3;answered=false;lvlIdx=0;tIdx=0;pIdx=0;tStr=0;gStr=0;maxStr=0;totR=0;totA=0;achievements={};resetPowerUps();showChar();showScreen('game-screen');updHUD();loadQ();}
 function restartGame(){startGame();}
 // DOMContentLoaded handled in duel system above
 
@@ -1766,11 +1979,67 @@ function updHUD(){
 
 function updStreak(){
   for(let i=0;i<3;i++)document.getElementById('sd'+i).className='sdot'+(tStr>i?' lit':'');
-  document.getElementById('streak-lbl').textContent=tStr>=3?'✅ עוברים!':'עוד '+(3-tStr)+' לעבור';
+  document.getElementById('streak-lbl').textContent=tStr>=3?'✅ מעולה! עוברים!':tStr===2?'עוד 1 לעבור! 💪':'עוד '+(3-tStr)+' לעבור';
   document.getElementById('streak-num').textContent=gStr+'🔥';
 }
 
-function cQ(){return LV[lvlIdx].topics[tIdx].pool[pIdx%LV[lvlIdx].topics[tIdx].pool.length];}
+function cQ(){
+  var pool=LV[lvlIdx].topics[tIdx].pool;
+  var base=pool[pIdx%pool.length];
+  // For replays (pIdx >= pool.length), generate dynamic variant
+  if(pIdx>=pool.length && LV[lvlIdx].topics[tIdx].gen){
+    return LV[lvlIdx].topics[tIdx].gen();
+  }
+  return base;
+}
+
+// ===== DYNAMIC QUESTION GENERATORS =====
+function randInt(a,b){return Math.floor(Math.random()*(b-a+1))+a;}
+function shuffle4(arr){for(var i=arr.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var t=arr[i];arr[i]=arr[j];arr[j]=t;}return arr;}
+function makeOpts(correct,unit,distractors){
+  var opts=[correct+''+unit];
+  distractors.forEach(function(d){if(d!==correct)opts.push(d+''+unit);});
+  while(opts.length<4)opts.push((correct+randInt(1,10))+''+unit);
+  opts=opts.slice(0,4);
+  // Shuffle but track correct
+  var ci=0;var shuffled=shuffle4(opts.map(function(o,i){return{o:o,c:i===0};}));
+  shuffled.forEach(function(o,i){if(o.c)ci=i;});
+  return{o:shuffled.map(function(x){return x.o;}),a:ci};
+}
+
+// Add generators to each topic for infinite replay
+(function(){
+  // Rectangle area generator
+  LV[0].topics[0].gen=function(){
+    var w=randInt(3,12),h=randInt(2,9),area=w*h;
+    var r=makeOpts(area,' סמ"ר',[w+h,2*(w+h),w*h+w,w*h-h]);
+    return{t:'מלבן '+w+'×'+h+' — מה השטח?',s:mR(w,h),o:r.o,a:r.a,p:100,e:w+'×'+h+'='+area};
+  };
+  // Rectangle perimeter generator
+  LV[0].topics[1].gen=function(){
+    var w=randInt(3,12),h=randInt(2,9),per=2*(w+h);
+    var r=makeOpts(per,' ס״מ',[w*h,w+h,4*w,4*h]);
+    return{t:'מלבן '+w+'×'+h+' — מה ההיקף?',s:mRP(w,h),o:r.o,a:r.a,p:100,e:'2×('+w+'+'+h+')='+per};
+  };
+  // Square generator
+  LV[0].topics[2].gen=function(){
+    var a=randInt(3,10);
+    if(Math.random()>.5){var area=a*a;var r=makeOpts(area,' סמ"ר',[4*a,2*a,a*a+a,a*a-a]);return{t:'ריבוע צלע '+a+' — השטח?',s:mS(a),o:r.o,a:r.a,p:100,e:a+'²='+area};}
+    else{var per=4*a;var r=makeOpts(per,' ס״מ',[a*a,2*a,3*a,5*a]);return{t:'ריבוע צלע '+a+' — ההיקף?',s:mSP(a),o:r.o,a:r.a,p:100,e:'4×'+a+'='+per};}
+  };
+  // Triangle area generator
+  if(LV[2]&&LV[2].topics[0])LV[2].topics[0].gen=function(){
+    var b=randInt(4,14),h=randInt(3,10),area=(b*h)/2;
+    var r=makeOpts(area,' סמ"ר',[b*h,b+h,(b*h)/2+b,b*h-h]);
+    return{t:'משולש: בסיס '+b+', גובה '+h+' — שטח?',s:mT(b,h),o:r.o,a:r.a,p:200,e:'('+b+'×'+h+')÷2='+area};
+  };
+  // Parallelogram generator
+  if(LV[1]&&LV[1].topics[2])LV[1].topics[2].gen=function(){
+    var b=randInt(4,12),h=randInt(3,9),area=b*h;
+    var r=makeOpts(area,' סמ"ר',[2*(b+h),b+h,b*h+b,b*h-h]);
+    return{t:'מקבילית: בסיס '+b+', גובה '+h+' — השטח?',s:mPar(b,h),o:r.o,a:r.a,p:150,e:b+'×'+h+'='+area};
+  };
+})();
 
 function loadQ(){
   answered=false;stopTmr();clearAuto();hideFB();
@@ -1788,6 +2057,7 @@ function loadQ(){
   });
   updStreak();updHUD();if(!isDuel)startTmr(30);
   startSpeedTrack();charThinking();
+  document.getElementById('hint-btn').classList.add('on');hintUsed=false;hideHintBubble();
 }
 
 function fadeNext(fn){
@@ -1798,6 +2068,7 @@ function fadeNext(fn){
 
 function pick(idx){
   if(answered)return;answered=true;stopTmr();totA++;
+  document.getElementById('hint-btn').classList.remove('on');hideHintBubble();
   const q=cQ(),ok=idx===q.a;
   const btns=document.querySelectorAll('.opt');
   btns.forEach((b,i)=>{b.disabled=true;if(i===q.a)b.classList.add('rc');});
@@ -1819,12 +2090,13 @@ function pick(idx){
     var totalPts=(basePts+speedPts)*mult;
     score+=totalPts;
     if(spd.bonus>0) showSpeedPop(spd);
-    if(gStr>=3){sfxCombo();showCombo(['COMBO! 🔥','ON FIRE! 🔥🔥','UNSTOPPABLE! 👑'][Math.min(gStr-3,2)]);}
+    if(gStr>=3){sfxCombo();showCombo(['COMBO! 🔥','ON FIRE! 🔥🔥','UNSTOPPABLE! 👑','LEGENDARY! 💎','GOD MODE! 🌟'][Math.min(gStr-3,4)]);}
     var popTxt='+'+totalPts;
     if(mult>1) popTxt+=' ×2!';
     scorePop(popTxt);
     charReactCorrect(gStr);
     earnPowerUp();
+    checkAchievements();
     updStreak();updHUD();pIdx++;
     showFB(true,q);
     autoID=setTimeout(()=>{hideFB();if(tStr>=3){advTopic();}else{fadeNext(loadQ);}},1200);
@@ -1849,7 +2121,7 @@ function showFB(ok,q,nearMiss){
   document.getElementById('fb-icon').textContent=ok?['✅','🎯','⚡','🔥','💥'][Math.floor(Math.random()*5)]:'❌';
   wrap.className='fb-icon-wrap '+(ok?'ok':'bad');
   const t=document.getElementById('fb-title');
-  t.textContent=ok?['נכון!','מצוין!','כל הכבוד!','אש! 🔥'][Math.floor(Math.random()*4)]:(nearMiss?'כמעט! 🤏':'טעות!');
+  t.textContent=ok?['נכון!','מצוין!','כל הכבוד!','אש! 🔥','מושלם!','גאוני!','BOOM! 💥'][Math.floor(Math.random()*7)]:(nearMiss?'כמעט! 🤏':'טעות — אבל עכשיו נלמד!');
   t.className=ok?'ok':'bad';
   document.getElementById('fb-pts').textContent=ok?'+'+q.p+' נקודות':'';
   document.getElementById('fb-cd').textContent='';
@@ -1859,7 +2131,7 @@ function showFB(ok,q,nearMiss){
     document.getElementById('fb-ex-title').textContent='📖 '+ex.title;
     document.getElementById('fb-ex-body').innerHTML=ex.body+(nearMiss?'<div class="near-miss-text">היית קרוב! נסה שוב בזהירות 💪</div>':'');
     document.getElementById('fb-formula').textContent=ex.formula;
-    document.getElementById('fb-answer').innerHTML='✅ התשובה: <span>'+q.o[q.a]+'</span> — '+q.e;
+    document.getElementById('fb-answer').innerHTML='✅ התשובה: <span>'+q.o[q.a]+'</span> — '+q.e+'<div style="margin-top:6px;font-size:12px;color:rgba(255,255,255,.5);">💪 לא נורא! טעויות עוזרות לנו ללמוד</div>';
     fb.className='feedback on wfb';
   }else{box.style.display='none';fb.className='feedback on cfb';}
 }
@@ -1909,9 +2181,10 @@ function showWin(){
   document.getElementById('w-score').textContent=score;
   document.getElementById('w-streak').textContent=maxStr;
   document.getElementById('w-acc').textContent=acc+'%';
-  let t='🏅',s='⭐',g='כל הכבוד!';
-  if(acc>=70){t='🥈';s='⭐⭐';g='עבודה טובה! 💪';}
-  if(acc>=90){t='🏆';s='⭐⭐⭐';g='מושלם! 👑';}
+  let t='🏅',s='⭐',g='כל הכבוד! המשך להתאמן 💪';
+  if(acc>=70){t='🥈';s='⭐⭐';g='עבודה מעולה! אתה על הדרך! 🚀';}
+  if(acc>=90){t='🏆';s='⭐⭐⭐';g='מושלם! אתה גאון גיאומטריה! 👑';}
+  if(acc>=95){t='💎';s='⭐⭐⭐';g='PERFECT! אלוף/ת על! 🌟';}
   document.getElementById('win-trophy').textContent=t;
   document.getElementById('win-stars').textContent=s;
   document.getElementById('win-grade').textContent=g;
@@ -1933,6 +2206,7 @@ function updTmr(l){
 function onTO(){
   if(answered)return;answered=true;totA++;
   sfxTimeout();
+  document.getElementById('hint-btn').classList.remove('on');hideHintBubble();
   lives=Math.max(0,lives-1);gStr=0;tStr=0;
   const prev=LV[lvlIdx].topics[tIdx].pool[pIdx%LV[lvlIdx].topics[tIdx].pool.length];
   pIdx++;
