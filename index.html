@@ -926,16 +926,16 @@ function legoGrid(cols,rows,bw,bh,fill,stroke,ox,oy,showNums){
   }
   return r;
 }
-function mR(w,h){
-  var cols=typeof w==='number'?Math.min(w,12):4;
-  var rows=typeof h==='number'?Math.min(h,10):3;
+function mR(w,h,wLabel,hLabel){
+  var cols=typeof w==='number'?Math.min(Math.round(w),12):4;
+  var rows=typeof h==='number'?Math.min(Math.round(h),10):3;
   var bw=Math.max(10,Math.floor(190/cols)-1);
   var bh=Math.max(9,Math.floor(130/rows)-1);
   var gw=cols*(bw+2)-2, gh=rows*(bh+2)-2;
   var svgW=gw+70, svgH=gh+44;
   var ox=32, oy=6;
-  var wl=typeof w==='number'?w+' ס"מ':'?';
-  var hl=typeof h==='number'?h+' ס"מ':'?';
+  var wl=wLabel?wLabel+' ס"מ':(typeof w==='number'?w+' ס"מ':'?');
+  var hl=hLabel?hLabel+' ס"מ':(typeof h==='number'?h+' ס"מ':'?');
   var r='<svg width="'+svgW+'" height="'+svgH+'">';
   // Draw grid with colored edges:
   // bottom row = teal (width axis), left col = coral (height axis), rest = blue
@@ -975,16 +975,16 @@ function mR(w,h){
   r+='</svg>';
   return r;
 }
-function mRP(w,h){
-  var cols=typeof w==='number'?Math.min(w,12):4;
-  var rows=typeof h==='number'?Math.min(h,10):3;
+function mRP(w,h,wLabel,hLabel){
+  var cols=typeof w==='number'?Math.min(Math.round(w),12):4;
+  var rows=typeof h==='number'?Math.min(Math.round(h),10):3;
   var bw=Math.max(10,Math.floor(190/cols)-1);
   var bh=Math.max(9,Math.floor(130/rows)-1);
   var gw=cols*(bw+2)-2, gh=rows*(bh+2)-2;
   var svgW=gw+80, svgH=gh+44;
   var ox=40, oy=6;
-  var wl=typeof w==='number'?w+' ס"מ':'?';
-  var hl=typeof h==='number'?h+' ס"מ':'?';
+  var wl=wLabel?wLabel+' ס"מ':(typeof w==='number'?w+' ס"מ':'?');
+  var hl=hLabel?hLabel+' ס"מ':(typeof h==='number'?h+' ס"מ':'?');
   var r='<svg width="'+svgW+'" height="'+svgH+'">';
   var colors=['#f97316','#fbbf24','#34d399','#60a5fa'];
   for(var row=0;row<rows;row++){
@@ -1027,14 +1027,14 @@ function mRP(w,h){
   r+='</svg>';
   return r;
 }
-function mS(a){
-  var n=typeof a==='number'?Math.min(a,12):4;
+function mS(a,aLabel){
+  var n=typeof a==='number'?Math.min(Math.round(a),12):4;
   var bw=Math.max(9,Math.floor(150/n)-1);
   var bh=bw;
   var gs=n*(bw+2)-2;
   var svgS=gs+60;
   var ox=36,oy=6;
-  var lbl=typeof a==='number'?a+' ס"מ':'?';
+  var lbl=aLabel?aLabel+' ס"מ':(typeof a==='number'?a+' ס"מ':'?');
   var r='<svg width="'+svgS+'" height="'+(svgS+10)+'">';
   for(var row=0;row<n;row++){
     for(var col=0;col<n;col++){
@@ -1043,9 +1043,18 @@ function mS(a){
       if(isBot && isLeft){fill='#c084fc';stroke='#7c3aed';num=1;}
       else if(isBot){fill='#5eead4';stroke='#0d9488';num=col+1;}
       else if(isLeft){fill='#fda4af';stroke='#e11d48';num=row+1;}
-      else{fill='#a855f7';stroke='#7c3aed';}
+      else{fill='#a855f7';stroke='#7c3aed';num=undefined;}
       r+=legoBlock(ox+col*(bw+2),oy+row*(bh+2),bw,bh,fill,stroke,num);
     }
+  }
+  // Crosshatch on corner block (bottom-left) — pink + teal blend
+  var cx2=ox, cy2=oy+(n-1)*(bw+2);
+  var s=5;
+  for(var i=-bh;i<=bw;i+=s){
+    r+='<line x1="'+(cx2+Math.max(0,i))+'" y1="'+(cy2+Math.max(0,-i))+'" x2="'+(cx2+Math.min(bw,i+bh))+'" y2="'+(cy2+Math.min(bh,bh+bw-i-bh))+'" stroke="#fda4af" stroke-width="2" stroke-linecap="round"/>';
+  }
+  for(var i=0;i<=bw+bh;i+=s){
+    r+='<line x1="'+(cx2+Math.min(i,bw))+'" y1="'+(cy2+Math.max(0,i-bw))+'" x2="'+(cx2+Math.max(0,i-bh))+'" y2="'+(cy2+Math.min(bh,i))+'" stroke="#5eead4" stroke-width="2" stroke-linecap="round"/>';
   }
   // Bottom arrow (width)
   r+='<line x1="'+ox+'" y1="'+(oy+gs+8)+'" x2="'+(ox+gs)+'" y2="'+(oy+gs+8)+'" stroke="#5eead4" stroke-width="1.5"/>';
@@ -1197,9 +1206,9 @@ const LV=[
            {t:'מלבן 6×4. כמה פעמים השטח גדול מההיקף?',s:mR(6,4),o:['פי 2','פי 1.2','פי 3','פי 1.5'],a:1,p:200,e:'שטח=24, היקף=20, 24÷20=1.2'},
            {t:'לריבוע שטח=היקף. מה הצלע?',s:mS('?'),o:['2 ס"מ','3 ס"מ','4 ס"מ','5 ס"מ'],a:2,p:250,e:'צלע 4: שטח=16, היקף=16'}]},
     {id:'dec',label:'שברים ועשרוניים',ex:{title:'מספרים לא שלמים',body:'עובדים בדיוק אותו דבר!<br>מכפילים אורך ברוחב גם עם עשרוניים.',formula:'שטח = אורך × רוחב (גם עם עשרוניים)'},
-     pool:[{t:'מלבן 2.5 × 4 ס"מ — השטח?',s:mR(3,4),o:['6.5 סמ"ר','8 סמ"ר','10 סמ"ר','12 סמ"ר'],a:2,p:200,e:'2.5×4=10'},
-           {t:'ריבוע צלע 3.5 ס"מ — השטח?',s:mS(4),o:['7 סמ"ר','12.25 סמ"ר','10.5 סמ"ר','14 סמ"ר'],a:1,p:200,e:'3.5²=12.25'},
-           {t:'מלבן 1.5 × 6 — ההיקף?',s:mR(2,6),o:['9 ס"מ','15 ס"מ','7.5 ס"מ','18 ס"מ'],a:1,p:200,e:'2×(1.5+6)=15'},
+     pool:[{t:'מלבן 2.5 × 4 ס"מ — השטח?',s:mR(3,4,'2.5','4'),o:['6.5 סמ"ר','8 סמ"ר','10 סמ"ר','12 סמ"ר'],a:2,p:200,e:'2.5×4=10'},
+           {t:'ריבוע צלע 3.5 ס"מ — השטח?',s:mS(4,'3.5'),o:['7 סמ"ר','12.25 סמ"ר','10.5 סמ"ר','14 סמ"ר'],a:1,p:200,e:'3.5²=12.25'},
+           {t:'מלבן 1.5 × 6 — ההיקף?',s:mR(2,6,'1.5','6'),o:['9 ס"מ','15 ס"מ','7.5 ס"מ','18 ס"מ'],a:1,p:200,e:'2×(1.5+6)=15'},
            {t:'משולש: בסיס 5, גובה 3.2 — השטח?',s:mT(5,3),o:['16 סמ"ר','8 סמ"ר','10 סמ"ר','6.4 סמ"ר'],a:1,p:250,e:'(5×3.2)÷2=8'}]}
   ]}
 ];
