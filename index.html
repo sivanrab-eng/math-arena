@@ -877,8 +877,8 @@ body{background:radial-gradient(ellipse at top, #2d1b69 0%, #1a0a3e 60%, #0f0628
   </div>
   <div class="lb-table" id="lb-table"></div>
   <div class="lb-my-pos" id="lb-my-pos"></div>
-  <button id="btn-lb-duel" onclick="shareDuelFromLB()">🤺 Challenge a friend</button>
-  <button id="btn-lb-continue" onclick="closeLB()">Continue ▶</button>
+  <button id="btn-lb-duel" onclick="shareDuelFromLB()">🤺 אתגר חבר</button>
+  <button id="btn-lb-continue" onclick="closeLB()">המשך ▶</button>
 </div>
 
 <!-- GAME SCREEN -->
@@ -965,7 +965,7 @@ body{background:radial-gradient(ellipse at top, #2d1b69 0%, #1a0a3e 60%, #0f0628
     <div class="wstat"><div class="wstat-val" id="w-streak">0</div><div class="wstat-lbl">Best streak</div></div>
     <div class="wstat"><div class="wstat-val" id="w-acc">0%</div><div class="wstat-lbl">Accuracy</div></div>
   </div>
-  <button class="btn-share-duel" onclick="shareDuelInvite()">⚔️ Challenge a friend</button>
+  <button class="btn-share-duel" onclick="shareDuelInvite()">⚔️ אתגר חבר</button>
   <button id="btn-restart" onclick="restartGame()">🔄 Play Again</button>
 </div>
 
@@ -1023,10 +1023,10 @@ body{background:radial-gradient(ellipse at top, #2d1b69 0%, #1a0a3e 60%, #0f0628
 <div id="share-popup" style="display:none;position:fixed;inset:0;z-index:9999;background:rgba(0,0,0,0.85);align-items:center;justify-content:center;flex-direction:column;padding:24px;">
   <div style="background:#1e0a4e;border:2px solid #7c3aed;border-radius:20px;padding:24px;width:100%;max-width:360px;text-align:center;">
     <div style="font-size:32px;margin-bottom:8px;">🤺</div>
-    <div style="color:#fff;font-size:18px;font-weight:800;margin-bottom:16px;">Share the challenge!</div>
+    <div style="color:#fff;font-size:18px;font-weight:800;margin-bottom:16px;">שתף את האתגר!</div>
     <textarea id="share-text" readonly style="width:100%;height:110px;background:#0f0628;color:#e0d0ff;border:1px solid #7c3aed;border-radius:12px;padding:12px;font-size:14px;font-family:inherit;direction:rtl;resize:none;"></textarea>
-    <button onclick="copyShareText()" style="width:100%;margin-top:12px;padding:14px;background:linear-gradient(135deg,#25d366,#128c7e);border:none;border-radius:14px;color:#fff;font-size:17px;font-weight:800;cursor:pointer;">📋 Copy & share on WhatsApp</button>
-    <button onclick="document.getElementById('share-popup').style.display='none'" style="width:100%;margin-top:8px;padding:11px;background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.2);border-radius:14px;color:#aaa;font-size:15px;cursor:pointer;">Close</button>
+    <button onclick="copyShareText()" style="width:100%;margin-top:12px;padding:14px;background:linear-gradient(135deg,#25d366,#128c7e);border:none;border-radius:14px;color:#fff;font-size:17px;font-weight:800;cursor:pointer;">📋 העתק ושתף בוואטסאפ</button>
+    <button onclick="document.getElementById('share-popup').style.display='none'" style="width:100%;margin-top:8px;padding:11px;background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.2);border-radius:14px;color:#aaa;font-size:15px;cursor:pointer;">סגור</button>
   </div>
 </div>
 <script>
@@ -1476,139 +1476,123 @@ function mkO(correct,unit,distractors){
 }
 
 const LV=[
-  {name:'Stage 1 — שטח מלבן',emoji:'🟦',bonus:50,topics:[
-    {id:'ra',label:'שטח מלבן',ex:{title:'שטח מלבן',body:'שטח = כמה מקום בפנים 📦<br>כופלים אורך × רוחב!',formula:'שטח = אורך × רוחב'},
-     pool:[{t:'מלבן 5×3 — השטח?',s:mR(5,3),o:['15 סמ"ר','8 סמ"ר','16 סמ"ר','30 סמ"ר'],a:0,p:80,e:'5×3=15'},{t:'מלבן 4×6 — השטח?',s:mR(4,6),o:['10 סמ"ר','24 סמ"ר','20 סמ"ר','48 סמ"ר'],a:1,p:80,e:'4×6=24'},{t:'מלבן 7×3 — השטח?',s:mR(7,3),o:['10 סמ"ר','21 סמ"ר','20 סמ"ר','14 סמ"ר'],a:1,p:80,e:'7×3=21'},{t:'מלבן 6×5 — השטח?',s:mR(6,5),o:['30 סמ"ר','11 סמ"ר','22 סמ"ר','35 סמ"ר'],a:0,p:80,e:'6×5=30'},{t:'ריבוע 5×5 — השטח?',s:mS(5),o:['10 סמ"ר','20 סמ"ר','25 סמ"ר','15 סמ"ר'],a:2,p:80,e:'5×5=25'},{t:'ריבוע 4×4 — השטח?',s:mS(4),o:['8 סמ"ר','12 סמ"ר','16 סמ"ר','20 סמ"ר'],a:2,p:80,e:'4×4=16'}],
-     gen:function(){var w=randInt(3,10),h=randInt(2,8),a=w*h;var r=mkO(a,' סמ"ר',[w+h,2*(w+h),w*h+w]);return{t:'מלבן '+w+'×'+h+' — השטח?',s:mR(w,h),o:r.o,a:r.a,p:80,e:w+'×'+h+'='+a};}}
+  {name:'שלב 1 — שטח מלבן וריבוע',emoji:'🟦',bonus:60,topics:[
+    {id:'ra',label:'שטח מלבן וריבוע',ex:{title:'שטח מלבן',body:'שטח = כמה מקום בפנים 📦<br>כופלים אורך × רוחב!',formula:'שטח = אורך × רוחב'},
+     pool:[{t:'מלבן 5×3 — השטח?',s:mR(5,3),o:['15 סמ"ר','8 סמ"ר','16 סמ"ר','30 סמ"ר'],a:0,p:80,e:'5×3=15'},{t:'מלבן 4×6 — השטח?',s:mR(4,6),o:['10 סמ"ר','24 סמ"ר','20 סמ"ר','48 סמ"ר'],a:1,p:80,e:'4×6=24'},{t:'ריבוע 5×5 — השטח?',s:mS(5),o:['10 סמ"ר','20 סמ"ר','25 סמ"ר','15 סמ"ר'],a:2,p:80,e:'5×5=25'},{t:'מלבן 9×7 — השטח?',s:mR(9,7),o:['16 סמ"ר','63 סמ"ר','32 סמ"ר','72 סמ"ר'],a:1,p:100,e:'9×7=63'},{t:'מלבן 12×3 — השטח?',s:mR(12,3),o:['36 סמ"ר','15 סמ"ר','30 סמ"ר','24 סמ"ר'],a:0,p:100,e:'12×3=36'},{t:'ריבוע 7×7 — השטח?',s:mS(7),o:['28 סמ"ר','49 סמ"ר','14 סמ"ר','42 סמ"ר'],a:1,p:100,e:'7×7=49'}],
+     gen:function(){var w=randInt(3,14),h=randInt(2,10),a=w*h;var r=mkO(a,' סמ"ר',[w+h,2*(w+h),w*h+w]);return{t:'מלבן '+w+'×'+h+' — השטח?',s:mR(w,h),o:r.o,a:r.a,p:90,e:w+'×'+h+'='+a};}}
   ]},
-  {name:'שלב 2 — שטח מלבן+',emoji:'🟩',bonus:60,topics:[
-    {id:'ra2',label:'שטח מלבן — גדול',ex:{title:'שטח מלבן',body:'מספרים גדולים — אותו דבר! 💪',formula:'שטח = אורך × רוחב'},
-     pool:[{t:'מלבן 8×5 — השטח?',s:mR(8,5),o:['40 סמ"ר','13 סמ"ר','26 סמ"ר','80 סמ"ר'],a:0,p:100,e:'8×5=40'},{t:'מלבן 9×7 — השטח?',s:mR(9,7),o:['16 סמ"ר','63 סמ"ר','32 סמ"ר','72 סמ"ר'],a:1,p:100,e:'9×7=63'},{t:'מלבן 12×3 — השטח?',s:mR(12,3),o:['36 סמ"ר','15 סמ"ר','30 סמ"ר','24 סמ"ר'],a:0,p:100,e:'12×3=36'},{t:'מלבן 10×4 — השטח?',s:mR(10,4),o:['14 סמ"ר','28 סמ"ר','40 סמ"ר','80 סמ"ר'],a:2,p:100,e:'10×4=40'},{t:'ריבוע 7×7 — השטח?',s:mS(7),o:['28 סמ"ר','49 סמ"ר','14 סמ"ר','42 סמ"ר'],a:1,p:100,e:'7×7=49'},{t:'ריבוע 9×9 — השטח?',s:mS(9),o:['36 סמ"ר','81 סמ"ר','18 סמ"ר','72 סמ"ר'],a:1,p:100,e:'9×9=81'}],
-     gen:function(){var w=randInt(6,14),h=randInt(3,10),a=w*h;var r=mkO(a,' סמ"ר',[w+h,2*(w+h),w*h+h]);return{t:'מלבן '+w+'×'+h+' — השטח?',s:mR(w,h),o:r.o,a:r.a,p:100,e:w+'×'+h+'='+a};}}
+  {name:'שלב 2 — היקף מלבן וריבוע',emoji:'🟨',bonus:70,topics:[
+    {id:'rp',label:'היקף מלבן וריבוע',ex:{title:'היקף מלבן',body:'היקף = הקו מסביב 🔄<br>2 ×(אורך+רוחב)',formula:'היקף = 2×(אורך+רוחב)'},
+     pool:[{t:'מלבן 5×3 — ההיקף?',s:mRP(5,3),o:['15 ס"מ','8 ס"מ','16 ס"מ','30 ס"מ'],a:2,p:80,e:'2×(5+3)=16'},{t:'מלבן 8×5 — ההיקף?',s:mRP(8,5),o:['13 ס"מ','40 ס"מ','26 ס"מ','20 ס"מ'],a:2,p:80,e:'2×(8+5)=26'},{t:'ריבוע צלע 6 — ההיקף?',s:mSP(6),o:['12 ס"מ','36 ס"מ','24 ס"מ','18 ס"מ'],a:2,p:80,e:'4×6=24'},{t:'מלבן 13×5 — ההיקף?',s:mRP(13,5),o:['65 ס"מ','18 ס"מ','36 ס"מ','26 ס"מ'],a:2,p:100,e:'2×(13+5)=36'},{t:'מלבן 15×8 — ההיקף?',s:mRP(15,8),o:['120 ס"מ','23 ס"מ','46 ס"מ','30 ס"מ'],a:2,p:100,e:'2×(15+8)=46'},{t:'ריבוע צלע 10 — ההיקף?',s:mSP(10),o:['100 ס"מ','20 ס"מ','40 ס"מ','50 ס"מ'],a:2,p:100,e:'4×10=40'}],
+     gen:function(){var w=randInt(3,15),h=randInt(2,10),p=2*(w+h);var r=mkO(p,' ס"מ',[w*h,w+h,4*w]);return{t:'מלבן '+w+'×'+h+' — ההיקף?',s:mRP(w,h),o:r.o,a:r.a,p:90,e:'2×('+w+'+'+h+')='+p};}}
   ]},
-  {name:'שלב 3 — היקף מלבן',emoji:'🟨',bonus:60,topics:[
-    {id:'rp',label:'היקף מלבן',ex:{title:'היקף מלבן',body:'היקף = הקו מסביב 🔄<br>2 ×(אורך+רוחב)',formula:'היקף = 2×(אורך+רוחב)'},
-     pool:[{t:'מלבן 5×3 — ההיקף?',s:mRP(5,3),o:['15 ס"מ','8 ס"מ','16 ס"מ','30 ס"מ'],a:2,p:80,e:'2×(5+3)=16'},{t:'מלבן 8×5 — ההיקף?',s:mRP(8,5),o:['13 ס"מ','40 ס"מ','26 ס"מ','20 ס"מ'],a:2,p:80,e:'2×(8+5)=26'},{t:'מלבן 7×3 — ההיקף?',s:mRP(7,3),o:['21 ס"מ','10 ס"מ','20 ס"מ','24 ס"מ'],a:2,p:80,e:'2×(7+3)=20'},{t:'מלבן 9×4 — ההיקף?',s:mRP(9,4),o:['36 ס"מ','13 ס"מ','26 ס"מ','20 ס"מ'],a:2,p:80,e:'2×(9+4)=26'},{t:'ריבוע צלע 6 — ההיקף?',s:mSP(6),o:['12 ס"מ','36 ס"מ','24 ס"מ','18 ס"מ'],a:2,p:80,e:'4×6=24'},{t:'ריבוע צלע 5 — ההיקף?',s:mSP(5),o:['25 ס"מ','10 ס"מ','20 ס"מ','15 ס"מ'],a:2,p:80,e:'4×5=20'}],
-     gen:function(){var w=randInt(3,12),h=randInt(2,9),p=2*(w+h);var r=mkO(p,' ס"מ',[w*h,w+h,4*w]);return{t:'מלבן '+w+'×'+h+' — ההיקף?',s:mRP(w,h),o:r.o,a:r.a,p:80,e:'2×('+w+'+'+h+')='+p};}}
-  ]},
-  {name:'שלב 4 — היקף מלבן+',emoji:'🟧',bonus:70,topics:[
-    {id:'rp2',label:'היקף מלבן — גדול',ex:{title:'היקף מלבן',body:'אותו דבר עם מספרים גדולים!',formula:'היקף = 2×(אורך+רוחב)'},
-     pool:[{t:'מלבן 11×6 — ההיקף?',s:mRP(11,6),o:['66 ס"מ','17 ס"מ','34 ס"מ','22 ס"מ'],a:2,p:100,e:'2×(11+6)=34'},{t:'מלבן 13×5 — ההיקף?',s:mRP(13,5),o:['65 ס"מ','18 ס"מ','36 ס"מ','26 ס"מ'],a:2,p:100,e:'2×(13+5)=36'},{t:'מלבן 15×8 — ההיקף?',s:mRP(15,8),o:['120 ס"מ','23 ס"מ','46 ס"מ','30 ס"מ'],a:2,p:100,e:'2×(15+8)=46'},{t:'מלבן 10×10 — ההיקף?',s:mRP(10,10),o:['100 ס"מ','20 ס"מ','40 ס"מ','80 ס"מ'],a:2,p:100,e:'2×(10+10)=40'},{t:'ריבוע צלע 8 — ההיקף?',s:mSP(8),o:['64 ס"מ','16 ס"מ','32 ס"מ','24 ס"מ'],a:2,p:100,e:'4×8=32'},{t:'ריבוע צלע 10 — ההיקף?',s:mSP(10),o:['100 ס"מ','20 ס"מ','40 ס"מ','50 ס"מ'],a:2,p:100,e:'4×10=40'}]}
-  ]},
-
-
-  {name:'שלב 5 — היקף משולש',emoji:'🔺',bonus:70,topics:[
+  {name:'שלב 3 — משולש + מלבן הפוך',emoji:'🔺',bonus:80,topics:[
     {id:'trip',label:'היקף משולש',ex:{title:'היקף משולש',body:'מחברים 3 צלעות!',formula:'היקף = צ1+צ2+צ3'},
-     pool:[{t:'משולש 5,7,8 — ההיקף?',s:mTP("5","8","7"),o:['35 ס"מ','20 ס"מ','40 ס"מ','56 ס"מ'],a:1,p:80,e:'5+7+8=20'},{t:'משולש 6,6,8 — ההיקף?',s:mTP("6","8","6"),o:['48 ס"מ','20 ס"מ','14 ס"מ','28 ס"מ'],a:1,p:80,e:'6+6+8=20'},{t:'משולש 4,5,6 — ההיקף?',s:mTP("4","6","5"),o:['120 ס"מ','14 ס"מ','15 ס"מ','20 ס"מ'],a:2,p:80,e:'4+5+6=15'},{t:'משולש שווה צלעות 9 — ההיקף?',s:mTPeq("9"),o:['18 ס"מ','81 ס"מ','27 ס"מ','36 ס"מ'],a:2,p:80,e:'9×3=27'}]}
-  ]},
-
-
-
-  {name:'שלב 6 — מלבן הפוך — שטח',emoji:'↩️',bonus:100,topics:[
-    {id:'rra',label:'משטח לצלע',ex:{title:'מלבן הפוך',body:'רוחב = שטח ÷ אורך',formula:'רוחב = שטח÷אורך'},
+     pool:[{t:'משולש 5,7,8 — ההיקף?',s:mTP("5","8","7"),o:['35 ס"מ','20 ס"מ','40 ס"מ','56 ס"מ'],a:1,p:80,e:'5+7+8=20'},{t:'משולש 6,6,8 — ההיקף?',s:mTP("6","8","6"),o:['48 ס"מ','20 ס"מ','14 ס"מ','28 ס"מ'],a:1,p:80,e:'6+6+8=20'},{t:'משולש 4,5,6 — ההיקף?',s:mTP("4","6","5"),o:['120 ס"מ','14 ס"מ','15 ס"מ','20 ס"מ'],a:2,p:80,e:'4+5+6=15'},{t:'משולש שווה צלעות 9 — ההיקף?',s:mTPeq("9"),o:['18 ס"מ','81 ס"מ','27 ס"מ','36 ס"מ'],a:2,p:80,e:'9×3=27'}]},
+    {id:'rra',label:'מלבן הפוך — משטח לצלע',ex:{title:'מלבן הפוך',body:'רוחב = שטח ÷ אורך',formula:'רוחב = שטח÷אורך'},
      pool:[{t:'שטח 48, אורך 8 — הרוחב?',s:mR(8,"?"),o:['4 ס"מ','8 ס"מ','6 ס"מ','12 ס"מ'],a:2,p:130,e:'48÷8=6'},{t:'שטח 30, רוחב 5 — האורך?',s:mR(6,5,"?","5"),o:['6 ס"מ','10 ס"מ','25 ס"מ','15 ס"מ'],a:0,p:130,e:'30÷5=6'},{t:'שטח 54, אורך 9 — הרוחב?',s:mR(9,6,"9","?"),o:['6 ס"מ','45 ס"מ','5 ס"מ','8 ס"מ'],a:0,p:130,e:'54÷9=6'},{t:'שטח 35, אורך 7 — הרוחב?',s:mR(7,5,"7","?"),o:['28 ס"מ','5 ס"מ','42 ס"מ','7 ס"מ'],a:1,p:130,e:'35÷7=5'}]}
   ]},
-  {name:'שלב 7 — מלבן הפוך — היקף',emoji:'🔃',bonus:100,topics:[
+  {name:'שלב 4 — מלבן הפוך — היקף',emoji:'🔃',bonus:100,topics:[
     {id:'rrp',label:'מהיקף לצלע',ex:{title:'מלבן הפוך',body:'חלקו ב-2, הורידו אורך!',formula:'רוחב = (היקף÷2)−אורך'},
      pool:[{t:'היקף 22, אורך 7 — הרוחב?',s:mRP(7,4,"7","?"),o:['15 ס"מ','8 ס"מ','4 ס"מ','11 ס"מ'],a:2,p:130,e:'(22÷2)−7=4'},{t:'היקף 28, אורך 9 — הרוחב?',s:mRP(9,5,"9","?"),o:['19 ס"מ','5 ס"מ','7 ס"מ','14 ס"מ'],a:1,p:130,e:'(28÷2)−9=5'},{t:'היקף 34, אורך 12 — הרוחב?',s:mRP(12,5,"12","?"),o:['5 ס"מ','22 ס"מ','10 ס"מ','17 ס"מ'],a:0,p:130,e:'(34÷2)−12=5'},{t:'היקף 30, אורך 8 — הרוחב?',s:mRP(8,7,"8","?"),o:['14 ס"מ','7 ס"מ','22 ס"מ','15 ס"מ'],a:1,p:130,e:'(30÷2)−8=7'},{t:'ריבוע היקף 36 — הצלע?',s:mSP(9,"?"),o:['6 ס"מ','9 ס"מ','12 ס"מ','4 ס"מ'],a:1,p:130,e:'36÷4=9'},{t:'ריבוע היקף 48 — הצלע?',s:mSP(12,"?"),o:['6 ס"מ','12 ס"מ','8 ס"מ','16 ס"מ'],a:1,p:130,e:'48÷4=12'}]}
   ]},
-  {name:'שלב 8 — שטח מקבילית',emoji:'🔶',bonus:110,topics:[
+  {name:'שלב 5 — שטח מקבילית',emoji:'🔶',bonus:110,topics:[
     {id:'par',label:'שטח מקבילית',ex:{title:'שטח מקבילית',body:'בסיס × גובה (לא הצלע הנטויה!)',formula:'שטח = בסיס×גובה'},
      pool:[{t:'מקבילית: בסיס 8, גובה 5 — שטח?',s:mPar(8,5),o:['26 סמ"ר','40 סמ"ר','13 סמ"ר','80 סמ"ר'],a:1,p:120,e:'8×5=40'},{t:'מקבילית: בסיס 7, גובה 4 — שטח?',s:mPar(7,4),o:['11 סמ"ר','22 סמ"ר','28 סמ"ר','42 סמ"ר'],a:2,p:120,e:'7×4=28'},{t:'מקבילית: בסיס 9, גובה 6 — שטח?',s:mPar(9,6),o:['30 סמ"ר','54 סמ"ר','15 סמ"ר','45 סמ"ר'],a:1,p:120,e:'9×6=54'},{t:'מקבילית: בסיס 10, גובה 3 — שטח?',s:mPar(10,3),o:['13 סמ"ר','30 סמ"ר','26 סמ"ר','60 סמ"ר'],a:1,p:120,e:'10×3=30'}],
      gen:function(){var b=randInt(4,12),h=randInt(3,9),a=b*h;var r=mkO(a,' סמ"ר',[2*(b+h),b+h,b*h+b]);return{t:'מקבילית: בסיס '+b+', גובה '+h+' — שטח?',s:mPar(b,h),o:r.o,a:r.a,p:120,e:b+'×'+h+'='+a};}}
   ]},
-  {name:'שלב 9 — היקף מקבילית',emoji:'🔷',bonus:110,topics:[
+  {name:'שלב 6 — היקף מקבילית',emoji:'🔷',bonus:110,topics:[
     {id:'parp',label:'היקף מקבילית',ex:{title:'היקף מקבילית',body:'2×(צלע+צלע)',formula:'היקף = 2×(א+ב)'},
      pool:[{t:'מקבילית: צלעות 8,5 — היקף?',s:mParP(8,5),o:['40 ס"מ','26 ס"מ','13 ס"מ','16 ס"מ'],a:1,p:120,e:'2×(8+5)=26'},{t:'מקבילית: צלעות 10,6 — היקף?',s:mParP(10,6),o:['60 ס"מ','16 ס"מ','32 ס"מ','20 ס"מ'],a:2,p:120,e:'2×(10+6)=32'},{t:'מקבילית: צלעות 7,4 — היקף?',s:mParP(7,4),o:['28 ס"מ','11 ס"מ','22 ס"מ','14 ס"מ'],a:2,p:120,e:'2×(7+4)=22'},{t:'מקבילית: צלעות 9,3 — היקף?',s:mParP(9,3),o:['27 ס"מ','24 ס"מ','12 ס"מ','36 ס"מ'],a:1,p:120,e:'2×(9+3)=24'}]}
   ]},
 
-  {name:'Stage 10 — משולש חד-זווית',emoji:'🔺',bonus:130,topics:[
+  {name:'שלב 7 — משולש חד-זווית',emoji:'🔺',bonus:130,topics:[
     {id:'tr1',label:'שטח משולש חד',ex:{title:'שטח משולש',body:'(בסיס×גובה)÷2 ✂️<br>הגובה בתוך המשולש',formula:'שטח = (בסיס×גובה)÷2'},
      pool:[{t:'משולש: בסיס 10, גובה 6 — שטח?',s:mT(10,6),o:['60 סמ"ר','30 סמ"ר','16 סמ"ר','48 סמ"ר'],a:1,p:150,e:'(10×6)÷2=30'},{t:'משולש: בסיס 8, גובה 5 — שטח?',s:mT(8,5),o:['40 סמ"ר','20 סמ"ר','13 סמ"ר','16 סמ"ר'],a:1,p:150,e:'(8×5)÷2=20'},{t:'משולש: בסיס 14, גובה 5 — שטח?',s:mT(14,5),o:['70 סמ"ר','35 סמ"ר','19 סמ"ר','42 סמ"ר'],a:1,p:150,e:'(14×5)÷2=35'},{t:'משולש: בסיס 6, גובה 8 — שטח?',s:mT(6,8),o:['48 סמ"ר','24 סמ"ר','14 סמ"ר','32 סמ"ר'],a:1,p:150,e:'(6×8)÷2=24'}],
      gen:function(){var b=randInt(4,14),h=randInt(3,10),a=(b*h)/2;var r=mkO(a,' סמ"ר',[b*h,b+h,a+b]);return{t:'משולש: בסיס '+b+', גובה '+h+' — שטח?',s:mT(b,h),o:r.o,a:r.a,p:150,e:'('+b+'×'+h+')÷2='+a};}}
   ]},
-  {name:'Stage 11 — משולש ישר-זווית',emoji:'📏',bonus:130,topics:[
+  {name:'שלב 8 — משולש ישר-זווית',emoji:'📏',bonus:130,topics:[
     {id:'tr2',label:'שטח משולש ישר',ex:{title:'שטח משולש ישר',body:'הניצבים = הבסיס והגובה!',formula:'שטח = (ניצב×ניצב)÷2'},
      pool:[{t:'משולש ישר: ניצבים 8,5 — שטח?',s:mTright(8,5),o:['40 סמ"ר','20 סמ"ר','13 סמ"ר','16 סמ"ר'],a:1,p:150,e:'(8×5)÷2=20'},{t:'משולש ישר: ניצבים 6,8 — שטח?',s:mTright(6,8),o:['48 סמ"ר','24 סמ"ר','14 סמ"ר','32 סמ"ר'],a:1,p:150,e:'(6×8)÷2=24'},{t:'משולש ישר: ניצבים 12,4 — שטח?',s:mTright(12,4),o:['48 סמ"ר','24 סמ"ר','16 סמ"ר','32 סמ"ר'],a:1,p:150,e:'(12×4)÷2=24'},{t:'משולש ישר: ניצבים 10,3 — שטח?',s:mTright(10,3),o:['30 סמ"ר','15 סמ"ר','13 סמ"ר','20 סמ"ר'],a:1,p:150,e:'(10×3)÷2=15'}]}
   ]},
-  {name:'Stage 12 — משולש קהה-זווית',emoji:'📐',bonus:130,topics:[
+  {name:'שלב 9 — משולש קהה-זווית',emoji:'📐',bonus:130,topics:[
     {id:'tr3',label:'שטח משולש קהה',ex:{title:'שטח משולש קהה',body:'הגובה יוצא מחוץ למשולש!<br>אבל אותה נוסחה!',formula:'שטח = (בסיס×גובה)÷2'},
      pool:[{t:'משולש קהה: בסיס 12, גובה 4 — שטח?',s:mTobt(12,4),o:['48 סמ"ר','24 סמ"ר','16 סמ"ר','32 סמ"ר'],a:1,p:150,e:'(12×4)÷2=24'},{t:'משולש קהה: בסיס 9, גובה 4 — שטח?',s:mTobt(9,4),o:['36 סמ"ר','18 סמ"ר','13 סמ"ר','27 סמ"ר'],a:1,p:150,e:'(9×4)÷2=18'},{t:'משולש קהה: בסיס 16, גובה 5 — שטח?',s:mTobt(16,5),o:['80 סמ"ר','40 סמ"ר','21 סמ"ר','60 סמ"ר'],a:1,p:150,e:'(16×5)÷2=40'},{t:'משולש קהה: בסיס 10, גובה 7 — שטח?',s:mTobt(10,7),o:['70 סמ"ר','35 סמ"ר','17 סמ"ר','50 סמ"ר'],a:1,p:150,e:'(10×7)÷2=35'}]}
   ]},
 
-  {name:'Stage 13 — משולש הפוך',emoji:'🔁',bonus:140,topics:[
+  {name:'שלב 10 — משולש הפוך',emoji:'🔁',bonus:140,topics:[
     {id:'trr',label:'משולש — הפוך',ex:{title:'משולש הפוך',body:'גובה = (שטח×2)÷בסיס',formula:'גובה = שטח×2÷בסיס'},
      pool:[{t:'משולש שטח 24, בסיס 8 — גובה?',s:mT(8,6),o:['3 ס"מ','6 ס"מ','16 ס"מ','4 ס"מ'],a:1,p:170,e:'24×2÷8=6'},{t:'משולש שטח 35, בסיס 10 — גובה?',s:mT(10,7),o:['3.5 ס"מ','7 ס"מ','25 ס"מ','5 ס"מ'],a:1,p:170,e:'35×2÷10=7'},{t:'משולש שטח 20, בסיס 5 — גובה?',s:mT(5,8),o:['4 ס"מ','8 ס"מ','15 ס"מ','10 ס"מ'],a:1,p:170,e:'20×2÷5=8'},{t:'משולש שטח 18, גובה 6 — בסיס?',s:mT(6,6),o:['3 ס"מ','6 ס"מ','12 ס"מ','9 ס"מ'],a:1,p:170,e:'18×2÷6=6'}]}
   ]},
-  {name:'Stage 14 — טרפז — קל',emoji:'🔷',bonus:150,topics:[
+  {name:'שלב 11 — טרפז — קל',emoji:'🔷',bonus:150,topics:[
     {id:'tp1',label:'שטח טרפז',ex:{title:'שטח טרפז',body:'(בסיס1+בסיס2)×גובה÷2',formula:'שטח = (a+b)×h÷2'},
      pool:[{t:'טרפז: 6,10, גובה 4 — שטח?',s:mTrap(6,10,4),o:['40 סמ"ר','32 סמ"ר','24 סמ"ר','60 סמ"ר'],a:1,p:170,e:'(6+10)×4÷2=32'},{t:'טרפז: 5,9, גובה 6 — שטח?',s:mTrap(5,9,6),o:['27 סמ"ר','42 סמ"ר','54 סמ"ר','30 סמ"ר'],a:1,p:170,e:'(5+9)×6÷2=42'},{t:'טרפז: 4,8, גובה 5 — שטח?',s:mTrap(4,8,5),o:['20 סמ"ר','40 סמ"ר','30 סמ"ר','60 סמ"ר'],a:2,p:170,e:'(4+8)×5÷2=30'},{t:'טרפז: 3,7, גובה 6 — שטח?',s:mTrap(3,7,6),o:['21 סמ"ר','30 סמ"ר','60 סמ"ר','42 סמ"ר'],a:1,p:170,e:'(3+7)×6÷2=30'}],
      gen:function(){var a=randInt(3,8),b=randInt(a+2,a+8),h=randInt(3,7),s=(a+b)*h/2;var r=mkO(s,' סמ"ר',[(a+b)*h,a*h,b*h]);return{t:'טרפז: '+a+','+b+', גובה '+h+' — שטח?',s:mTrap(a,b,h),o:r.o,a:r.a,p:170,e:'('+a+'+'+b+')×'+h+'÷2='+s};}}
   ]},
-  {name:'Stage 15 — טרפז — בינוני',emoji:'🔷',bonus:150,topics:[
+  {name:'שלב 12 — טרפז — בינוני',emoji:'🔷',bonus:150,topics:[
     {id:'tp2',label:'טרפז+',ex:{title:'טרפז',body:'מספרים גדולים — אותו דבר!',formula:'שטח = (a+b)×h÷2'},
      pool:[{t:'טרפז: 7,11, גובה 4 — שטח?',s:mTrap(7,11,4),o:['44 סמ"ר','36 סמ"ר','28 סמ"ר','72 סמ"ר'],a:1,p:180,e:'(7+11)×4÷2=36'},{t:'טרפז: 8,12, גובה 5 — שטח?',s:mTrap(8,12,5),o:['100 סמ"ר','50 סמ"ר','40 סמ"ר','60 סמ"ר'],a:1,p:180,e:'(8+12)×5÷2=50'},{t:'טרפז: 6,14, גובה 3 — שטח?',s:mTrap(6,14,3),o:['60 סמ"ר','30 סמ"ר','42 סמ"ר','20 סמ"ר'],a:1,p:180,e:'(6+14)×3÷2=30'},{t:'טרפז: 9,15, גובה 4 — שטח?',s:mTrap(9,15,4),o:['96 סמ"ר','48 סמ"ר','60 סמ"ר','36 סמ"ר'],a:1,p:180,e:'(9+15)×4÷2=48'}]}
   ]},
-  {name:'Stage 16 — מילוליות מתקדם',emoji:'📝',bonus:150,topics:[
+  {name:'שלב 13 — מילוליות מתקדם',emoji:'📝',bonus:150,topics:[
     {id:'wd2',label:'מילוליות+',ex:{title:'מילוליות',body:'שטח/היקף — כל הצורות!',formula:'כיסוי=שטח | מסביב=היקף'},
      pool:[{t:'גינה משולשת: בסיס 12, גובה 5 — שטח?',s:mT(12,5),o:['60','17','30','34'],a:2,p:180,e:'(12×5)÷2=30'},{t:'שדה טרפז: 20,30, גובה 10 — שטח?',s:mTrap(20,30,10),o:['300','250','500','200'],a:1,p:180,e:'(20+30)×10÷2=250'},{t:'מגרש מקבילית: בסיס 15, גובה 8 — שטח?',s:mPar(15,8),o:['120 מ"ר','23 מ"ר','46 מ"ר','60 מ"ר'],a:0,p:180,e:'15×8=120'},{t:'חדר 8×6 — כמה פנלים לקיר (היקף)?',s:mRP(8,6),o:['48 מ','14 מ','28 מ','96 מ'],a:2,p:180,e:'2×(8+6)=28'}]}
   ]},
-  {name:'Stage 17 — שטח מול היקף',emoji:'⚡',bonus:160,topics:[
+  {name:'שלב 14 — שטח מול היקף',emoji:'⚡',bonus:160,topics:[
     {id:'cmb',label:'השוואות',ex:{title:'השוואה',body:'חשבו שניהם ← השוו!',formula:'שטח=א×ב | היקף=2(א+ב)'},
      pool:[{t:'מלבן 5×3: הפרש שטח-היקף?',s:mR(5,3),o:['1','3','15','16'],a:0,p:200,e:'15−16=−1→הפרש 1'},{t:'ריבוע: שטח=היקף. הצלע?',s:mS(4,"?"),o:['2 ס"מ','3 ס"מ','4 ס"מ','5 ס"מ'],a:2,p:220,e:'4: 16=16'},{t:'מלבן 6×4: שטח÷היקף?',s:mR(6,4),o:['פי 2','פי 1.2','פי 3','פי 1.5'],a:1,p:200,e:'24÷20=1.2'},{t:'ריבוע: שטח>היקף ב-5. הצלע?',s:mS(5,"?"),o:['5','6','7','8'],a:0,p:220,e:'25−20=5'}]}
   ]},
-  {name:'Stage 18 — עשרוניים — שטח',emoji:'🔢',bonus:160,topics:[
+  {name:'שלב 15 — עשרוניים — שטח',emoji:'🔢',bonus:160,topics:[
     {id:'dc1',label:'עשרוניים',ex:{title:'עשרוניים',body:'אותן נוסחאות! 😎',formula:'שטח = א×ב (גם עשרוני)'},
      pool:[{t:'מלבן 2.5×4 — שטח?',s:mR(3,4,"2.5","4"),o:['6.5 סמ"ר','8 סמ"ר','10 סמ"ר','12 סמ"ר'],a:2,p:190,e:'2.5×4=10'},{t:'ריבוע צלע 3.5 — שטח?',s:mS(4,"3.5"),o:['7 סמ"ר','12.25 סמ"ר','10.5 סמ"ר','14 סמ"ר'],a:1,p:190,e:'3.5²=12.25'},{t:'מלבן 1.5×6 — היקף?',s:mR(2,6,"1.5","6"),o:['9 ס"מ','15 ס"מ','7.5 ס"מ','18 ס"מ'],a:1,p:190,e:'2×(1.5+6)=15'},{t:'משולש: בסיס 5, גובה 3.2 — שטח?',s:mT(5,3),o:['16 סמ"ר','8 סמ"ר','10 סמ"ר','6.4 סמ"ר'],a:1,p:200,e:'(5×3.2)÷2=8'}]}
   ]},
-  {name:'Stage 19 — היקף מעגל',emoji:'⭕',bonus:170,topics:[
+  {name:'שלב 16 — היקף מעגל',emoji:'⭕',bonus:170,topics:[
     {id:'cp1',label:'היקף מעגל',ex:{title:'היקף מעגל',body:'π≈3.14 ⭕ היקף=2×π×r',formula:'היקף = 2×π×r'},
      pool:[{t:'מעגל r=5 — היקף? (π≈3.14)',s:mCirc(5),o:['15.7','31.4','25','78.5'],a:1,p:210,e:'2×3.14×5=31.4'},{t:'מעגל r=7 — היקף? (π≈3.14)',s:mCirc(7),o:['21.98','43.96','49','153.86'],a:1,p:210,e:'2×3.14×7=43.96'},{t:'מעגל r=10 — היקף? (π≈3.14)',s:mCirc(10),o:['31.4','62.8','100','314'],a:1,p:210,e:'2×3.14×10=62.8'},{t:'מעגל r=3 — היקף? (π≈3.14)',s:mCirc(3),o:['9.42','18.84','28.26','6.28'],a:1,p:210,e:'2×3.14×3=18.84'}],
      gen:function(){var r2=randInt(2,12),c=Math.round(2*3.14*r2*100)/100;var r=mkO(c,'',[3.14*r2,r2*r2,r2*4]);return{t:'מעגל r='+r2+' — היקף? (π≈3.14)',s:mCirc(r2),o:r.o,a:r.a,p:210,e:'2×3.14×'+r2+'='+c};}}
   ]},
-  {name:'שלב 20 — היקף מעגל — קוטר',emoji:'⭕',bonus:170,topics:[
+  {name:'שלב 17 — היקף מעגל — קוטר',emoji:'⭕',bonus:170,topics:[
     {id:'cp2',label:'היקף (קוטר)',ex:{title:'היקף מעגל',body:'קוטר = 2×r → היקף = π×d',formula:'היקף = π×d'},
      pool:[{t:'מעגל d=14 — היקף? (π≈3.14)',s:mCirc(7),o:['43.96','21.98','49','28'],a:0,p:210,e:'3.14×14=43.96'},{t:'מעגל d=10 — היקף? (π≈3.14)',s:mCirc(5),o:['31.4','15.7','25','50'],a:0,p:210,e:'3.14×10=31.4'},{t:'מעגל d=6 — היקף? (π≈3.14)',s:mCirc(3),o:['18.84','9.42','12','36'],a:0,p:210,e:'3.14×6=18.84'},{t:'מעגל d=20 — היקף? (π≈3.14)',s:mCirc(10),o:['62.8','31.4','100','200'],a:0,p:210,e:'3.14×20=62.8'}]}
   ]},
-  {name:'שלב 21 — שטח מעגל',emoji:'🟣',bonus:180,topics:[
+  {name:'שלב 18 — שטח מעגל',emoji:'🟣',bonus:180,topics:[
     {id:'ca1',label:'שטח מעגל',ex:{title:'שטח מעגל',body:'r² קודם, ואז ×π!',formula:'שטח = π×r²'},
      pool:[{t:'מעגל r=5 — שטח? (π≈3.14)',s:mCirc(5),o:['31.4 סמ"ר','78.5 סמ"ר','25 סמ"ר','15.7 סמ"ר'],a:1,p:220,e:'3.14×25=78.5'},{t:'מעגל r=3 — שטח? (π≈3.14)',s:mCirc(3),o:['9.42 סמ"ר','28.26 סמ"ר','18.84 סמ"ר','6 סמ"ר'],a:1,p:220,e:'3.14×9=28.26'},{t:'מעגל r=10 — שטח? (π≈3.14)',s:mCirc(10),o:['31.4 סמ"ר','314 סמ"ר','100 סמ"ר','628 סמ"ר'],a:1,p:220,e:'3.14×100=314'},{t:'מעגל r=4 — שטח? (π≈3.14)',s:mCirc(4),o:['50.24 סמ"ר','25.12 סמ"ר','12.56 סמ"ר','16 סמ"ר'],a:0,p:220,e:'3.14×16=50.24'}],
      gen:function(){var r2=randInt(2,10),a=Math.round(3.14*r2*r2*100)/100;var r=mkO(a,' סמ"ר',[2*3.14*r2,r2*r2,3.14*r2]);return{t:'מעגל r='+r2+' — שטח? (π≈3.14)',s:mCirc(r2),o:r.o,a:r.a,p:220,e:'3.14×'+r2+'²='+a};}}
   ]},
-  {name:'שלב 22 — שטח מעגל+',emoji:'🟣',bonus:180,topics:[
+  {name:'שלב 19 — שטח מעגל+',emoji:'🟣',bonus:180,topics:[
     {id:'ca2',label:'שטח מעגל+',ex:{title:'שטח מעגל',body:'r² ואז ×3.14',formula:'שטח = π×r²'},
      pool:[{t:'מעגל r=6 — שטח? (π≈3.14)',s:mCirc(6),o:['36 סמ"ר','113.04 סמ"ר','37.68 סמ"ר','18.84 סמ"ר'],a:1,p:230,e:'3.14×36=113.04'},{t:'מעגל r=8 — שטח? (π≈3.14)',s:mCirc(8),o:['200.96 סמ"ר','64 סמ"ר','50.24 סמ"ר','25.12 סמ"ר'],a:0,p:230,e:'3.14×64=200.96'},{t:'מעגל r=7 — שטח? (π≈3.14)',s:mCirc(7),o:['153.86 סמ"ר','43.96 סמ"ר','49 סמ"ר','21.98 סמ"ר'],a:0,p:230,e:'3.14×49=153.86'},{t:'מעגל r=2 — שטח? (π≈3.14)',s:mCirc(2),o:['6.28 סמ"ר','12.56 סמ"ר','4 סמ"ר','25.12 סמ"ר'],a:1,p:230,e:'3.14×4=12.56'}]}
   ]},
-  {name:'שלב 23 — צורות מורכבות+',emoji:'🧩',bonus:200,topics:[
+  {name:'שלב 20 — צורות מורכבות+',emoji:'🧩',bonus:200,topics:[
     {id:'cm1',label:'חיבור שטחים',ex:{title:'צורות מורכבות',body:'פרקו לחלקים! 🧩',formula:'שטח = חלק1+חלק2'},
      pool:[{t:'מלבן 10×6 + משולש בסיס 6 גובה 4. סה"כ?',s:mR(10,6),o:['60 סמ"ר','72 סמ"ר','84 סמ"ר','48 סמ"ר'],a:1,p:260,e:'60+12=72'},{t:'2 מלבנים: 5×3 ו-4×2. סה"כ?',s:mCompL(5,5,5,3),o:['23 סמ"ר','22 סמ"ר','15 סמ"ר','20 סמ"ר'],a:0,p:260,e:'15+8=23'},{t:'ריבוע 6×6 + משולש בסיס 6 גובה 4. סה"כ?',s:mS(6),o:['36 סמ"ר','48 סמ"ר','60 סמ"ר','42 סמ"ר'],a:1,p:260,e:'36+12=48'},{t:'מלבן 8×4 + מלבן 3×4. סה"כ?',s:mR(8,4),o:['44 סמ"ר','32 סמ"ר','48 סמ"ר','24 סמ"ר'],a:0,p:260,e:'32+12=44'}]}
   ]},
-  {name:'שלב 24 — צורות מורכבות−',emoji:'✂️',bonus:200,topics:[
+  {name:'שלב 21 — צורות מורכבות−',emoji:'✂️',bonus:200,topics:[
     {id:'cm2',label:'חיסור שטחים',ex:{title:'צורות מורכבות',body:'גדול − חתוך! ✂️',formula:'שטח = גדול−חתוך'},
      pool:[{t:'מלבן 12×8, ריבוע 4×4 חתוך. נשאר?',s:mR(12,8),o:['96 סמ"ר','80 סמ"ר','64 סמ"ר','112 סמ"ר'],a:1,p:260,e:'96−16=80'},{t:'ריבוע 10, משולש בסיס 10 גובה 4 חתוך. נשאר?',s:mS(10),o:['100 סמ"ר','80 סמ"ר','60 סמ"ר','120 סמ"ר'],a:1,p:260,e:'100−20=80'},{t:'L: מלבן 8×6 חסר 3×4. שטח?',s:mCompL(8,6,5,4),o:['48 סמ"ר','36 סמ"ר','24 סמ"ר','12 סמ"ר'],a:1,p:260,e:'48−12=36'},{t:'מלבן 10×5, מלבן 2×3 חתוך. נשאר?',s:mR(10,5),o:['50 סמ"ר','44 סמ"ר','56 סמ"ר','38 סמ"ר'],a:1,p:260,e:'50−6=44'}]}
   ]},
-  {name:'שלב 25 — סמ"ר ↔ מ"ר',emoji:'📏',bonus:210,topics:[
+  {name:'שלב 22 — סמ"ר ↔ מ"ר',emoji:'📏',bonus:210,topics:[
     {id:'u1',label:'סמ"ר ↔ מ"ר',ex:{title:'המרת יחידות',body:'1 מ"ר = 10,000 סמ"ר',formula:'1 מ"ר = 10,000 סמ"ר'},
      pool:[{t:'3 מ"ר = ? סמ"ר',s:mUnits("3 מ\"ר","?"),o:['300','3,000','30,000','300,000'],a:2,p:240,e:'3×10,000=30,000'},{t:'50,000 סמ"ר = ? מ"ר',s:mUnits("50,000","?"),o:['50','5','500','0.5'],a:1,p:240,e:'50,000÷10,000=5'},{t:'7 מ"ר = ? סמ"ר',s:mUnits("7 מ\"ר","?"),o:['700','7,000','70,000','700,000'],a:2,p:240,e:'7×10,000=70,000'},{t:'20,000 סמ"ר = ? מ"ר',s:mUnits("20,000","?"),o:['20','2','200','0.2'],a:1,p:240,e:'20,000÷10,000=2'}]}
   ]},
-  {name:'שלב 26 — מ"ר ↔ דונם',emoji:'🌾',bonus:210,topics:[
+  {name:'שלב 23 — מ"ר ↔ דונם',emoji:'🌾',bonus:210,topics:[
     {id:'u2',label:'מ"ר ↔ דונם',ex:{title:'המרת יחידות',body:'1 דונם = 1,000 מ"ר',formula:'1 דונם = 1,000 מ"ר'},
      pool:[{t:'2 דונם = ? מ"ר',s:mUnits("2 דונם","?"),o:['200','2,000','20,000','20'],a:1,p:240,e:'2×1,000=2,000'},{t:'4,000 מ"ר = ? דונם',s:mUnits("4,000","?"),o:['40','4','0.4','400'],a:1,p:240,e:'4,000÷1,000=4'},{t:'3 דונם = ? מ"ר',s:mUnits("3 דונם","?"),o:['300','3,000','30,000','30'],a:1,p:240,e:'3×1,000=3,000'},{t:'500 מ"ר = ? דונם',s:mUnits("500","?"),o:['5','50','0.5','500'],a:2,p:240,e:'500÷1,000=0.5'}]}
   ]},
-  {name:'שלב 27 — נפח תיבה',emoji:'📦',bonus:220,topics:[
+  {name:'שלב 24 — נפח תיבה',emoji:'📦',bonus:220,topics:[
     {id:'v1',label:'נפח תיבה',ex:{title:'נפח תיבה',body:'אורך×רוחב×גובה 📦',formula:'נפח = א×ב×ג'},
      pool:[{t:'תיבה 3×4×5 — נפח?',s:mBox3D(3,4,5),o:['12 סמ"ק','60 סמ"ק','24 סמ"ק','35 סמ"ק'],a:1,p:260,e:'3×4×5=60'},{t:'תיבה 2×6×3 — נפח?',s:mBox3D(2,6,3),o:['11 סמ"ק','36 סמ"ק','18 סמ"ק','24 סמ"ק'],a:1,p:260,e:'2×6×3=36'},{t:'תיבה 10×5×2 — נפח?',s:mBox3D(10,5,2),o:['50 סמ"ק','100 סמ"ק','17 סמ"ק','70 סמ"ק'],a:1,p:260,e:'10×5×2=100'},{t:'תיבה 4×3×2 — נפח?',s:mBox3D(4,3,2),o:['24 סמ"ק','9 סמ"ק','12 סמ"ק','20 סמ"ק'],a:0,p:260,e:'4×3×2=24'}],
      gen:function(){var a=randInt(2,8),b=randInt(2,8),c=randInt(2,6),v=a*b*c;var r=mkO(v,' סמ"ק',[a*b,a+b+c,a*b*2]);return{t:'תיבה '+a+'×'+b+'×'+c+' — נפח?',s:mBox3D(a,b,c),o:r.o,a:r.a,p:260,e:a+'×'+b+'×'+c+'='+v};}}
   ]},
-  {name:'שלב 28 — נפח קוביה',emoji:'🎲',bonus:220,topics:[
+  {name:'שלב 25 — נפח קוביה',emoji:'🎲',bonus:220,topics:[
     {id:'v2',label:'נפח קוביה',ex:{title:'נפח קוביה',body:'צלע×צלע×צלע 🎲',formula:'נפח = צלע³'},
      pool:[{t:'קוביה צלע 4 — נפח?',s:mCube3D(4),o:['16 סמ"ק','64 סמ"ק','12 סמ"ק','48 סמ"ק'],a:1,p:260,e:'4³=64'},{t:'קוביה צלע 5 — נפח?',s:mCube3D(5),o:['25 סמ"ק','125 סמ"ק','15 סמ"ק','75 סמ"ק'],a:1,p:260,e:'5³=125'},{t:'קוביה צלע 3 — נפח?',s:mCube3D(3),o:['9 סמ"ק','27 סמ"ק','12 סמ"ק','18 סמ"ק'],a:1,p:260,e:'3³=27'},{t:'קוביה צלע 6 — נפח?',s:mCube3D(6),o:['36 סמ"ק','216 סמ"ק','18 סמ"ק','72 סמ"ק'],a:1,p:260,e:'6³=216'}]}
   ]},
-  {name:'שלב 29 — נפח הפוך',emoji:'🔄',bonus:230,topics:[
+  {name:'שלב 26 — נפח הפוך',emoji:'🔄',bonus:230,topics:[
     {id:'vr',label:'נפח הפוך',ex:{title:'נפח הפוך',body:'צלע = נפח÷(א×ב)',formula:'צלע = נפח÷(א×ב)'},
      pool:[{t:'תיבה: נפח 120, 6×5 — גובה?',s:mBox3D(6,5,4),o:['4 ס"מ','10 ס"מ','24 ס"מ','2 ס"מ'],a:0,p:280,e:'120÷30=4'},{t:'תיבה: נפח 60, 5×4 — גובה?',s:mBox3D(5,4,3),o:['3 ס"מ','12 ס"מ','15 ס"מ','6 ס"מ'],a:0,p:280,e:'60÷20=3'},{t:'תיבה: נפח 72, 6×3 — גובה?',s:mBox3D(6,3,4),o:['4 ס"מ','12 ס"מ','2 ס"מ','6 ס"מ'],a:0,p:280,e:'72÷18=4'},{t:'קוביה: נפח 27 — צלע?',s:mCube3D(3),o:['9 ס"מ','3 ס"מ','27 ס"מ','6 ס"מ'],a:1,p:280,e:'∛27=3'}]}
   ]},
-  {name:'שלב 30 — 👑 GEOMETRY PRO!',emoji:'👑',bonus:500,topics:[
+  {name:'שלב 27 — 👑 GEOMETRY PRO!',emoji:'👑',bonus:500,topics:[
     {id:'fin',label:'הכל ביחד!',ex:{title:'Final Boss!',body:'שאלות מכל הנושאים! 👑',formula:'כל הנוסחאות!'},
      pool:[{t:'מלבן 11×7 — שטח?',s:mR(11,7),o:['77 סמ"ר','36 סמ"ר','18 סמ"ר','154 סמ"ר'],a:0,p:300,e:'11×7=77'},{t:'מעגל r=4 — היקף? (π≈3.14)',s:mCirc(4),o:['12.56','25.12','50.24','16'],a:1,p:300,e:'2×3.14×4=25.12'},{t:'טרפז: 5,11, גובה 6 — שטח?',s:mTrap(5,11,6),o:['96 סמ"ר','48 סמ"ר','33 סמ"ר','66 סמ"ר'],a:1,p:300,e:'(5+11)×6÷2=48'},{t:'קוביה צלע 7 — נפח?',s:mCube3D(7),o:['49 סמ"ק','343 סמ"ק','21 סמ"ק','147 סמ"ק'],a:1,p:300,e:'7³=343'},{t:'5 דונם = ? מ"ר',s:mUnits("5 דונם","?"),o:['500','5,000','50','50,000'],a:1,p:300,e:'5×1,000=5,000'}]}
   ]}
@@ -2247,9 +2231,9 @@ function endDuel(){
 }
 
 function shareDuelResult(){
-  var text = playerName + ' accepted your Math Arena challenge and scored ' + duelScore + ' points! Can you do better?? ' + window.location.origin + window.location.pathname + '?duel=' + encodeURIComponent(playerName);
+  var text = playerName + ' accepted your Math Arena challenge and scored ' + duelScore + ' points! Can you do better??';
   if(navigator.share){
-    navigator.share({title:'Math Arena — Duel', text: text, url: window.location.href});
+    navigator.share({title:'Math Arena — Duel', text: text});
   } else if(navigator.clipboard){
     navigator.clipboard.writeText(text);
     alert('Link copied!');
@@ -2257,14 +2241,13 @@ function shareDuelResult(){
 }
 
 function shareDuelInvite(){
-  if(!playerName){ alert('Enter a name first'); return; }
-  var url = window.location.origin + window.location.pathname + '?duel=' + encodeURIComponent(playerName);
-  var text = playerName + ' invites you to a Math Arena duel! Click here: ' + url;
+  if(!playerName){ alert('הכנס שם קודם'); return; }
+  var text = '🤺 ' + playerName + ' מזמין אותך לדו-קרב ב-Math Arena! 🎮';
   if(navigator.share){
-    navigator.share({title:'Math Arena — I challenge you!', text: text, url: url});
+    navigator.share({title:'Math Arena — אתגר!', text: text});
   } else if(navigator.clipboard){
     navigator.clipboard.writeText(text);
-    alert('Link copied! Share on WhatsApp 📲');
+    alert('הקישור הועתק! שתף בוואטסאפ 📲');
   }
 }
 
@@ -2294,17 +2277,31 @@ document.getElementById('name-input').addEventListener('keydown', function(e){
   if(e.key === 'Enter') submitName();
 });
 
+// === LEADERBOARD with bot scores (no shared storage needed) ===
+var _botNames = ['דניאל','נועה','עידן','מאיה','אלון','שי','רוני','טל','אור','יעל','עמית','גיל','ליאם','שרה','מיכאל','תמר','איתי','הילה','עומר','ליה'];
+
+function generateBotScores(stageIdx){
+  var bots = [];
+  for(var i=0; i<_botNames.length; i++){
+    // Deterministic but varied scores per stage
+    var seed = (stageIdx+1)*137 + (i+1)*53;
+    var base = (stageIdx+1) * 120;
+    var s = base + ((seed * 31 + 17) % (base + 300));
+    bots.push({ name: _botNames[i], score: s, isBot: true });
+  }
+  bots.sort(function(a,b){ return b.score - a.score; });
+  return bots;
+}
+
 function saveScore(){
   try {
     var scores = JSON.parse(localStorage.getItem(LS_KEY)||'[]');
-    // Update or add player score
     var idx = scores.findIndex(function(s){ return s.name === playerName; });
     if(idx >= 0){
       if(score > scores[idx].score) scores[idx].score = score;
     } else {
       scores.push({name: playerName, score: score});
     }
-    // Keep top 200
     scores.sort(function(a,b){ return b.score - a.score; });
     if(scores.length > 200) scores = scores.slice(0,200);
     localStorage.setItem(LS_KEY, JSON.stringify(scores));
@@ -2320,52 +2317,67 @@ function getLeaderboard(){
 
 function showLB(heading, emoji, onContinue){
   saveScore();
-  var scores = getLeaderboard();
-  scores.sort(function(a,b){ return b.score-a.score; });
 
-  var myRank = scores.findIndex(function(s){ return s.name===playerName; }) + 1;
-  var total = scores.length;
+  // Merge player score with bot scores
+  var bots = generateBotScores(lvlIdx);
+  var all = bots.map(function(b){ return { name: b.name, score: b.score, isBot: true }; });
+  all.push({ name: playerName, score: score, isBot: false });
+  all.sort(function(a,b){ return b.score - a.score; });
 
-  // Show top 5 + player if not in top 5
-  var showList = scores.slice(0,5);
-  var myInTop = myRank <= 5;
+  var myRank = 0;
+  for(var i=0; i<all.length; i++){
+    if(!all[i].isBot){ myRank = i; break; }
+  }
+  var myRankDisplay = myRank + 1;
+  var total = all.length;
+  var topScore = all[0].score;
 
   document.getElementById('lb-emoji').textContent = emoji;
   document.getElementById('lb-heading').textContent = heading;
-  document.getElementById('lb-sub').textContent = 'Your score: ' + score;
+  document.getElementById('lb-sub').textContent = 'הניקוד שלך: ' + score;
 
   var table = document.getElementById('lb-table');
   table.innerHTML = '';
-  showList.forEach(function(s, i){
-    var isMe = s.name === playerName;
-    var rank = i+1;
+
+  // Show top 3
+  for(var r=0; r<3 && r<all.length; r++){
+    var s = all[r];
+    var isMe = !s.isBot;
+    var rank = r+1;
     var row = document.createElement('div');
     row.className = 'lb-row' + (isMe?' me':'') + (rank===1?' top1':rank===2?' top2':rank===3?' top3':'');
-    var rankClass = rank<=3?'r'+rank:'rn';
-    var medalEmoji = rank===1?'🥇':rank===2?'🥈':rank===3?'🥉':'';
-    row.innerHTML = '<div class="lb-rank '+rankClass+'">'+(medalEmoji||rank)+'</div>'
-      + '<div class="lb-name'+(isMe?' me-name':'')+'">'+s.name+(isMe?' <span class="lb-you">← you</span>':'')+'</div>'
+    var rankClass = 'r'+rank;
+    var medalEmoji = rank===1?'🥇':rank===2?'🥈':'🥉';
+    var displayName = isMe ? playerName + ' <span class="lb-you">← אתה!</span>' : 'שחקן אנונימי';
+    row.innerHTML = '<div class="lb-rank '+rankClass+'">'+medalEmoji+'</div>'
+      + '<div class="lb-name'+(isMe?' me-name':'')+'">'+displayName+'</div>'
       + '<div class="lb-score">'+s.score+'</div>';
     table.appendChild(row);
-  });
+  }
 
-  // If player not in top 5, add separator + player row
-  if(!myInTop){
+  // If player not in top 3, show separator + player row
+  if(myRankDisplay > 3){
     var sep = document.createElement('div');
     sep.style.cssText='text-align:center;font-size:18px;color:rgba(255,255,255,.3);letter-spacing:4px;';
-    sep.textContent='...';
+    sep.textContent='···';
     table.appendChild(sep);
-    var myScore = scores[myRank-1];
+
     var myRow = document.createElement('div');
     myRow.className = 'lb-row me';
-    myRow.innerHTML = '<div class="lb-rank rn">'+myRank+'</div>'
-      + '<div class="lb-name me-name">'+playerName+' <span class="lb-you">← you</span></div>'
+    myRow.innerHTML = '<div class="lb-rank rn">'+myRankDisplay+'</div>'
+      + '<div class="lb-name me-name">'+playerName+' <span class="lb-you">← אתה!</span></div>'
       + '<div class="lb-score">'+score+'</div>';
     table.appendChild(myRow);
   }
 
   var posEl = document.getElementById('lb-my-pos');
-  posEl.innerHTML = 'Your rank: <span>#'+myRank+'</span> out of '+total+' players';
+  var gapText = '';
+  if(myRankDisplay > 1){
+    gapText = '<div style="margin-top:6px;font-size:12px;color:rgba(255,255,255,.4);">🏆 ניקוד מקום ראשון: '+topScore+' נק\'</div>';
+  } else {
+    gapText = '<div style="margin-top:6px;font-size:12px;color:#fbbf24;">🏆 אתה במקום הראשון!</div>';
+  }
+  posEl.innerHTML = 'המיקום שלך: <span>#'+myRankDisplay+'</span> מתוך '+total+' שחקנים' + gapText;
 
   _lbContinue = onContinue;
   document.getElementById('lb-overlay').classList.add('on');
@@ -2373,9 +2385,8 @@ function showLB(heading, emoji, onContinue){
 
 function shareDuelFromLB(){
   if(!playerName){ playerName = 'Player'; }
-  var msg = '🤺 ' + playerName + ' challenges you to Math Arena!\n' +
-            'הScore שלי: ' + score + ' pts — Can you beat it? אותי? 🎮\n' +
-            window.location.href;
+  var msg = '🤺 ' + playerName + ' מאתגר אותך ל-Math Arena!\n' +
+            'הניקוד שלי: ' + score + ' נק\' — תצליח לנצח אותי? 🎮';
   document.getElementById('share-text').value = msg;
   var popup = document.getElementById('share-popup');
   popup.style.display = 'flex';
