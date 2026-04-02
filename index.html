@@ -1724,6 +1724,7 @@ function startBGMusic(){
   if(bgMusicPlaying) return;
   var ctx = getACtx();
   if(!ctx) return;
+  if(ctx.state === 'suspended') ctx.resume();
   bgMusicPlaying = true;
   
   bgMusicGain = ctx.createGain();
@@ -1880,7 +1881,14 @@ var _musicStarted = false;
 document.addEventListener('click', function(){
   if(!_musicStarted){
     _musicStarted = true;
-    setTimeout(startBGMusic, 500);
+    // MUST create & resume AudioContext synchronously inside user gesture
+    var ctx = getACtx();
+    if(ctx && ctx.state === 'suspended') ctx.resume();
+    setTimeout(startBGMusic, 300);
+  } else {
+    // Ensure context stays alive on subsequent clicks (iOS Safari fix)
+    var ctx = getACtx();
+    if(ctx && ctx.state === 'suspended') ctx.resume();
   }
 }, {once: false});
 
@@ -2156,7 +2164,7 @@ window.addEventListener('DOMContentLoaded', function(){
   if(challenger){
     duelChallengerName = decodeURIComponent(challenger);
     document.getElementById('duel-challenger-name').textContent = duelChallengerName;
-    if(beatScore){ document.getElementById('duel-subtitle').textContent = 'הScore של '+duelChallengerName+': '+beatScore+' — Can you beat it??'; try{ localStorage.setItem('challScore_'+duelChallengerName, beatScore); }catch(e){} }
+    if(beatScore){ document.getElementById('duel-subtitle').textContent = 'הניקוד של '+duelChallengerName+': '+beatScore+' — תצליח לנצח?! 🔥'; try{ localStorage.setItem('challScore_'+duelChallengerName, beatScore); }catch(e){} }
     showScreen('duel-invite-screen');
     isDuel = true;
   } else {
@@ -2231,24 +2239,24 @@ function endDuel(){
 }
 
 function shareDuelResult(){
-  var text = playerName + ' accepted your Math Arena challenge and scored ' + duelScore + ' points! Can you do better??';
-  if(navigator.share){
-    navigator.share({title:'Math Arena — Duel', text: text});
-  } else if(navigator.clipboard){
-    navigator.clipboard.writeText(text);
-    alert('Link copied!');
-  }
+  var baseUrl = window.location.origin + window.location.pathname;
+  var duelUrl = baseUrl + '?duel=' + encodeURIComponent(playerName) + '&beat=' + duelScore;
+  var text = '⚔️ ' + playerName + ' קיבל את האתגר של ' + duelChallengerName + ' וסיים עם ' + duelScore + ' נקודות!\n' +
+             '🔥 תצליח לנצח?\n\n' +
+             '👉 ' + duelUrl;
+  document.getElementById('share-text').value = text;
+  document.getElementById('share-popup').style.display = 'flex';
 }
 
 function shareDuelInvite(){
   if(!playerName){ alert('הכנס שם קודם'); return; }
-  var text = '🤺 ' + playerName + ' מזמין אותך לדו-קרב ב-Math Arena! 🎮';
-  if(navigator.share){
-    navigator.share({title:'Math Arena — אתגר!', text: text});
-  } else if(navigator.clipboard){
-    navigator.clipboard.writeText(text);
-    alert('הקישור הועתק! שתף בוואטסאפ 📲');
-  }
+  var baseUrl = window.location.origin + window.location.pathname;
+  var duelUrl = baseUrl + '?duel=' + encodeURIComponent(playerName) + '&beat=' + score;
+  var text = '🤺 ' + playerName + ' מאתגר אותך ל-Math Arena!\n' +
+             '🎯 הניקוד שלי: ' + score + ' נק\' — תצליח לנצח?\n\n' +
+             '👉 ' + duelUrl;
+  document.getElementById('share-text').value = text;
+  document.getElementById('share-popup').style.display = 'flex';
 }
 
 // ===== PLAYER & LEADERBOARD =====
@@ -2348,7 +2356,7 @@ function showLB(heading, emoji, onContinue){
     row.className = 'lb-row' + (isMe?' me':'') + (rank===1?' top1':rank===2?' top2':rank===3?' top3':'');
     var rankClass = 'r'+rank;
     var medalEmoji = rank===1?'🥇':rank===2?'🥈':'🥉';
-    var displayName = isMe ? playerName + ' <span class="lb-you">← אתה!</span>' : 'שחקן אנונימי';
+    var displayName = isMe ? playerName + ' <span class="lb-you">← אתה!</span>' : s.name;
     row.innerHTML = '<div class="lb-rank '+rankClass+'">'+medalEmoji+'</div>'
       + '<div class="lb-name'+(isMe?' me-name':'')+'">'+displayName+'</div>'
       + '<div class="lb-score">'+s.score+'</div>';
@@ -2385,8 +2393,11 @@ function showLB(heading, emoji, onContinue){
 
 function shareDuelFromLB(){
   if(!playerName){ playerName = 'Player'; }
+  var baseUrl = window.location.origin + window.location.pathname;
+  var duelUrl = baseUrl + '?duel=' + encodeURIComponent(playerName) + '&beat=' + score;
   var msg = '🤺 ' + playerName + ' מאתגר אותך ל-Math Arena!\n' +
-            'הניקוד שלי: ' + score + ' נק\' — תצליח לנצח אותי? 🎮';
+            '🎯 הניקוד שלי: ' + score + ' נק\' — תצליח לנצח? 🎮\n\n' +
+            '👉 ' + duelUrl;
   document.getElementById('share-text').value = msg;
   var popup = document.getElementById('share-popup');
   popup.style.display = 'flex';
@@ -2616,6 +2627,11 @@ function pick(idx){
     setTimeout(()=>document.getElementById('q-area').classList.remove('shake'),350);
     charReactWrong(nearMiss);
     updStreak();updHUD();
+    if(lives<=0 && !isDuel){
+      showFB(false,q,nearMiss);
+      autoID=setTimeout(()=>{clearAuto();hideFB();showWin();},2200);
+      return;
+    }
     showFB(false,q,nearMiss);
     let secs=3;
     document.getElementById('fb-cd').textContent='Similar question in '+secs+'...';
@@ -2724,6 +2740,11 @@ function onTO(){
   charTimeout();
   updStreak();updHUD();
   if(navigator.vibrate)navigator.vibrate([100,50,100]);
+  if(lives<=0 && !isDuel){
+    showFB(false,prev);
+    autoID=setTimeout(()=>{clearAuto();hideFB();showWin();},2200);
+    return;
+  }
   showFB(false,prev);
   let secs=3;
   document.getElementById('fb-cd').textContent='⏰ Time\'s up! Similar question in '+secs+'...';
