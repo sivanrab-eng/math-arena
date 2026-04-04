@@ -877,6 +877,7 @@ body{background-color:#1a0a3e;background:radial-gradient(ellipse at top, #2d1b69
 <meta name="theme-color" content="#1a0a3e">
 <meta property="og:title" content="Math Arena — Geometry">
 <meta property="og:description" content="Math Arena Geometry Game">
+<meta property="og:url" content="https://sivanrab-eng.github.io/math-arena/">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📐</text></svg>">
 </head>
 <body style="background:#1a0a3e;color:#fff;">
@@ -1127,6 +1128,10 @@ window.onerror=function(msg,src,line,col,err){
   document.body.appendChild(d);
 };
 try{document.body.style.background='radial-gradient(ellipse at top, #2d1b69 0%, #1a0a3e 60%, #0f0628 100%)';}catch(e){}
+
+// ===== GAME URL (single source of truth for all share links) =====
+// To change: update this single line. Must end with /
+var GAME_URL = 'https://sivanrab-eng.github.io/math-arena/';
 
 // ===== STARFIELD =====
 (function(){var sf=document.getElementById('starfield');if(!sf)return;for(var i=0;i<70;i++){var s=document.createElement('div');s.className='star';var sz=Math.random()*3.5+0.5;var colors=['#fff','#c4b5fd','#93c5fd','#fde68a'];var col=colors[Math.floor(Math.random()*colors.length)];s.style.cssText='width:'+sz+'px;height:'+sz+'px;left:'+Math.random()*100+'%;top:'+Math.random()*100+'%;--dur:'+(1.5+Math.random()*5)+'s;--bright:'+(0.3+Math.random()*0.7)+';animation-delay:-'+Math.random()*5+'s;background:'+col+';box-shadow:0 0 '+(sz*2)+'px '+col+';';sf.appendChild(s);}})();
@@ -2309,7 +2314,7 @@ function revivalInvite(){
             '🆘  ' + playerName + ' צריך עזרה!\n\n' +
             '🏆  ניקוד: *' + score + '*\n' +
             '💪  בוא תנצח אותי!\n\n' +
-            '👇  לחץ לשחק 👇\n' +
+            '🎮 *Play Math Arena* 👇\n' +
             duelUrl;
   
   // Try native share first, fallback to share popup
@@ -2527,12 +2532,11 @@ function endDuel(){
 }
 
 function makeDuelUrl(name, score, includeState){
-  var baseUrl = window.location.origin + window.location.pathname;
   var data = { n: name, s: score };
   if(includeState){
     data.st = { l: lvlIdx, t: tIdx, p: pIdx, sc: score, ms: maxStr, tr: totR, ta: totA };
   }
-  return baseUrl + '#b/' + btoa(unescape(encodeURIComponent(JSON.stringify(data))));
+  return GAME_URL + '#b/' + btoa(unescape(encodeURIComponent(JSON.stringify(data))));
 }
 
 function shareDuelResult(){
@@ -2543,7 +2547,7 @@ function shareDuelResult(){
              '🎯  ' + playerName + ' vs ' + duelChallengerName + '\n\n' +
              '🏆  תוצאה: *' + duelScore + ' נק\'*\n' +
              '🔥  מי ינצח הבא?\n\n' +
-             '👇  לחץ לשחק 👇\n' +
+             '🎮 *Play Math Arena* 👇\n' +
              duelUrl;
   showSharePopup(text);
 }
@@ -2557,7 +2561,7 @@ function shareDuelInvite(){
              '🤺  ' + playerName + ' מאתגר אותך!\n\n' +
              '🏆  הניקוד שלי: *' + score + '*\n' +
              '💪  תצליח לנצח?\n\n' +
-             '👇  לחץ להתחיל 👇\n' +
+             '🎮 *Play Math Arena* 👇\n' +
              duelUrl;
   showSharePopup(text);
 }
@@ -2727,7 +2731,7 @@ function shareDuelFromLB(){
             '🤺  ' + playerName + ' מאתגר אותך!\n\n' +
             '🏆  הניקוד שלי: *' + score + '*\n' +
             '💪  תצליח לנצח?\n\n' +
-            '👇  לחץ להתחיל 👇\n' +
+            '🎮 *Play Math Arena* 👇\n' +
             duelUrl;
   showSharePopup(msg);
 }
@@ -2817,14 +2821,13 @@ window.addEventListener('DOMContentLoaded', function(){
 
 // ===== SHARE GAME (no challenge) =====
 function shareGameLink(){
-  var baseUrl = window.location.origin + window.location.pathname;
   var msg = '━━━━━━━━━━━━━━━\n' +
             '🎮  *Math Arena*  🎮\n' +
             '━━━━━━━━━━━━━━━\n\n' +
             '📐  גיאומטריה כיתה ו\'\n' +
             '🔥  שלבים • אתגרים • דו-קרבות\n\n' +
-            '👇  לחץ לשחק 👇\n' +
-            baseUrl;
+            '🎮 *Play Math Arena* 👇\n' +
+            GAME_URL;
   showSharePopup(msg);
 }
 
