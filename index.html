@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>Math Arena — Geometry</title>
+<title>Math Arena — כיתה ו׳</title>
 
 <style>
 *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
@@ -376,6 +376,70 @@ body{background-color:#1a0a3e;background:radial-gradient(ellipse at top, #2d1b69
 }
 @keyframes startPulse{0%,100%{box-shadow:0 6px 0 #2e1065,0 8px 20px rgba(124,58,237,.4);}50%{box-shadow:0 6px 0 #2e1065,0 8px 30px rgba(124,58,237,.7),0 0 60px rgba(124,58,237,.2);}}
 #btn-start:active{transform:translateY(4px);box-shadow:0 2px 0 #2e1065;}
+
+/* ===== ARENA SELECT SCREEN ===== */
+#arena-screen{align-items:center;justify-content:flex-start;padding:28px 16px;gap:0;overflow-y:auto;}
+.arena-title{font-size:28px;font-weight:900;color:#fff;text-align:center;margin-bottom:4px;}
+.arena-sub{font-size:14px;color:rgba(255,255,255,.5);text-align:center;margin-bottom:20px;}
+.arena-player{font-size:13px;color:#a78bfa;font-weight:700;margin-bottom:16px;text-align:center;}
+.arena-grid{width:100%;max-width:380px;display:flex;flex-direction:column;gap:14px;margin-bottom:18px;}
+.arena-card{
+  position:relative;width:100%;padding:18px 20px;
+  border-radius:20px;cursor:pointer;
+  display:flex;align-items:center;gap:16px;
+  transition:transform .15s,box-shadow .15s;
+  border:2.5px solid rgba(255,255,255,.15);
+  overflow:hidden;
+}
+.arena-card::before{content:'';position:absolute;top:0;left:0;right:0;bottom:0;opacity:.12;z-index:0;}
+.arena-card:active{transform:scale(.97);}
+.arena-card .ac-emoji{font-size:42px;z-index:1;flex-shrink:0;}
+.arena-card .ac-info{z-index:1;flex:1;min-width:0;}
+.arena-card .ac-name{font-size:18px;font-weight:900;color:#fff;margin-bottom:3px;}
+.arena-card .ac-desc{font-size:12px;color:rgba(255,255,255,.6);line-height:1.3;}
+.arena-card .ac-badge{
+  position:absolute;top:10px;left:10px;
+  padding:3px 10px;border-radius:20px;font-size:10px;font-weight:800;
+  z-index:2;letter-spacing:.5px;
+}
+.arena-card .ac-levels{
+  z-index:1;flex-shrink:0;text-align:center;
+  font-size:11px;color:rgba(255,255,255,.5);font-weight:700;
+}
+.arena-card .ac-levels span{display:block;font-size:18px;color:#fbbf24;font-weight:900;}
+
+.ac-geo{background:linear-gradient(135deg,#4c1d95,#2d1b69);border-color:#7c3aed;}
+.ac-geo::before{background:linear-gradient(135deg,#7c3aed,#4c1d95);}
+.ac-frac{background:linear-gradient(135deg,#0e4429,#064e3b);border-color:#22c55e;}
+.ac-frac::before{background:linear-gradient(135deg,#22c55e,#16a34a);}
+.ac-pct{background:linear-gradient(135deg,#7c2d12,#431407);border-color:#f97316;}
+.ac-pct::before{background:linear-gradient(135deg,#f97316,#ea580c);}
+.ac-num{background:linear-gradient(135deg,#1e3a5f,#172554);border-color:#3b82f6;}
+.ac-num::before{background:linear-gradient(135deg,#3b82f6,#2563eb);}
+
+.ac-geo .ac-badge{background:#7c3aed;color:#e9d5ff;}
+.ac-frac .ac-badge{background:#16a34a;color:#dcfce7;}
+.ac-pct .ac-badge{background:#ea580c;color:#ffedd5;}
+.ac-num .ac-badge{background:#2563eb;color:#dbeafe;}
+
+.arena-card.locked{opacity:.45;pointer-events:none;filter:grayscale(.5);}
+.arena-card.locked .ac-badge{background:rgba(255,255,255,.15);color:rgba(255,255,255,.5);}
+
+.arena-total-score{
+  text-align:center;padding:12px 24px;
+  background:linear-gradient(135deg,rgba(251,191,36,.12),rgba(245,158,11,.06));
+  border:1.5px solid rgba(251,191,36,.3);border-radius:16px;
+  margin-bottom:14px;
+}
+.arena-total-score .ats-lbl{font-size:11px;color:#fbbf24;font-weight:700;}
+.arena-total-score .ats-val{font-size:26px;color:#fef3c7;font-weight:900;}
+
+.arena-back-btn{
+  padding:10px 24px;background:rgba(255,255,255,.06);
+  border:1px solid rgba(255,255,255,.12);border-radius:14px;
+  color:rgba(255,255,255,.5);font-size:13px;cursor:pointer;
+  font-family:inherit;font-weight:700;
+}
 
 /* ===== LEADERBOARD OVERLAY ===== */
 #lb-overlay{
@@ -873,10 +937,10 @@ body{background-color:#1a0a3e;background:radial-gradient(ellipse at top, #2d1b69
   box-shadow:none;
 }
 </style>
-<meta name="description" content="Math Arena — Geometry Game">
+<meta name="description" content="Math Arena — Grade 6 Math Game">
 <meta name="theme-color" content="#1a0a3e">
-<meta property="og:title" content="Math Arena — Geometry">
-<meta property="og:description" content="Math Arena Geometry Game">
+<meta property="og:title" content="Math Arena — כיתה ו׳">
+<meta property="og:description" content="Math Arena — Geometry, Fractions, Percentages, Number Line">
 <meta property="og:url" content="https://sivanrab-eng.github.io/math-arena/">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📐</text></svg>">
 </head>
@@ -919,13 +983,63 @@ body{background-color:#1a0a3e;background:radial-gradient(ellipse at top, #2d1b69
 <div id="name-screen" class="screen on" style="display:flex;">
   <div class="name-logo">📐</div>
   <div class="name-title">Math Arena</div>
-  <div class="name-sub">Geometry — Grade 6 🎮</div>
+  <div class="name-sub">גיאומטריה • שברים • אחוזים • ציר המספרים 🎮</div>
   <div class="name-features"><div class="name-feat">🔥 Streaks</div><div class="name-feat">⚡ Speed Bonus</div><div class="name-feat">✂️ Powers</div><div class="name-feat">⚔️ Duels</div><div class="name-feat">🎵 Music</div><div class="name-feat">💥 Multipliers</div></div>
   <div class="name-input-wrap">
     <input id="name-input" type="text" placeholder="What's your name? ✏️" maxlength="16" autocomplete="off"/>
   </div>
   <button id="btn-start" onclick="submitName()">🚀 LET'S GO!</button>
   <button onclick="shareGameLink()" style="margin-top:12px;padding:10px 24px;background:rgba(59,130,246,.12);border:1.5px solid rgba(59,130,246,.35);border-radius:14px;color:#60a5fa;font-size:14px;font-weight:700;cursor:pointer;font-family:inherit;">🔗 שתף את המשחק עם חבר</button>
+</div>
+
+<!-- ARENA SELECT SCREEN -->
+<div id="arena-screen" class="screen">
+  <div class="arena-title">🏟️ Math Arena</div>
+  <div class="arena-sub">בחרו זירה!</div>
+  <div class="arena-player" id="arena-player-name"></div>
+  <div class="arena-total-score">
+    <div class="ats-lbl">🪙 ניקוד כולל</div>
+    <div class="ats-val" id="arena-total">0</div>
+  </div>
+  <div class="arena-grid">
+    <div class="arena-card ac-geo" onclick="selectArena('geo')">
+      <div class="ac-emoji">📐</div>
+      <div class="ac-info">
+        <div class="ac-name">גיאומטריה</div>
+        <div class="ac-desc">שטח, היקף, נפח, מעגל, צורות מורכבות</div>
+      </div>
+      <div class="ac-levels"><span id="geo-prog">0</span>שלבים</div>
+      <div class="ac-badge">27 שלבים</div>
+    </div>
+    <div class="arena-card ac-frac" onclick="selectArena('frac')">
+      <div class="ac-emoji">🍕</div>
+      <div class="ac-info">
+        <div class="ac-name">שברים</div>
+        <div class="ac-desc">חיבור, חיסור, השוואה, צמצום</div>
+      </div>
+      <div class="ac-levels"><span id="frac-prog">0</span>שלבים</div>
+      <div class="ac-badge">12 שלבים</div>
+    </div>
+    <div class="arena-card ac-pct" onclick="selectArena('pct')">
+      <div class="ac-emoji">💯</div>
+      <div class="ac-info">
+        <div class="ac-name">אחוזים</div>
+        <div class="ac-desc">חישוב אחוז, המרה שבר↔אחוז</div>
+      </div>
+      <div class="ac-levels"><span id="pct-prog">0</span>שלבים</div>
+      <div class="ac-badge">10 שלבים</div>
+    </div>
+    <div class="arena-card ac-num" onclick="selectArena('num')">
+      <div class="ac-emoji">📏</div>
+      <div class="ac-info">
+        <div class="ac-name">ציר המספרים</div>
+        <div class="ac-desc">עשרוניים, סדר, מיקום על הציר</div>
+      </div>
+      <div class="ac-levels"><span id="num-prog">0</span>שלבים</div>
+      <div class="ac-badge">10 שלבים</div>
+    </div>
+  </div>
+  <button onclick="shareGameLink()" style="padding:10px 24px;background:rgba(59,130,246,.12);border:1.5px solid rgba(59,130,246,.35);border-radius:14px;color:#60a5fa;font-size:14px;font-weight:700;cursor:pointer;font-family:inherit;">🔗 שתף את המשחק</button>
 </div>
 
 <!-- LEADERBOARD OVERLAY -->
@@ -1029,9 +1143,8 @@ body{background-color:#1a0a3e;background:radial-gradient(ellipse at top, #2d1b69
   <button class="btn-share-duel" onclick="shareDuelInvite()">⚔️ אתגר חבר</button>
   <button class="btn-share-duel" onclick="shareGameLink()" style="background:rgba(59,130,246,.15);border-color:rgba(59,130,246,.4);color:#3b82f6;">🔗 שתף את המשחק</button>
   <button id="btn-restart" onclick="restartGame()">🔄 Play Again</button>
+  <button onclick="showArenaScreen()" style="margin-top:8px;width:90%;max-width:320px;padding:12px;background:rgba(255,255,255,.06);border:1.5px solid rgba(255,255,255,.15);border-radius:14px;color:rgba(255,255,255,.6);font-size:14px;font-weight:700;cursor:pointer;font-family:inherit;">🏟️ חזרה לזירות</button>
 </div>
-
-<!-- PRIZE BOX OVERLAY -->
 <div id="prize-overlay">
   <div class="prize-box-wrap">
     <div class="prize-box" id="prize-box">
@@ -1138,7 +1251,7 @@ var GAME_URL = 'https://sivanrab-eng.github.io/math-arena/';
 
 // ===== HINT SYSTEM =====
 var hintUsed=false;
-var HINTS={'ra':'💡 כפלו אורך × רוחב!','ra2':'💡 כפלו אורך × רוחב!','rp':'💡 חברו אורך+רוחב, כפלו ב-2!','rp2':'💡 חברו אורך+רוחב, כפלו ב-2!','sq':'💡 שטח=צלע×צלע, היקף=צלע×4!','tri-p':'💡 חברו את 3 הצלעות!','rs':'💡 היקף÷4 או √שטח!','rra':'💡 שטח÷אורך!','rrp':'💡 (היקף÷2)−אורך!','rr':'💡 שטח÷אורך או (היקף÷2)−אורך!','par':'💡 בסיס × גובה (לא הצלע הנטויה!)','par-p':'💡 היקף = 2×(צלע+צלע)','tr':'💡 (בסיס×גובה)÷2','trap':'💡 (בסיס1+בסיס2)×גובה÷2','wd':'💡 שטיח=שטח, גדר=היקף!','combo':'💡 חשבו שטח והיקף בנפרד!','dec':'💡 אותן נוסחאות, עם עשרוניים!','circ-p':'💡 2×3.14×רדיוס','circ-a':'💡 3.14×r²','comp':'💡 פרקו לחלקים פשוטים!','units':'💡 1מ"ר=10,000סמ"ר, 1דונם=1,000מ"ר','vol':'💡 אורך×רוחב×גובה'};
+var HINTS={'ra':'💡 כפלו אורך × רוחב!','ra2':'💡 כפלו אורך × רוחב!','rp':'💡 חברו אורך+רוחב, כפלו ב-2!','rp2':'💡 חברו אורך+רוחב, כפלו ב-2!','sq':'💡 שטח=צלע×צלע, היקף=צלע×4!','tri-p':'💡 חברו את 3 הצלעות!','rs':'💡 היקף÷4 או √שטח!','rra':'💡 שטח÷אורך!','rrp':'💡 (היקף÷2)−אורך!','rr':'💡 שטח÷אורך או (היקף÷2)−אורך!','par':'💡 בסיס × גובה (לא הצלע הנטויה!)','par-p':'💡 היקף = 2×(צלע+צלע)','tr':'💡 (בסיס×גובה)÷2','trap':'💡 (בסיס1+בסיס2)×גובה÷2','wd':'💡 שטיח=שטח, גדר=היקף!','combo':'💡 חשבו שטח והיקף בנפרד!','dec':'💡 אותן נוסחאות, עם עשרוניים!','circ-p':'💡 2×3.14×רדיוס','circ-a':'💡 3.14×r²','comp':'💡 פרקו לחלקים פשוטים!','units':'💡 1מ"ר=10,000סמ"ר, 1דונם=1,000מ"ר','vol':'💡 אורך×רוחב×גובה','fid':'💡 ספרו חלקים צבועים!','fcmp':'💡 הרחיבו למכנה משותף!','fred':'💡 חלקו מונה ומכנה באותו מספר!','fadd1':'💡 מכנה זהה? חברו מונים!','fsub1':'💡 מכנה זהה? חסרו מונים!','fadd2':'💡 הרחיבו למכנה משותף!','fsub2':'💡 הרחיבו למכנה משותף!','fwh':'💡 חלקו מונה÷מכנה!','fmul':'💡 מונה×מונה, מכנה×מכנה!','fwp':'💡 קראו→תרגמו→חשבו!','fmix':'💡 שימו לב לסימן!','ffin':'💡 כל סוגי השברים!','pid':'💡 אחוז=חלקים מ-100!','pof':'💡 N×אחוז÷100!','f2p':'💡 מונה÷מכנה×100!','p2f':'💡 שימו על 100, צמצמו!','pmon':'💡 מחיר×אחוז÷100!','pfind':'💡 חלק÷שלם×100!','pqty':'💡 כמות×אחוז÷100!','pchg':'💡 הפרש÷מקורי×100!','pmix':'💡 שימו לב לסוג!','pfin':'💡 כל הנוסחאות!','ndec':'💡 נקודה=שלמים|עשיריות!','nord':'💡 השוו ספרה ספרה!','nline':'💡 קפיצות שוות על הציר!','nadd':'💡 יישרו נקודות, חברו!','nsub':'💡 יישרו נקודות, חסרו!','nmul10':'💡 ×10=נקודה ימינה!','ndiv10':'💡 ÷10=נקודה שמאלה!','nd2f':'💡 0.5=5/10=1/2!','nneg':'💡 שמאלה מ-0=מינוס!','nfin':'💡 כל הנוסחאות!'};
 function showHint(){if(typeof answered!=='undefined'&&answered)return;var tp=LV[lvlIdx].topics[tIdx];var h=HINTS[tp.id]||'💡 קראו שוב בזהירות!';var el=document.getElementById('hint-bubble');if(el.classList.contains('on')){el.classList.remove('on');return;}el.textContent=h;el.classList.add('on');hintUsed=true;setTimeout(function(){el.classList.remove('on');},4000);}
 function hideHintBubble(){document.getElementById('hint-bubble').classList.remove('on');}
 
@@ -1577,7 +1690,131 @@ function mkO(correct,unit,distractors){
   return{o:sh.map(function(x){return x.o;}),a:ci};
 }
 
-var LV=[
+// ===== FRACTION PIE SVG =====
+function mFracPie(num,den,color){
+  color=color||'#4ade80';
+  var sz=100,cx=50,cy=50,r=38;
+  var svg='<svg width="'+sz+'" height="'+sz+'" viewBox="0 0 100 100">';
+  // Background circle
+  svg+='<circle cx="'+cx+'" cy="'+cy+'" r="'+r+'" fill="rgba(255,255,255,.08)" stroke="rgba(255,255,255,.2)" stroke-width="2"/>';
+  // Draw filled slices
+  for(var i=0;i<num&&i<den;i++){
+    var a1=(i/den)*2*Math.PI-Math.PI/2;
+    var a2=((i+1)/den)*2*Math.PI-Math.PI/2;
+    var x1=cx+r*Math.cos(a1),y1=cy+r*Math.sin(a1);
+    var x2=cx+r*Math.cos(a2),y2=cy+r*Math.sin(a2);
+    var lg=(1/den)>.5?1:0;
+    svg+='<path d="M'+cx+','+cy+' L'+x1.toFixed(1)+','+y1.toFixed(1)+' A'+r+','+r+' 0 '+lg+',1 '+x2.toFixed(1)+','+y2.toFixed(1)+' Z" fill="'+color+'" fill-opacity=".5" stroke="'+color+'" stroke-width="1.5"/>';
+  }
+  // Draw divider lines
+  for(var i=0;i<den;i++){
+    var a=i/den*2*Math.PI-Math.PI/2;
+    svg+='<line x1="'+cx+'" y1="'+cy+'" x2="'+(cx+r*Math.cos(a)).toFixed(1)+'" y2="'+(cy+r*Math.sin(a)).toFixed(1)+'" stroke="rgba(255,255,255,.4)" stroke-width="1"/>';
+  }
+  // Label
+  svg+='<text x="'+cx+'" y="'+(cy-2)+'" fill="#fff" font-size="16" text-anchor="middle" font-weight="900">'+num+'</text>';
+  svg+='<line x1="'+(cx-12)+'" y1="'+(cy+4)+'" x2="'+(cx+12)+'" y2="'+(cy+4)+'" stroke="#fff" stroke-width="2"/>';
+  svg+='<text x="'+cx+'" y="'+(cy+18)+'" fill="#fff" font-size="16" text-anchor="middle" font-weight="900">'+den+'</text>';
+  svg+='</svg>';
+  return svg;
+}
+
+// ===== FRACTION BAR SVG =====
+function mFracBar(num,den,color){
+  color=color||'#4ade80';
+  var w=220,h=50,barH=28,y=8;
+  var svg='<svg width="'+w+'" height="'+h+'">';
+  var segW=Math.min(180,den*24)/den;
+  var totalW=segW*den;
+  var startX=(w-totalW)/2;
+  for(var i=0;i<den;i++){
+    var fill=i<num?color:'rgba(255,255,255,.08)';
+    var sx=startX+i*segW;
+    svg+='<rect x="'+sx+'" y="'+y+'" width="'+(segW-2)+'" height="'+barH+'" rx="4" fill="'+fill+'" fill-opacity="'+(i<num?'.5':'.3')+'" stroke="'+(i<num?color:'rgba(255,255,255,.2)')+'" stroke-width="1.5"/>';
+  }
+  svg+='<text x="'+(w/2)+'" y="'+(y+barH+14)+'" fill="#fff" font-size="13" text-anchor="middle" font-weight="800">'+num+'/'+den+'</text>';
+  svg+='</svg>';
+  return svg;
+}
+
+// ===== TWO FRACTION PIES SIDE BY SIDE =====
+function mFrac2(n1,d1,n2,d2){
+  return '<div style="display:flex;align-items:center;justify-content:center;gap:12px;">'+mFracPie(n1,d1,'#4ade80')+' <span style="font-size:22px;font-weight:900;color:#fbbf24;">?</span> '+mFracPie(n2,d2,'#60a5fa')+'</div>';
+}
+
+// ===== PERCENTAGE BAR SVG =====
+function mPctBar(pct,label){
+  label=label||'';
+  var w=220,h=50;
+  var svg='<svg width="'+w+'" height="'+h+'">';
+  var barW=180,barH=24,bx=20,by=6;
+  svg+='<rect x="'+bx+'" y="'+by+'" width="'+barW+'" height="'+barH+'" rx="12" fill="rgba(255,255,255,.08)" stroke="rgba(255,255,255,.2)" stroke-width="1.5"/>';
+  var fillW=Math.round(barW*Math.min(pct,100)/100);
+  if(fillW>0)svg+='<rect x="'+bx+'" y="'+by+'" width="'+fillW+'" height="'+barH+'" rx="12" fill="#f97316" fill-opacity=".6"/>';
+  svg+='<text x="'+(bx+barW/2)+'" y="'+(by+barH/2+5)+'" fill="#fff" font-size="14" text-anchor="middle" font-weight="900">'+pct+'%</text>';
+  if(label)svg+='<text x="'+(w/2)+'" y="'+(by+barH+14)+'" fill="rgba(255,255,255,.5)" font-size="11" text-anchor="middle" font-weight="700">'+label+'</text>';
+  svg+='</svg>';
+  return svg;
+}
+
+// ===== NUMBER LINE SVG =====
+function mNumLine(lo,hi,marks,highlight){
+  var w=260,h=60;
+  var svg='<svg width="'+w+'" height="'+h+'">';
+  var lx=20,rx=240,y=24;
+  svg+='<line x1="'+lx+'" y1="'+y+'" x2="'+rx+'" y2="'+y+'" stroke="rgba(255,255,255,.4)" stroke-width="2"/>';
+  svg+='<polygon points="'+(rx+8)+','+y+' '+(rx-2)+','+(y-5)+' '+(rx-2)+','+(y+5)+'" fill="rgba(255,255,255,.4)"/>';
+  // Ticks
+  var range=hi-lo;
+  if(marks&&marks.length){
+    marks.forEach(function(m){
+      var px=lx+(m-lo)/range*(rx-lx);
+      var isHL=highlight!==undefined&&m===highlight;
+      svg+='<line x1="'+px+'" y1="'+(y-8)+'" x2="'+px+'" y2="'+(y+8)+'" stroke="'+(isHL?'#fbbf24':'rgba(255,255,255,.5)')+'" stroke-width="'+(isHL?'3':'1.5')+'"/>';
+      svg+='<text x="'+px+'" y="'+(y+22)+'" fill="'+(isHL?'#fbbf24':'rgba(255,255,255,.6)')+'" font-size="'+(isHL?'13':'11')+'" text-anchor="middle" font-weight="'+(isHL?'900':'700')+'">'+m+'</text>';
+    });
+  }
+  // lo and hi labels
+  svg+='<text x="'+lx+'" y="'+(y-12)+'" fill="rgba(255,255,255,.5)" font-size="11" text-anchor="middle" font-weight="700">'+lo+'</text>';
+  svg+='<text x="'+rx+'" y="'+(y-12)+'" fill="rgba(255,255,255,.5)" font-size="11" text-anchor="middle" font-weight="700">'+hi+'</text>';
+  svg+='</svg>';
+  return svg;
+}
+
+// ===== NUMBER LINE WITH QUESTION MARK =====
+function mNumLineQ(lo,hi,marks,qPos){
+  var w=260,h=60;
+  var svg='<svg width="'+w+'" height="'+h+'">';
+  var lx=20,rx=240,y=24;
+  svg+='<line x1="'+lx+'" y1="'+y+'" x2="'+rx+'" y2="'+y+'" stroke="rgba(255,255,255,.4)" stroke-width="2"/>';
+  svg+='<polygon points="'+(rx+8)+','+y+' '+(rx-2)+','+(y-5)+' '+(rx-2)+','+(y+5)+'" fill="rgba(255,255,255,.4)"/>';
+  var range=hi-lo;
+  if(marks)marks.forEach(function(m){
+    var px=lx+(m-lo)/range*(rx-lx);
+    svg+='<line x1="'+px+'" y1="'+(y-6)+'" x2="'+px+'" y2="'+(y+6)+'" stroke="rgba(255,255,255,.4)" stroke-width="1.5"/>';
+    svg+='<text x="'+px+'" y="'+(y+20)+'" fill="rgba(255,255,255,.5)" font-size="10" text-anchor="middle" font-weight="700">'+m+'</text>';
+  });
+  // Question mark at position
+  if(qPos!==undefined){
+    var qpx=lx+(qPos-lo)/range*(rx-lx);
+    svg+='<line x1="'+qpx+'" y1="'+(y-10)+'" x2="'+qpx+'" y2="'+(y+10)+'" stroke="#fbbf24" stroke-width="3"/>';
+    svg+='<text x="'+qpx+'" y="'+(y-14)+'" fill="#fbbf24" font-size="16" text-anchor="middle" font-weight="900">?</text>';
+  }
+  svg+='<text x="'+lx+'" y="'+(y-12)+'" fill="rgba(255,255,255,.5)" font-size="11" text-anchor="middle">'+lo+'</text>';
+  svg+='<text x="'+rx+'" y="'+(y-12)+'" fill="rgba(255,255,255,.5)" font-size="11" text-anchor="middle">'+hi+'</text>';
+  svg+='</svg>';
+  return svg;
+}
+
+// ===== ARENA SYSTEM =====
+var currentArena='geo';
+var ARENAS={};
+// Helper to make fraction string
+function fStr(n,d){return n+'/'+d;}
+function gcd(a,b){a=Math.abs(a);b=Math.abs(b);while(b){var t=b;b=a%b;a=t;}return a;}
+function simplify(n,d){var g=gcd(n,d);return[n/g,d/g];}
+
+var LV_GEO=[
   {name:'שלב 1 — שטח מלבן וריבוע',emoji:'🟦',bonus:60,topics:[
     {id:'ra',label:'שטח מלבן וריבוע',ex:{title:'שטח מלבן',body:'שטח = כמה מקום בפנים 📦<br>כופלים אורך × רוחב!',formula:'שטח = אורך × רוחב'},
      pool:[{t:'מלבן 5×3 — השטח?',s:mR(5,3),o:['15 סמ"ר','8 סמ"ר','16 סמ"ר','30 סמ"ר'],a:0,p:80,e:'5×3=15'},{t:'מלבן 4×6 — השטח?',s:mR(4,6),o:['10 סמ"ר','24 סמ"ר','20 סמ"ר','48 סמ"ר'],a:1,p:80,e:'4×6=24'},{t:'ריבוע 5×5 — השטח?',s:mS(5),o:['10 סמ"ר','20 סמ"ר','25 סמ"ר','15 סמ"ר'],a:2,p:80,e:'5×5=25'},{t:'מלבן 9×7 — השטח?',s:mR(9,7),o:['16 סמ"ר','63 סמ"ר','32 סמ"ר','72 סמ"ר'],a:1,p:100,e:'9×7=63'},{t:'מלבן 12×3 — השטח?',s:mR(12,3),o:['36 סמ"ר','15 סמ"ר','30 סמ"ר','24 סמ"ר'],a:0,p:100,e:'12×3=36'},{t:'ריבוע 7×7 — השטח?',s:mS(7),o:['28 סמ"ר','49 סמ"ר','14 סמ"ר','42 סמ"ר'],a:1,p:100,e:'7×7=49'}],
@@ -1699,6 +1936,196 @@ var LV=[
      pool:[{t:'מלבן 11×7 — שטח?',s:mR(11,7),o:['77 סמ"ר','36 סמ"ר','18 סמ"ר','154 סמ"ר'],a:0,p:300,e:'11×7=77'},{t:'מעגל r=4 — היקף? (π≈3.14)',s:mCirc(4),o:['12.56','25.12','50.24','16'],a:1,p:300,e:'2×3.14×4=25.12'},{t:'טרפז: 5,11, גובה 6 — שטח?',s:mTrap(5,11,6),o:['96 סמ"ר','48 סמ"ר','33 סמ"ר','66 סמ"ר'],a:1,p:300,e:'(5+11)×6÷2=48'},{t:'קוביה צלע 7 — נפח?',s:mCube3D(7),o:['49 סמ"ק','343 סמ"ק','21 סמ"ק','147 סמ"ק'],a:1,p:300,e:'7³=343'},{t:'5 דונם = ? מ"ר',s:mUnits("5 דונם","?"),o:['500','5,000','50','50,000'],a:1,p:300,e:'5×1,000=5,000'}]}
   ]}
 ];
+
+// ===== FRACTIONS ARENA =====
+var LV_FRAC=[
+  {name:'שלב 1 — זיהוי שברים',emoji:'🍕',bonus:60,topics:[
+    {id:'fid',label:'זיהוי שבר',ex:{title:'זיהוי שבר',body:'כמה חלקים צבועים מתוך הכל? 🍕',formula:'שבר = צבוע / סה"כ'},
+     pool:[{t:'איזה שבר מוצג?',s:mFracPie(1,4),o:['1/4','1/2','1/3','3/4'],a:0,p:60,e:'חלק 1 מתוך 4'},{t:'איזה שבר מוצג?',s:mFracPie(3,4),o:['1/4','2/4','3/4','4/4'],a:2,p:60,e:'3 חלקים מתוך 4'},{t:'איזה שבר מוצג?',s:mFracPie(2,3),o:['1/3','2/3','3/3','1/2'],a:1,p:60,e:'2 חלקים מתוך 3'},{t:'איזה שבר מוצג?',s:mFracPie(1,2),o:['1/4','1/3','1/2','2/3'],a:2,p:60,e:'חצי = 1/2'},{t:'איזה שבר מוצג?',s:mFracBar(3,5),o:['2/5','3/5','4/5','1/5'],a:1,p:60,e:'3 מתוך 5'},{t:'איזה שבר מוצג?',s:mFracBar(5,8),o:['3/8','5/8','6/8','4/8'],a:1,p:70,e:'5 מתוך 8'}]}
+  ]},
+  {name:'שלב 2 — השוואת שברים',emoji:'⚖️',bonus:70,topics:[
+    {id:'fcmp',label:'השוואת שברים',ex:{title:'השוואת שברים',body:'מרחיבים למכנה משותף ⚖️<br>או משווים בצלב!',formula:'a/b ? c/d → a×d ? c×b'},
+     pool:[{t:'מה גדול יותר?',s:mFrac2(1,3,1,4),o:['1/3 > 1/4','1/3 < 1/4','1/3 = 1/4','אי אפשר'],a:0,p:80,e:'1/3 = 0.33 > 1/4 = 0.25'},{t:'מה גדול יותר?',s:mFrac2(2,5,3,10),o:['2/5 < 3/10','2/5 > 3/10','2/5 = 3/10','אי אפשר'],a:1,p:80,e:'4/10 > 3/10'},{t:'מה גדול יותר?',s:mFrac2(3,4,5,8),o:['3/4 < 5/8','3/4 > 5/8','3/4 = 5/8','אי אפשר'],a:1,p:90,e:'6/8 > 5/8'},{t:'מה גדול יותר?',s:mFrac2(1,2,3,6),o:['1/2 < 3/6','1/2 > 3/6','1/2 = 3/6','אי אפשר'],a:2,p:90,e:'3/6 = 1/2'}],
+     gen:function(){var d1=randInt(2,8),n1=randInt(1,d1-1),d2=randInt(2,8),n2=randInt(1,d2-1);var v1=n1/d1,v2=n2/d2;var sign=v1>v2?'>':v1<v2?'<':'=';var r={o:[fStr(n1,d1)+' > '+fStr(n2,d2),fStr(n1,d1)+' < '+fStr(n2,d2),fStr(n1,d1)+' = '+fStr(n2,d2),'אי אפשר'],a:sign==='>'?0:sign==='<'?1:2};return{t:'מה הקשר?',s:mFrac2(n1,d1,n2,d2),o:r.o,a:r.a,p:85,e:fStr(n1,d1)+' '+sign+' '+fStr(n2,d2)};}}
+  ]},
+  {name:'שלב 3 — צמצום שברים',emoji:'✂️',bonus:80,topics:[
+    {id:'fred',label:'צמצום',ex:{title:'צמצום שברים',body:'מחלקים מונה ומכנה במספר זהה ✂️',formula:'צמצום = חלוקה ב-מ.מ.ג'},
+     pool:[{t:'צמצמו: 4/8',s:mFracPie(4,8),o:['1/2','2/4','1/4','2/8'],a:0,p:80,e:'4÷4=1, 8÷4=2'},{t:'צמצמו: 6/9',s:mFracBar(6,9),o:['3/4','2/3','1/3','3/9'],a:1,p:80,e:'6÷3=2, 9÷3=3'},{t:'צמצמו: 10/15',s:mFracBar(10,15),o:['5/10','2/3','1/3','5/15'],a:1,p:90,e:'10÷5=2, 15÷5=3'},{t:'צמצמו: 8/12',s:mFracPie(8,12),o:['4/6','2/3','4/12','1/3'],a:1,p:90,e:'8÷4=2, 12÷4=3'},{t:'צמצמו: 3/12',s:mFracBar(3,12),o:['1/4','1/3','3/6','1/6'],a:0,p:80,e:'3÷3=1, 12÷3=4'},{t:'צמצמו: 15/20',s:mFracBar(15,20),o:['3/4','5/10','3/5','5/20'],a:0,p:90,e:'15÷5=3, 20÷5=4'}],
+     gen:function(){var g2=randInt(2,6),sn=randInt(1,4),sd=randInt(sn+1,8);var n=sn*g2,d=sd*g2;var r=mkO(0,'',[]);return{t:'צמצמו: '+n+'/'+d,s:mFracBar(n,d),o:[fStr(sn,sd),fStr(sn+1,sd),fStr(sn,sd+1),fStr(n,d)],a:0,p:85,e:n+'÷'+g2+'='+sn+', '+d+'÷'+g2+'='+sd};}}
+  ]},
+  {name:'שלב 4 — חיבור מכנה זהה',emoji:'➕',bonus:80,topics:[
+    {id:'fadd1',label:'חיבור (מכנה זהה)',ex:{title:'חיבור שברים',body:'מכנה זהה? מחברים רק מונים! ➕',formula:'a/c + b/c = (a+b)/c'},
+     pool:[{t:'1/5 + 2/5 = ?',s:mFracBar(1,5,'#4ade80'),o:['3/5','3/10','2/5','1/5'],a:0,p:70,e:'1+2=3, מכנה 5'},{t:'2/7 + 3/7 = ?',s:mFracBar(2,7,'#4ade80'),o:['5/14','5/7','6/7','1/7'],a:1,p:70,e:'2+3=5, מכנה 7'},{t:'1/4 + 2/4 = ?',s:mFracPie(1,4),o:['3/8','3/4','2/4','1/2'],a:1,p:70,e:'1+2=3, מכנה 4'},{t:'3/8 + 4/8 = ?',s:mFracBar(3,8,'#4ade80'),o:['7/16','7/8','1/8','4/8'],a:1,p:80,e:'3+4=7, מכנה 8'}],
+     gen:function(){var d=randInt(3,10),a=randInt(1,d-2),b=randInt(1,d-a);var s=a+b;var opts=[fStr(s,d),fStr(s,d*2),fStr(a,d),fStr(b,d)];return{t:fStr(a,d)+' + '+fStr(b,d)+' = ?',s:mFracBar(a,d),o:opts,a:0,p:75,e:a+'+'+b+'='+s+', מכנה '+d};}}
+  ]},
+  {name:'שלב 5 — חיסור מכנה זהה',emoji:'➖',bonus:80,topics:[
+    {id:'fsub1',label:'חיסור (מכנה זהה)',ex:{title:'חיסור שברים',body:'מכנה זהה? מחסרים רק מונים! ➖',formula:'a/c − b/c = (a−b)/c'},
+     pool:[{t:'4/5 − 2/5 = ?',s:mFracBar(4,5,'#f97316'),o:['2/5','2/10','6/5','1/5'],a:0,p:70,e:'4−2=2, מכנה 5'},{t:'5/7 − 3/7 = ?',s:mFracBar(5,7,'#f97316'),o:['2/14','2/7','3/7','8/7'],a:1,p:70,e:'5−3=2, מכנה 7'},{t:'3/4 − 1/4 = ?',s:mFracPie(3,4,'#f97316'),o:['2/8','1/2','2/4','4/4'],a:2,p:70,e:'3−1=2, מכנה 4'},{t:'7/8 − 5/8 = ?',s:mFracBar(7,8,'#f97316'),o:['2/16','1/4','2/8','3/8'],a:2,p:80,e:'7−5=2, מכנה 8'}],
+     gen:function(){var d=randInt(3,10),a=randInt(2,d-1),b=randInt(1,a-1);var s=a-b;var sg=simplify(s,d);var opts=[fStr(s,d),fStr(s,d*2),fStr(a,d),fStr(b,d)];return{t:fStr(a,d)+' − '+fStr(b,d)+' = ?',s:mFracBar(a,d,'#f97316'),o:opts,a:0,p:75,e:a+'−'+b+'='+s+', מכנה '+d};}}
+  ]},
+  {name:'שלב 6 — חיבור מכנה שונה',emoji:'🔀',bonus:100,topics:[
+    {id:'fadd2',label:'חיבור (מכנה שונה)',ex:{title:'חיבור מכנה שונה',body:'מרחיבים למכנה משותף! 🔀',formula:'a/b+c/d = (a×d+c×b)/(b×d)'},
+     pool:[{t:'1/2 + 1/3 = ?',s:mFrac2(1,2,1,3),o:['2/5','5/6','1/6','3/6'],a:1,p:100,e:'3/6+2/6=5/6'},{t:'1/4 + 1/3 = ?',s:mFrac2(1,4,1,3),o:['2/7','7/12','5/12','1/12'],a:1,p:100,e:'3/12+4/12=7/12'},{t:'2/3 + 1/6 = ?',s:mFrac2(2,3,1,6),o:['3/9','5/6','3/6','1/2'],a:1,p:110,e:'4/6+1/6=5/6'},{t:'1/2 + 1/4 = ?',s:mFrac2(1,2,1,4),o:['2/6','3/4','1/4','2/4'],a:1,p:100,e:'2/4+1/4=3/4'},{t:'2/5 + 1/10 = ?',s:mFrac2(2,5,1,10),o:['3/15','1/2','3/10','5/10'],a:1,p:110,e:'4/10+1/10=5/10=1/2'}]}
+  ]},
+  {name:'שלב 7 — חיסור מכנה שונה',emoji:'🔄',bonus:100,topics:[
+    {id:'fsub2',label:'חיסור (מכנה שונה)',ex:{title:'חיסור מכנה שונה',body:'מרחיבים למכנה משותף! 🔄',formula:'a/b−c/d = (a×d−c×b)/(b×d)'},
+     pool:[{t:'1/2 − 1/3 = ?',s:mFrac2(1,2,1,3),o:['1/6','2/6','1/5','0'],a:0,p:100,e:'3/6−2/6=1/6'},{t:'3/4 − 1/2 = ?',s:mFrac2(3,4,1,2),o:['2/4','1/4','1/2','2/2'],a:1,p:100,e:'3/4−2/4=1/4'},{t:'5/6 − 1/3 = ?',s:mFrac2(5,6,1,3),o:['4/6','1/2','2/3','1/6'],a:1,p:110,e:'5/6−2/6=3/6=1/2'},{t:'7/10 − 1/5 = ?',s:mFrac2(7,10,1,5),o:['6/10','5/10','1/2','3/5'],a:2,p:110,e:'7/10−2/10=5/10=1/2'}]}
+  ]},
+  {name:'שלב 8 — שבר מספר שלם',emoji:'🔢',bonus:90,topics:[
+    {id:'fwh',label:'שבר ושלם',ex:{title:'שבר ומספר שלם',body:'שלם = מונה÷מכנה + שארית 🔢',formula:'5/3 = 1 ושארית 2/3'},
+     pool:[{t:'כמה שלמים ב-7/3?',s:mFracBar(7,3),o:['1 ו-1/3','2 ו-1/3','3 ו-1/3','2 ו-2/3'],a:1,p:90,e:'7÷3=2 שארית 1'},{t:'כמה שלמים ב-5/2?',s:mFracBar(5,2),o:['2','2 ו-1/2','3','1 ו-1/2'],a:1,p:90,e:'5÷2=2 שארית 1'},{t:'כמה שלמים ב-10/4?',s:mFracBar(10,4),o:['2','2 ו-1/2','2 ו-1/4','3'],a:1,p:100,e:'10÷4=2 שארית 2'},{t:'כמה שלמים ב-9/5?',s:mFracBar(9,5),o:['1 ו-3/5','1 ו-4/5','2','1 ו-2/5'],a:1,p:100,e:'9÷5=1 שארית 4'}]}
+  ]},
+  {name:'שלב 9 — כפל שברים',emoji:'✖️',bonus:110,topics:[
+    {id:'fmul',label:'כפל שברים',ex:{title:'כפל שברים',body:'כופלים מונה×מונה, מכנה×מכנה ✖️',formula:'a/b × c/d = (a×c)/(b×d)'},
+     pool:[{t:'1/2 × 1/3 = ?',s:mFrac2(1,2,1,3),o:['1/5','1/6','2/6','2/3'],a:1,p:100,e:'1×1=1, 2×3=6'},{t:'2/3 × 3/4 = ?',s:mFrac2(2,3,3,4),o:['6/7','1/2','5/12','6/12'],a:1,p:110,e:'6/12=1/2'},{t:'3/5 × 2/7 = ?',s:mFrac2(3,5,2,7),o:['5/12','6/35','6/12','5/35'],a:1,p:110,e:'3×2=6, 5×7=35'},{t:'1/4 × 2/3 = ?',s:mFrac2(1,4,2,3),o:['2/7','3/12','2/12','1/6'],a:2,p:110,e:'1×2=2, 4×3=12 → 1/6'}]}
+  ]},
+  {name:'שלב 10 — בעיות מילוליות',emoji:'📝',bonus:120,topics:[
+    {id:'fwp',label:'בעיות מילוליות',ex:{title:'בעיות מילוליות',body:'קוראים → מתרגמים → מחשבים 📝',formula:'קראו בזהירות!'},
+     pool:[{t:'אכלתי 2/8 מהפיצה. כמה נשאר?',s:mFracPie(2,8,'#ef4444'),o:['4/8','6/8','5/8','2/8'],a:1,p:100,e:'8/8−2/8=6/8'},{t:'1/3 מהכיתה בנים. בכיתה 30 — כמה בנים?',s:mFracBar(1,3),o:['3','10','15','20'],a:1,p:120,e:'30÷3=10'},{t:'שתיתי 3/4 מבקבוק חצי ליטר. כמה שתיתי?',s:mFracPie(3,4,'#3b82f6'),o:['1/4 ל\'','3/8 ל\'','3/4 ל\'','1/2 ל\''],a:1,p:130,e:'3/4×0.5=3/8'},{t:'יש 2/5 כחולים ו-1/5 אדומים. כמה ביחד?',s:mFracBar(3,5),o:['3/10','3/5','2/5','1/5'],a:1,p:110,e:'2/5+1/5=3/5'}]}
+  ]},
+  {name:'שלב 11 — מיקס שברים',emoji:'🎲',bonus:140,topics:[
+    {id:'fmix',label:'מיקס שברים',ex:{title:'מיקס!',body:'חיבור, חיסור, כפל — הכל ביחד! 🎲',formula:'כל הפעולות!'},
+     pool:[{t:'3/4 + 1/8 = ?',s:mFrac2(3,4,1,8),o:['4/12','7/8','4/8','5/8'],a:1,p:120,e:'6/8+1/8=7/8'},{t:'5/6 − 1/2 = ?',s:mFrac2(5,6,1,2),o:['1/3','4/6','2/6','1/6'],a:0,p:120,e:'5/6−3/6=2/6=1/3'},{t:'2/3 × 3/5 = ?',s:mFrac2(2,3,3,5),o:['6/15','5/8','6/8','2/5'],a:3,p:120,e:'6/15=2/5'},{t:'1/6 + 1/2 = ?',s:mFrac2(1,6,1,2),o:['2/8','2/3','1/3','4/6'],a:1,p:120,e:'1/6+3/6=4/6=2/3'}]}
+  ]},
+  {name:'שלב 12 — 👑 FRACTIONS PRO!',emoji:'👑',bonus:500,topics:[
+    {id:'ffin',label:'אלוף השברים!',ex:{title:'Final Boss!',body:'שאלות מכל הנושאים! 👑',formula:'כל סוגי השברים!'},
+     pool:[{t:'צמצמו: 12/18',s:mFracBar(12,18),o:['2/3','6/9','4/6','3/6'],a:0,p:150,e:'12÷6=2, 18÷6=3'},{t:'2/3 + 1/4 = ?',s:mFrac2(2,3,1,4),o:['3/7','11/12','8/12','7/12'],a:1,p:150,e:'8/12+3/12=11/12'},{t:'מה גדול: 5/8 או 2/3?',s:mFrac2(5,8,2,3),o:['5/8 > 2/3','5/8 < 2/3','5/8 = 2/3','אי אפשר'],a:1,p:150,e:'15/24 < 16/24'},{t:'3/5 × 5/9 = ?',s:mFrac2(3,5,5,9),o:['1/3','8/14','15/45','8/45'],a:0,p:150,e:'15/45=1/3'}]}
+  ]}
+];
+
+// ===== PERCENTAGES ARENA =====
+var LV_PCT=[
+  {name:'שלב 1 — מהו אחוז?',emoji:'💯',bonus:60,topics:[
+    {id:'pid',label:'זיהוי אחוז',ex:{title:'מהו אחוז?',body:'אחוז = חלקים מתוך 100 💯',formula:'50% = 50 מתוך 100 = 1/2'},
+     pool:[{t:'50% זה כמה מתוך 100?',s:mPctBar(50),o:['25','50','75','100'],a:1,p:60,e:'50% = 50 מתוך 100'},{t:'25% זה כמה מתוך 100?',s:mPctBar(25),o:['10','25','50','75'],a:1,p:60,e:'25% = 25 מתוך 100'},{t:'10% זה כמה מתוך 100?',s:mPctBar(10),o:['10','20','5','1'],a:0,p:60,e:'10% = 10 מתוך 100'},{t:'75% זה כמה מתוך 100?',s:mPctBar(75),o:['25','50','70','75'],a:3,p:60,e:'75% = 75 מתוך 100'}]}
+  ]},
+  {name:'שלב 2 — אחוז ממספר',emoji:'🔢',bonus:70,topics:[
+    {id:'pof',label:'אחוז ממספר',ex:{title:'אחוז ממספר',body:'מחלקים ב-100, כופלים באחוז 🔢',formula:'X% מ-N = N×X÷100'},
+     pool:[{t:'50% מ-80 = ?',s:mPctBar(50,'80'),o:['40','45','50','60'],a:0,p:80,e:'80×50÷100=40'},{t:'10% מ-200 = ?',s:mPctBar(10,'200'),o:['10','20','30','2'],a:1,p:80,e:'200×10÷100=20'},{t:'25% מ-120 = ?',s:mPctBar(25,'120'),o:['25','30','40','60'],a:1,p:90,e:'120×25÷100=30'},{t:'20% מ-150 = ?',s:mPctBar(20,'150'),o:['15','30','35','75'],a:1,p:90,e:'150×20÷100=30'}],
+     gen:function(){var pcts=[10,20,25,50,75];var p=pcts[randInt(0,4)];var n=randInt(2,20)*10;var ans=n*p/100;var r=mkO(ans,'',[n-ans,ans+10,n/p]);return{t:p+'% מ-'+n+' = ?',s:mPctBar(p,String(n)),o:r.o,a:r.a,p:85,e:n+'×'+p+'÷100='+ans};}}
+  ]},
+  {name:'שלב 3 — שבר לאחוז',emoji:'🔄',bonus:80,topics:[
+    {id:'f2p',label:'שבר → אחוז',ex:{title:'שבר לאחוז',body:'כופלים ב-100! 🔄',formula:'a/b = (a÷b)×100%'},
+     pool:[{t:'1/2 = כמה אחוז?',s:mFracPie(1,2),o:['25%','50%','75%','100%'],a:1,p:80,e:'1÷2×100=50%'},{t:'1/4 = כמה אחוז?',s:mFracPie(1,4),o:['20%','25%','40%','50%'],a:1,p:80,e:'1÷4×100=25%'},{t:'3/4 = כמה אחוז?',s:mFracPie(3,4),o:['34%','60%','75%','80%'],a:2,p:90,e:'3÷4×100=75%'},{t:'1/5 = כמה אחוז?',s:mFracPie(1,5),o:['15%','20%','25%','50%'],a:1,p:80,e:'1÷5×100=20%'},{t:'2/5 = כמה אחוז?',s:mFracPie(2,5),o:['25%','30%','40%','45%'],a:2,p:90,e:'2÷5×100=40%'},{t:'3/10 = כמה אחוז?',s:mFracBar(3,10),o:['13%','30%','33%','3%'],a:1,p:80,e:'3÷10×100=30%'}]}
+  ]},
+  {name:'שלב 4 — אחוז לשבר',emoji:'🔃',bonus:80,topics:[
+    {id:'p2f',label:'אחוז → שבר',ex:{title:'אחוז לשבר',body:'שמים על 100, מצמצמים! 🔃',formula:'X% = X/100 → צמצום'},
+     pool:[{t:'50% = איזה שבר?',s:mPctBar(50),o:['1/2','1/4','2/3','5/10'],a:0,p:80,e:'50/100=1/2'},{t:'25% = איזה שבר?',s:mPctBar(25),o:['1/5','1/4','1/3','2/5'],a:1,p:80,e:'25/100=1/4'},{t:'75% = איזה שבר?',s:mPctBar(75),o:['7/10','3/4','2/3','4/5'],a:1,p:90,e:'75/100=3/4'},{t:'20% = איזה שבר?',s:mPctBar(20),o:['1/4','2/10','1/5','1/20'],a:2,p:80,e:'20/100=1/5'},{t:'10% = איזה שבר?',s:mPctBar(10),o:['1/5','1/10','1/100','10/10'],a:1,p:80,e:'10/100=1/10'}]}
+  ]},
+  {name:'שלב 5 — אחוזים עם כסף',emoji:'💰',bonus:100,topics:[
+    {id:'pmon',label:'אחוזים וכסף',ex:{title:'הנחות ומחירים',body:'הנחה = חוסכים כסף! 💰',formula:'מחיר אחרי הנחה = מחיר × (100−X)/100'},
+     pool:[{t:'חולצה ב-100₪, הנחה 20%. כמה לשלם?',s:mPctBar(20,'100₪'),o:['20₪','80₪','90₪','70₪'],a:1,p:100,e:'100−20=80₪'},{t:'משחק ב-200₪, הנחה 25%. כמה חוסכים?',s:mPctBar(25,'200₪'),o:['25₪','50₪','75₪','100₪'],a:1,p:100,e:'200×25÷100=50₪'},{t:'ספר ב-60₪, הנחה 10%. המחיר?',s:mPctBar(10,'60₪'),o:['50₪','54₪','56₪','48₪'],a:1,p:110,e:'60−6=54₪'},{t:'נעליים ב-300₪, הנחה 30%. כמה חוסכים?',s:mPctBar(30,'300₪'),o:['30₪','60₪','90₪','120₪'],a:2,p:110,e:'300×30÷100=90₪'}]}
+  ]},
+  {name:'שלב 6 — מציאת האחוז',emoji:'🔍',bonus:110,topics:[
+    {id:'pfind',label:'מציאת האחוז',ex:{title:'מציאת האחוז',body:'חלק÷שלם×100 🔍',formula:'אחוז = (חלק÷שלם)×100'},
+     pool:[{t:'30 מתוך 100 — כמה אחוז?',s:mPctBar(30),o:['3%','13%','30%','33%'],a:2,p:90,e:'30÷100×100=30%'},{t:'15 מתוך 60 — כמה אחוז?',s:mPctBar(25),o:['15%','20%','25%','30%'],a:2,p:110,e:'15÷60×100=25%'},{t:'12 מתוך 48 — כמה אחוז?',s:mPctBar(25),o:['12%','20%','24%','25%'],a:3,p:120,e:'12÷48×100=25%'},{t:'8 מתוך 40 — כמה אחוז?',s:mPctBar(20),o:['8%','16%','20%','25%'],a:2,p:110,e:'8÷40×100=20%'}]}
+  ]},
+  {name:'שלב 7 — אחוזים של כמויות',emoji:'📊',bonus:120,topics:[
+    {id:'pqty',label:'אחוזים וכמויות',ex:{title:'אחוזים של כמויות',body:'מחשבים חלק מהשלם 📊',formula:'X% מ-N = N×X÷100'},
+     pool:[{t:'בכיתה 40 ילדים. 30% בנות. כמה בנות?',s:mPctBar(30,'40 ילדים'),o:['3','10','12','15'],a:2,p:110,e:'40×30÷100=12'},{t:'במגרש 50 מכוניות. 40% לבנות. כמה?',s:mPctBar(40,'50 מכוניות'),o:['4','15','20','25'],a:2,p:110,e:'50×40÷100=20'},{t:'מבחן עם 80 שאלות. ענית נכון 75%. כמה?',s:mPctBar(75,'80 שאלות'),o:['55','60','65','70'],a:1,p:120,e:'80×75÷100=60'},{t:'יש 250 תלמידים. 60% הולכים ברגל. כמה?',s:mPctBar(60,'250'),o:['100','125','150','175'],a:2,p:130,e:'250×60÷100=150'}]}
+  ]},
+  {name:'שלב 8 — שינוי באחוזים',emoji:'📈',bonus:130,topics:[
+    {id:'pchg',label:'שינוי באחוזים',ex:{title:'שינוי באחוזים',body:'עלייה/ירידה = הפרש÷מקורי×100 📈',formula:'שינוי% = (חדש−ישן)/ישן × 100'},
+     pool:[{t:'מחיר עלה מ-100 ל-120. כמה אחוז עלייה?',s:mPctBar(20),o:['12%','20%','25%','120%'],a:1,p:120,e:'20÷100×100=20%'},{t:'מחיר ירד מ-200 ל-150. כמה אחוז ירידה?',s:mPctBar(25),o:['50%','25%','30%','15%'],a:1,p:130,e:'50÷200×100=25%'},{t:'היו 80 תלמידים, עכשיו 100. כמה עלייה?',s:mPctBar(25),o:['20%','25%','80%','30%'],a:1,p:130,e:'20÷80×100=25%'},{t:'מחיר ירד מ-500 ל-400. כמה ירידה?',s:mPctBar(20),o:['10%','15%','20%','25%'],a:2,p:130,e:'100÷500×100=20%'}]}
+  ]},
+  {name:'שלב 9 — מיקס אחוזים',emoji:'🎲',bonus:150,topics:[
+    {id:'pmix',label:'מיקס אחוזים',ex:{title:'מיקס!',body:'כל סוגי שאלות האחוזים! 🎲',formula:'כל הנוסחאות!'},
+     pool:[{t:'35% מ-200 = ?',s:mPctBar(35,'200'),o:['35','50','70','80'],a:2,p:130,e:'200×35÷100=70'},{t:'3/5 = כמה אחוז?',s:mFracPie(3,5),o:['35%','50%','60%','65%'],a:2,p:130,e:'3÷5×100=60%'},{t:'40% = איזה שבר?',s:mPctBar(40),o:['4/10','2/5','1/4','2/4'],a:1,p:130,e:'40/100=2/5'},{t:'18 מתוך 90 = כמה אחוז?',s:mPctBar(20),o:['18%','20%','25%','9%'],a:1,p:140,e:'18÷90×100=20%'}]}
+  ]},
+  {name:'שלב 10 — 👑 PERCENT PRO!',emoji:'👑',bonus:500,topics:[
+    {id:'pfin',label:'אלוף האחוזים!',ex:{title:'Final Boss!',body:'שאלות מכל הנושאים! 👑',formula:'כל הנוסחאות!'},
+     pool:[{t:'חולצה ב-160₪, הנחה 25%. המחיר?',s:mPctBar(25,'160₪'),o:['40₪','100₪','120₪','135₪'],a:2,p:160,e:'160−40=120₪'},{t:'7/8 = כמה אחוז?',s:mFracPie(7,8),o:['78%','85%','87.5%','90%'],a:2,p:160,e:'7÷8×100=87.5%'},{t:'היו 60, עכשיו 75. כמה עלייה?',s:mPctBar(25),o:['15%','20%','25%','30%'],a:2,p:160,e:'15÷60×100=25%'},{t:'45% מ-300 = ?',s:mPctBar(45,'300'),o:['45','90','135','150'],a:2,p:160,e:'300×45÷100=135'}]}
+  ]}
+];
+
+// ===== NUMBER LINE ARENA =====
+var LV_NUM=[
+  {name:'שלב 1 — עשרוניים בסיסי',emoji:'📏',bonus:60,topics:[
+    {id:'ndec',label:'מהו עשרוני?',ex:{title:'מספר עשרוני',body:'הנקודה מפרידה שלמים מחלקים 📏',formula:'3.5 = 3 שלמים וחצי'},
+     pool:[{t:'מה הספרה אחרי הנקודה ב-4.7?',s:mNumLine(4,5,[4,4.5,4.7,5],4.7),o:['4','7','47','0.7'],a:1,p:60,e:'עשיריות = 7'},{t:'כמה שלמים ב-6.3?',s:mNumLine(6,7,[6,6.3,6.5,7],6.3),o:['3','6','63','0.3'],a:1,p:60,e:'החלק השלם = 6'},{t:'2.5 = כמה שלמים?',s:mNumLine(2,3,[2,2.5,3],2.5),o:['2','2.5','3','5'],a:0,p:60,e:'2 שלמים + 0.5'},{t:'0.8 קרוב יותר ל...?',s:mNumLine(0,1,[0,0.5,0.8,1],0.8),o:['0','0.5','1','2'],a:2,p:70,e:'0.8 קרוב ל-1'}]}
+  ]},
+  {name:'שלב 2 — סדר עשרוניים',emoji:'📊',bonus:70,topics:[
+    {id:'nord',label:'סדר עשרוניים',ex:{title:'סדר עשרוניים',body:'משווים ספרה אחרי ספרה 📊',formula:'2.3 < 2.5 כי 3 < 5'},
+     pool:[{t:'מה הגדול ביותר?',s:mNumLine(0,5,[1.2,2.8,3.1,4.5]),o:['1.2','2.8','3.1','4.5'],a:3,p:70,e:'4.5 הגדול ביותר'},{t:'מה הקטן ביותר?',s:mNumLine(0,4,[0.7,1.3,2.1,3.9]),o:['0.7','1.3','2.1','3.9'],a:0,p:70,e:'0.7 הקטן ביותר'},{t:'סדרו מהקטן: 3.5, 3.2, 3.8',s:mNumLine(3,4,[3.2,3.5,3.8]),o:['3.5, 3.2, 3.8','3.8, 3.5, 3.2','3.2, 3.5, 3.8','3.2, 3.8, 3.5'],a:2,p:80,e:'3.2 < 3.5 < 3.8'},{t:'מה בין 2.3 ל-2.5?',s:mNumLineQ(2,3,[2,2.3,2.5,3],2.4),o:['2.35','2.4','2.45','כל התשובות'],a:3,p:80,e:'יש אינסוף מספרים ביניהם'}]}
+  ]},
+  {name:'שלב 3 — ציר המספרים',emoji:'🎯',bonus:80,topics:[
+    {id:'nline',label:'מיקום על הציר',ex:{title:'ציר המספרים',body:'מחלקים את הציר לחלקים שווים 🎯',formula:'כל קפיצה = מרחק קבוע'},
+     pool:[{t:'איפה 1.5 על הציר?',s:mNumLineQ(0,3,[0,1,2,3],1.5),o:['בין 0 ל-1','בין 1 ל-2','בין 2 ל-3','על ה-1'],a:1,p:80,e:'1.5 = בין 1 ל-2'},{t:'מה המספר המסומן?',s:mNumLineQ(0,2,[0,0.5,1,1.5,2],0.5),o:['0.25','0.5','1','1.5'],a:1,p:80,e:'באמצע בין 0 ל-1'},{t:'מה המספר המסומן?',s:mNumLineQ(3,5,[3,3.5,4,4.5,5],4.5),o:['3.5','4','4.5','5'],a:2,p:90,e:'בין 4 ל-5, באמצע'},{t:'מה המספר המסומן?',s:mNumLineQ(0,1,[0,0.2,0.4,0.6,0.8,1],0.6),o:['0.3','0.5','0.6','0.8'],a:2,p:90,e:'קפיצות של 0.2, הנקודה השלישית'}]}
+  ]},
+  {name:'שלב 4 — חיבור עשרוניים',emoji:'➕',bonus:90,topics:[
+    {id:'nadd',label:'חיבור עשרוניים',ex:{title:'חיבור עשרוניים',body:'מיישרים נקודות! ➕',formula:'1.5 + 2.3 = 3.8'},
+     pool:[{t:'1.5 + 2.3 = ?',s:mNumLine(0,5,[1.5,2.3,3.8]),o:['3.8','3.5','4.8','3.2'],a:0,p:80,e:'1.5+2.3=3.8'},{t:'0.7 + 0.8 = ?',s:mNumLine(0,2,[0.7,0.8,1.5]),o:['0.15','1.5','1.6','0.78'],a:1,p:80,e:'0.7+0.8=1.5'},{t:'3.25 + 1.75 = ?',s:mNumLine(3,6,[3.25,5]),o:['4.00','4.10','5.00','4.90'],a:2,p:100,e:'3.25+1.75=5.00'},{t:'2.4 + 3.9 = ?',s:mNumLine(2,7,[2.4,3.9,6.3]),o:['5.3','6.3','5.13','6.13'],a:1,p:90,e:'2.4+3.9=6.3'}],
+     gen:function(){var a2=randInt(1,9),b2=randInt(1,9),a3=a2/10,b3=b2/10;var w1=randInt(0,5),w2=randInt(0,4);var n1=w1+a3,n2=w2+b3;var s2=Math.round((n1+n2)*10)/10;var r=mkO(s2,'',[Math.round((n1-n2)*10)/10,s2+1,s2-1]);return{t:n1+' + '+n2+' = ?',s:mNumLine(0,Math.ceil(s2+1),[n1,n2,s2]),o:r.o,a:r.a,p:85,e:n1+'+'+n2+'='+s2};}}
+  ]},
+  {name:'שלב 5 — חיסור עשרוניים',emoji:'➖',bonus:90,topics:[
+    {id:'nsub',label:'חיסור עשרוניים',ex:{title:'חיסור עשרוניים',body:'מיישרים נקודות! ➖',formula:'4.5 − 1.2 = 3.3'},
+     pool:[{t:'4.5 − 1.2 = ?',s:mNumLine(0,5,[1.2,3.3,4.5]),o:['3.3','3.7','5.7','2.3'],a:0,p:80,e:'4.5−1.2=3.3'},{t:'3.0 − 1.8 = ?',s:mNumLine(0,4,[1.2,1.8,3]),o:['1.2','2.2','1.8','2.8'],a:0,p:90,e:'3.0−1.8=1.2'},{t:'5.75 − 2.25 = ?',s:mNumLine(0,6,[2.25,3.5,5.75]),o:['3.00','3.50','3.55','2.50'],a:1,p:100,e:'5.75−2.25=3.50'},{t:'7.1 − 3.6 = ?',s:mNumLine(0,8,[3.5,3.6,7.1]),o:['3.5','4.5','3.6','4.1'],a:0,p:90,e:'7.1−3.6=3.5'}]}
+  ]},
+  {name:'שלב 6 — כפל עשרוניים ב-10',emoji:'🔟',bonus:100,topics:[
+    {id:'nmul10',label:'כפל ב-10, 100',ex:{title:'כפל ב-10/100',body:'הנקודה קופצת ימינה! 🔟',formula:'×10 → קפיצה אחת, ×100 → שתיים'},
+     pool:[{t:'3.5 × 10 = ?',s:'',o:['0.35','3.50','35','350'],a:2,p:80,e:'הנקודה ימינה 1 → 35'},{t:'0.42 × 100 = ?',s:'',o:['4.2','42','420','0.042'],a:1,p:90,e:'הנקודה ימינה 2 → 42'},{t:'1.7 × 10 = ?',s:'',o:['0.17','17','170','1.70'],a:1,p:80,e:'הנקודה ימינה 1 → 17'},{t:'0.08 × 100 = ?',s:'',o:['0.8','8','80','800'],a:1,p:100,e:'הנקודה ימינה 2 → 8'},{t:'12.5 × 10 = ?',s:'',o:['1.25','12.50','125','1250'],a:2,p:90,e:'הנקודה ימינה 1 → 125'}]}
+  ]},
+  {name:'שלב 7 — חילוק עשרוניים ב-10',emoji:'➗',bonus:100,topics:[
+    {id:'ndiv10',label:'חילוק ב-10, 100',ex:{title:'חילוק ב-10/100',body:'הנקודה קופצת שמאלה! ➗',formula:'÷10 → קפיצה אחת, ÷100 → שתיים'},
+     pool:[{t:'35 ÷ 10 = ?',s:'',o:['0.35','3.5','35','350'],a:1,p:80,e:'הנקודה שמאלה 1 → 3.5'},{t:'42 ÷ 100 = ?',s:'',o:['4.2','0.42','0.042','420'],a:1,p:90,e:'הנקודה שמאלה 2 → 0.42'},{t:'170 ÷ 10 = ?',s:'',o:['1.7','17','170','0.17'],a:1,p:80,e:'הנקודה שמאלה 1 → 17'},{t:'8 ÷ 100 = ?',s:'',o:['0.8','0.08','80','0.008'],a:1,p:100,e:'הנקודה שמאלה 2 → 0.08'}]}
+  ]},
+  {name:'שלב 8 — עשרוניים ושברים',emoji:'🔄',bonus:110,topics:[
+    {id:'nd2f',label:'עשרוני ↔ שבר',ex:{title:'עשרוני ↔ שבר',body:'0.5 = 5/10 = 1/2 🔄',formula:'קוראים את העשרוני, כותבים כשבר'},
+     pool:[{t:'0.5 = איזה שבר?',s:mNumLine(0,1,[0,0.5,1]),o:['1/5','5/100','1/2','2/5'],a:2,p:90,e:'0.5 = 5/10 = 1/2'},{t:'0.25 = איזה שבר?',s:mNumLine(0,1,[0,0.25,0.5,1]),o:['1/25','1/4','25/10','2/5'],a:1,p:100,e:'0.25 = 25/100 = 1/4'},{t:'0.75 = איזה שבר?',s:mNumLine(0,1,[0,0.25,0.5,0.75,1]),o:['7/10','3/4','7/5','75/10'],a:1,p:100,e:'0.75 = 75/100 = 3/4'},{t:'3/4 = כמה עשרוני?',s:mFracPie(3,4),o:['0.25','0.34','0.5','0.75'],a:3,p:100,e:'3÷4=0.75'},{t:'0.2 = איזה שבר?',s:mNumLine(0,1,[0,0.2,0.5,1]),o:['2/100','1/5','1/2','2/5'],a:1,p:90,e:'0.2 = 2/10 = 1/5'}]}
+  ]},
+  {name:'שלב 9 — מספרים שליליים',emoji:'❄️',bonus:120,topics:[
+    {id:'nneg',label:'מספרים שליליים',ex:{title:'מספרים שליליים',body:'שמאלה מ-0 = מינוס! ❄️',formula:'-3 < -1 < 0 < 2'},
+     pool:[{t:'מה גדול יותר: -3 או -1?',s:mNumLine(-4,2,[-3,-1,0]),o:['-3','-1','שווים','0'],a:1,p:90,e:'-1 ימינה על הציר = גדול'},{t:'מה קטן יותר: -5 או 2?',s:mNumLine(-6,3,[-5,0,2]),o:['-5','2','שווים','0'],a:0,p:80,e:'-5 שמאלה = קטן'},{t:'סדרו: 3, -1, 0, -4',s:mNumLine(-5,4,[-4,-1,0,3]),o:['-4,-1,0,3','3,0,-1,-4','-1,-4,0,3','0,-1,-4,3'],a:0,p:100,e:'-4 < -1 < 0 < 3'},{t:'(-2) + 5 = ?',s:mNumLine(-3,4,[-2,0,3]),o:['-7','3','7','-3'],a:1,p:110,e:'מ-(-2) קופצים 5 ימינה = 3'}]}
+  ]},
+  {name:'שלב 10 — 👑 NUMBER LINE PRO!',emoji:'👑',bonus:500,topics:[
+    {id:'nfin',label:'אלוף ציר המספרים!',ex:{title:'Final Boss!',body:'שאלות מכל הנושאים! 👑',formula:'כל הנוסחאות!'},
+     pool:[{t:'2.7 + 1.6 = ?',s:mNumLine(0,5,[2.7,4.3]),o:['3.3','4.3','3.13','4.13'],a:1,p:140,e:'2.7+1.6=4.3'},{t:'0.35 × 100 = ?',s:'',o:['3.5','35','350','0.035'],a:1,p:140,e:'הנקודה ימינה 2 → 35'},{t:'0.6 = איזה שבר?',s:mNumLine(0,1,[0,0.5,0.6,1]),o:['6/100','1/6','3/5','6/5'],a:2,p:140,e:'0.6 = 6/10 = 3/5'},{t:'מה בין -2 ל-1?',s:mNumLineQ(-3,2,[-2,-1,0,1],-1.5),o:['-0.5','-1.5','-3','0'],a:1,p:140,e:'באמצע = -1.5'},{t:'5.08 − 2.3 = ?',s:'',o:['2.78','3.78','2.05','3.05'],a:0,p:150,e:'5.08−2.30=2.78'}]}
+  ]}
+];
+
+// ===== ARENA MAP (single source of truth) =====
+ARENAS = {
+  geo:  {lv:LV_GEO, name:'גיאומטריה', emoji:'📐', color:'#7c3aed'},
+  frac: {lv:LV_FRAC, name:'שברים', emoji:'🍕', color:'#22c55e'},
+  pct:  {lv:LV_PCT, name:'אחוזים', emoji:'💯', color:'#f97316'},
+  num:  {lv:LV_NUM, name:'ציר המספרים', emoji:'📏', color:'#3b82f6'}
+};
+
+// Active level array — defaults to geo, changes when player picks arena
+var LV = LV_GEO;
+
+// ===== ARENA SELECTION =====
+function selectArena(id){
+  currentArena = id;
+  var ar = ARENAS[id];
+  if(!ar) return;
+  LV = ar.lv;
+  startGame();
+}
+
+function showArenaScreen(){
+  document.getElementById('arena-player-name').textContent='👋 '+playerName;
+  // Load total score across all arenas
+  var total=0;
+  ['geo','frac','pct','num'].forEach(function(id){
+    try{
+      var s=JSON.parse(localStorage.getItem('mathArena_progress_'+id)||'null');
+      var progEl=document.getElementById(id+'-prog');
+      if(s&&s.lvlIdx>0){
+        if(progEl) progEl.textContent=s.lvlIdx+'/';
+        total+=(s.score||0);
+      } else {
+        if(progEl) progEl.textContent='0/';
+      }
+    }catch(e){}
+  });
+  document.getElementById('arena-total').textContent=total;
+  showScreen('arena-screen');
+}
+
+// Per-arena progress keys
+function arenaProgressKey(){return 'mathArena_progress_'+currentArena;}
+function arenaScoreKey(){return 'mathArena_scores_'+currentArena;}
 
 
 
@@ -2193,19 +2620,22 @@ var PROGRESS_KEY = 'mathArena_progress';
 
 function saveProgress(){
   try {
+    var key = arenaProgressKey();
     var state = {
       lvlIdx:lvlIdx, tIdx:tIdx, score:score,
       maxStr:maxStr, totR:totR, totA:totA, lives:lives,
       powerUps:powerUps, playerName:playerName,
+      arena:currentArena,
       timestamp:Date.now()
     };
-    localStorage.setItem(PROGRESS_KEY, JSON.stringify(state));
+    localStorage.setItem(key, JSON.stringify(state));
   } catch(e){}
 }
 
 function loadProgress(){
   try {
-    var raw = localStorage.getItem(PROGRESS_KEY);
+    var key = arenaProgressKey();
+    var raw = localStorage.getItem(key);
     if(!raw) return null;
     var state = JSON.parse(raw);
     // Expire after 30 days
@@ -2215,7 +2645,7 @@ function loadProgress(){
 }
 
 function clearProgress(){
-  try { localStorage.removeItem(PROGRESS_KEY); } catch(e){}
+  try { localStorage.removeItem(arenaProgressKey()); } catch(e){}
 }
 
 // Auto-save on topic/level advance
@@ -2424,7 +2854,7 @@ window.addEventListener('DOMContentLoaded', function(){
     isDuel = true;
     // Pre-fill name if available
     try {
-      var saved = JSON.parse(localStorage.getItem('mathArena_progress')||'null');
+      var saved = JSON.parse(localStorage.getItem('mathArena_progress_geo')||'null');
       if(saved && saved.playerName) document.getElementById('duel-name-input').value = saved.playerName;
     } catch(e){}
   } else {
@@ -2449,9 +2879,9 @@ function startDuel(){
   
   // Save player name for future
   try { 
-    var p = JSON.parse(localStorage.getItem('mathArena_progress')||'{}');
+    var p = JSON.parse(localStorage.getItem('mathArena_progress_geo')||'{}');
     p.playerName = playerName;
-    localStorage.setItem('mathArena_progress', JSON.stringify(p));
+    localStorage.setItem('mathArena_progress_geo', JSON.stringify(p));
   } catch(e){}
   addPlayerToCount(playerName);
   
@@ -2575,15 +3005,19 @@ function submitName(){
   if(!n){ document.getElementById('name-input').focus(); return; }
   playerName = n;
   addPlayerToCount(playerName);
-  startGame();
+  showArenaScreen();
 }
 
-// Pre-fill name from saved progress
+// Pre-fill name from saved progress (check any arena)
 try {(function(){
   try {
-    var saved = JSON.parse(localStorage.getItem('mathArena_progress')||'null');
-    if(saved && saved.playerName){
-      document.getElementById('name-input').value = saved.playerName;
+    var ids=['geo','frac','pct','num'];
+    for(var i=0;i<ids.length;i++){
+      var saved = JSON.parse(localStorage.getItem('mathArena_progress_'+ids[i])||'null');
+      if(saved && saved.playerName){
+        document.getElementById('name-input').value = saved.playerName;
+        break;
+      }
     }
   } catch(e){}
 })();}catch(e){}
@@ -2824,8 +3258,8 @@ function shareGameLink(){
   var msg = '━━━━━━━━━━━━━━━\n' +
             '🎮  *Math Arena*  🎮\n' +
             '━━━━━━━━━━━━━━━\n\n' +
-            '📐  גיאומטריה כיתה ו\'\n' +
-            '🔥  שלבים • אתגרים • דו-קרבות\n\n' +
+            '📐🍕💯📏 מתמטיקה כיתה ו\'\n' +
+            '🔥  4 זירות • אתגרים • דו-קרבות\n\n' +
             '🎮 *Play Math Arena* 👇\n' +
             GAME_URL;
   showSharePopup(msg);
