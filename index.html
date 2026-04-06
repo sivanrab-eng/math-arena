@@ -3528,7 +3528,7 @@ window.addEventListener('DOMContentLoaded', function(){
     } catch(e){}
   } else {
     showScreen('name-screen');
-    document.getElementById('name-input').focus();
+    var ni = document.getElementById('name-input'); if(ni) ni.focus();
   }
   
   // Track unique player count
