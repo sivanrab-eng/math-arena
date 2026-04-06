@@ -4,6 +4,14 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>Math Arena — כיתה ד׳-י׳</title>
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#6c35de">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Math Arena">
+<link rel="apple-touch-icon" href="icon-192.png">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="application-name" content="Math Arena">
 
 <style>
 *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
@@ -4353,6 +4361,15 @@ function doConfetti(){
   var ps=[];for(var pi=0;pi<150;pi++){ps.push({x:Math.random()*cv.width,y:-10-Math.random()*50,r:Math.random()*6+2,sp:Math.random()*4+1.5,ta:0,ts:Math.random()*.12+.04,col:['#a78bfa','#fbbf24','#fb923c','#4ade80','#f472b6','#38bdf8','#ef4444','#fde68a'][Math.floor(Math.random()*8)],rot:Math.random()*360,rsp:Math.random()*6-3});}
   var fr=0;
   (function draw(){ctx.clearRect(0,0,cv.width,cv.height);ps.forEach(function(p){p.ta+=p.ts;p.y+=p.sp;p.x+=Math.sin(p.ta)*1.5;p.rot+=p.rsp;ctx.save();ctx.translate(p.x,p.y);ctx.rotate(p.rot*Math.PI/180);ctx.fillStyle=p.col;ctx.fillRect(-p.r/2,-p.r,p.r,p.r*2);ctx.restore();});if(++fr<250)requestAnimationFrame(draw);else ctx.clearRect(0,0,cv.width,cv.height);})();
+}
+</script>
+<script>
+if('serviceWorker' in navigator){
+  window.addEventListener('load',function(){
+    navigator.serviceWorker.register('sw.js').then(function(r){
+      console.log('SW registered:',r.scope);
+    }).catch(function(e){console.log('SW failed:',e);});
+  });
 }
 </script>
 </body>
