@@ -3424,10 +3424,16 @@ function doRevive(){
 function revivalInvite(){
   // Share invite link
   var duelUrl = makeDuelUrl(playerName, score, false);
+  var topicLine = '';
+  var _ga5 = GRADE_ARENAS[currentGrade];
+  var _gn5 = GRADE_NAMES[currentGrade] || '';
+  var _an5 = (_ga5 && _ga5[currentArena]) ? _ga5[currentArena].name : '';
+  if(_gn5 && _an5) topicLine = '📚  '+_gn5+' — '+_an5+'\n';
   var msg = '━━━━━━━━━━━━━━━\n' +
             '⚔️  *Math Arena*  ⚔️\n' +
             '━━━━━━━━━━━━━━━\n\n' +
             '🆘  ' + playerName + ' צריך עזרה!\n\n' +
+            topicLine +
             '🏆  ניקוד: *' + score + '*\n' +
             '💪  בוא תנצח אותי!\n\n' +
             '🎮 *Play Math Arena* 👇\n' +
@@ -3500,6 +3506,8 @@ var duelChallengerName = '';
 var duelTimeLeft = 90; // 1.5 minutes
 var duelTimerID = null;
 var duelScore = 0;
+var duelGrade = null;
+var duelArenaId = null;
 
 // Check URL for duel params on load (supports both hash and query params)
 window.addEventListener('DOMContentLoaded', function(){
@@ -3513,6 +3521,8 @@ window.addEventListener('DOMContentLoaded', function(){
       challenger = data.n || null;
       beatScore = data.s != null ? String(data.s) : null;
       challState = data.st || null; // challenger's state for ping-pong
+      duelGrade = data.g || null;
+      duelArenaId = data.a || null;
     } catch(e){}
   }
   
@@ -3526,9 +3536,21 @@ window.addEventListener('DOMContentLoaded', function(){
   if(challenger){
     duelChallengerName = decodeURIComponent(challenger);
     document.getElementById('duel-challenger-name').textContent = duelChallengerName;
+    // Build topic label from duel grade+arena
+    var duelTopicLabel = '';
+    if(duelGrade && duelArenaId){
+      var _ga = GRADE_ARENAS[duelGrade];
+      var _gn = GRADE_NAMES[duelGrade] || '';
+      var _an = (_ga && _ga[duelArenaId]) ? _ga[duelArenaId].name : '';
+      if(_gn && _an) duelTopicLabel = _gn + ' — ' + _an;
+    }
     if(beatScore){ 
-      document.getElementById('duel-subtitle').textContent = 'הניקוד של '+duelChallengerName+': '+beatScore+' — תצליח לנצח?! 🔥'; 
+      var subText = 'הניקוד של '+duelChallengerName+': '+beatScore+' — תצליח לנצח?! 🔥';
+      if(duelTopicLabel) subText = '📚 '+duelTopicLabel+'\n'+subText;
+      document.getElementById('duel-subtitle').textContent = subText; 
       try{ localStorage.setItem('challScore_'+duelChallengerName, beatScore); }catch(e){} 
+    } else if(duelTopicLabel){
+      document.getElementById('duel-subtitle').textContent = '📚 '+duelTopicLabel+' ⚡';
     }
     // Save challenger state if provided (for ping-pong continuity)
     if(challState){
@@ -3553,6 +3575,22 @@ window.addEventListener('DOMContentLoaded', function(){
 });
 
 function startDuel(){
+  // Set correct grade and arena from duel link
+  if(duelGrade && duelArenaId){
+    currentGrade = duelGrade;
+    var _ga = GRADE_ARENAS[currentGrade];
+    if(_ga){
+      ARENAS = {};
+      var _keys = Object.keys(_ga);
+      for(var _i=0;_i<_keys.length;_i++){
+        var _k=_keys[_i], _ar=_ga[_k];
+        ARENAS[_k] = {lv:_ar.lv, name:_ar.name, emoji:_ar.emoji, color:_ar.color};
+      }
+    }
+    currentArena = duelArenaId;
+    var _arObj = ARENAS[duelArenaId];
+    if(_arObj) LV = _arObj.lv;
+  }
   // Get name from duel name input
   var nameInput = document.getElementById('duel-name-input');
   if(nameInput && nameInput.value.trim()){
@@ -3648,7 +3686,7 @@ function endDuel(){
 }
 
 function makeDuelUrl(name, score, includeState){
-  var data = { n: name, s: score };
+  var data = { n: name, s: score, g: currentGrade, a: currentArena };
   if(includeState){
     data.st = { l: lvlIdx, t: tIdx, p: pIdx, sc: score, ms: maxStr, tr: totR, ta: totA };
   }
@@ -3657,10 +3695,16 @@ function makeDuelUrl(name, score, includeState){
 
 function shareDuelResult(){
   var duelUrl = makeDuelUrl(playerName, duelScore, true);
+  var topicLine = '';
+  var _ga3 = GRADE_ARENAS[currentGrade];
+  var _gn3 = GRADE_NAMES[currentGrade] || '';
+  var _an3 = (_ga3 && _ga3[currentArena]) ? _ga3[currentArena].name : '';
+  if(_gn3 && _an3) topicLine = '📚  '+_gn3+' — '+_an3+'\n';
   var text = '━━━━━━━━━━━━━━━\n' +
              '⚔️  *Math Arena*  ⚔️\n' +
              '━━━━━━━━━━━━━━━\n\n' +
              '🎯  ' + playerName + ' vs ' + duelChallengerName + '\n\n' +
+             topicLine +
              '🏆  תוצאה: *' + duelScore + ' נק\'*\n' +
              '🔥  מי ינצח הבא?\n\n' +
              '🎮 *Play Math Arena* 👇\n' +
@@ -3671,10 +3715,16 @@ function shareDuelResult(){
 function shareDuelInvite(){
   if(!playerName || playerName === 'שחקן'){ alert('הכנס שם קודם'); return; }
   var duelUrl = makeDuelUrl(playerName, score, true);
+  var topicLine = '';
+  var _ga2 = GRADE_ARENAS[currentGrade];
+  var _gn2 = GRADE_NAMES[currentGrade] || '';
+  var _an2 = (_ga2 && _ga2[currentArena]) ? _ga2[currentArena].name : '';
+  if(_gn2 && _an2) topicLine = '📚  '+_gn2+' — '+_an2+'\n';
   var text = '━━━━━━━━━━━━━━━\n' +
              '⚔️  *Math Arena*  ⚔️\n' +
              '━━━━━━━━━━━━━━━\n\n' +
              '🤺  ' + playerName + ' מאתגר אותך!\n\n' +
+             topicLine +
              '🏆  הניקוד שלי: *' + score + '*\n' +
              '💪  תצליח לנצח?\n\n' +
              '🎮 *Play Math Arena* 👇\n' +
@@ -3871,10 +3921,16 @@ function showLB(heading, emoji, onContinue){
 function shareDuelFromLB(){
   if(!playerName){ playerName = 'Player'; }
   var duelUrl = makeDuelUrl(playerName, score, true);
+  var topicLine = '';
+  var _ga4 = GRADE_ARENAS[currentGrade];
+  var _gn4 = GRADE_NAMES[currentGrade] || '';
+  var _an4 = (_ga4 && _ga4[currentArena]) ? _ga4[currentArena].name : '';
+  if(_gn4 && _an4) topicLine = '📚  '+_gn4+' — '+_an4+'\n';
   var msg = '━━━━━━━━━━━━━━━\n' +
             '⚔️  *Math Arena*  ⚔️\n' +
             '━━━━━━━━━━━━━━━\n\n' +
             '🤺  ' + playerName + ' מאתגר אותך!\n\n' +
+            topicLine +
             '🏆  הניקוד שלי: *' + score + '*\n' +
             '💪  תצליח לנצח?\n\n' +
             '🎮 *Play Math Arena* 👇\n' +
