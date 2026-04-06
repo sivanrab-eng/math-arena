@@ -988,6 +988,39 @@ body{background-color:#1a0a3e;background:radial-gradient(ellipse at top, #2d1b69
   box-shadow:0 5px 0 #b45309,0 8px 20px rgba(251,191,36,.3);
 }
 .revival-btn.coins:disabled{opacity:.4;cursor:default;transform:none !important;}
+.revival-btn.ad{
+  background:linear-gradient(135deg,#8b5cf6,#6d28d9);color:#fff;
+  box-shadow:0 5px 0 #4c1d95,0 8px 20px rgba(139,92,246,.3);
+  position:relative;overflow:hidden;
+}
+.revival-btn.ad::after{
+  content:'';position:absolute;top:-50%;left:-50%;width:200%;height:200%;
+  background:linear-gradient(45deg,transparent 40%,rgba(255,255,255,.15) 50%,transparent 60%);
+  animation:adShine 2s ease-in-out infinite;
+}
+@keyframes adShine{0%{transform:translateX(-100%) rotate(45deg);}100%{transform:translateX(100%) rotate(45deg);}}
+#ad-overlay{
+  display:none;position:fixed;top:0;right:0;bottom:0;left:0;z-index:10001;
+  background:rgba(0,0,0,.95);align-items:center;justify-content:center;flex-direction:column;gap:16px;
+}
+#ad-overlay.on{display:flex;}
+.ad-container{
+  width:100%;max-width:340px;min-height:280px;background:#111;border:2px solid #333;
+  border-radius:16px;display:flex;align-items:center;justify-content:center;flex-direction:column;
+  gap:12px;position:relative;overflow:hidden;
+}
+.ad-placeholder{color:rgba(255,255,255,.3);font-size:14px;font-weight:700;}
+.ad-timer-bar{
+  width:100%;max-width:340px;height:6px;background:rgba(255,255,255,.1);border-radius:3px;overflow:hidden;
+}
+.ad-timer-fill{height:100%;background:linear-gradient(90deg,#8b5cf6,#a78bfa);width:0%;transition:width .3s linear;border-radius:3px;}
+.ad-skip-btn{
+  padding:10px 32px;border-radius:12px;border:none;background:#8b5cf6;color:#fff;
+  font-size:15px;font-weight:800;cursor:pointer;font-family:inherit;opacity:0;
+  pointer-events:none;transition:opacity .3s;
+}
+.ad-skip-btn.ready{opacity:1;pointer-events:auto;}
+.ad-label{color:rgba(255,255,255,.4);font-size:11px;font-weight:700;letter-spacing:1px;}
 .revival-btn.giveup{
   background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.15);
   color:rgba(255,255,255,.5);font-size:14px;
@@ -1299,8 +1332,19 @@ body{background-color:#1a0a3e;background:radial-gradient(ellipse at top, #2d1b69
   <div class="revival-opts">
     <button class="revival-btn invite" onclick="revivalInvite()">📲 הזמן חבר = +1 חיים מיד!</button>
     <button class="revival-btn coins" id="revival-coins-btn" onclick="revivalCoins()">🪙 שלם 300 מטבעות</button>
+    <button class="revival-btn ad" id="revival-ad-btn" onclick="revivalWatchAd()">📺 צפה בפרסומת = +1 חיים!</button>
     <button class="revival-btn giveup" onclick="revivalGiveUp()">😔 ויתור</button>
   </div>
+</div>
+
+<!-- AD OVERLAY -->
+<div id="ad-overlay">
+  <div class="ad-label">פרסומת</div>
+  <div class="ad-container" id="ad-container">
+    <div class="ad-placeholder" id="ad-placeholder">📺 מרחב פרסומת<br><span style="font-size:11px;">AD_SLOT — יוחלף בפרסומת אמיתית</span></div>
+  </div>
+  <div class="ad-timer-bar"><div class="ad-timer-fill" id="ad-timer-fill"></div></div>
+  <button class="ad-skip-btn" id="ad-skip-btn" onclick="AdManager.skip()">✓ קיבלת חיים!</button>
 </div>
 
 <!-- SHARE POPUP -->
@@ -3372,6 +3416,14 @@ function showRevival(){
     coinsBtn.textContent = '🪙 ' + _revivalCost + ' מטבעות (חסר לך ' + (_revivalCost - score) + ')';
   }
   
+  // Update ad button
+  var adBtn = document.getElementById('revival-ad-btn');
+  if(AdManager.canShowAd()){
+    adBtn.style.display = 'flex';
+  } else {
+    adBtn.style.display = 'none';
+  }
+  
   // Show overlay
   document.getElementById('revival-overlay').classList.add('on');
   
@@ -3466,6 +3518,121 @@ function revivalGiveUp(){
   document.getElementById('revival-ring').style.stroke = '#a78bfa';
   document.getElementById('revival-timer-num').style.color = '#fff';
   showWin();
+}
+
+// ===== AD MANAGER (Infrastructure for rewarded ads) =====
+var AdManager = (function(){
+  var _adTimerID = null;
+  var _onReward = null;
+  var _adWatchCount = 0;       // total ads watched this session
+  var _adRevivalCount = 0;     // ad-revivals this game
+  var _maxAdRevivals = 1;      // max 1 ad-revival per game (prevents abuse)
+  var _adDurationSec = 5;      // simulated ad duration (real SDK will override)
+  var _sdkReady = false;       // will be true when real SDK loads
+  var _sdkType = null;         // 'admob' | 'gam' | 'ironsource' | null
+
+  function canShowAd(){
+    return _adRevivalCount < _maxAdRevivals;
+  }
+
+  // Called when real ad SDK loads (AdMob / GAM / IronSource etc.)
+  function initSDK(type){
+    _sdkType = type;
+    _sdkReady = true;
+    console.log('[AdManager] SDK ready:', type);
+  }
+
+  // Show a rewarded ad. onReward called if user completes it.
+  function showRewarded(onReward){
+    _onReward = onReward;
+    
+    // --- REAL SDK HOOK ---
+    // When integrating a real ad SDK, replace the simulated block below with:
+    //
+    // if(_sdkType === 'admob' && typeof admob !== 'undefined'){
+    //   admob.rewardedAd.show({ adUnitId: 'ca-app-pub-XXXX/YYYY' })
+    //     .then(function(reward){ _complete(); })
+    //     .catch(function(e){ _fail(); });
+    //   return;
+    // }
+    //
+    // if(_sdkType === 'gam' && typeof googletag !== 'undefined'){
+    //   // Google Ad Manager rewarded ad logic here
+    //   return;
+    // }
+    // --- END REAL SDK HOOK ---
+
+    // Simulated ad (placeholder until real SDK is plugged in)
+    _showSimulated();
+  }
+
+  function _showSimulated(){
+    var overlay = document.getElementById('ad-overlay');
+    var fill = document.getElementById('ad-timer-fill');
+    var skipBtn = document.getElementById('ad-skip-btn');
+    overlay.classList.add('on');
+    fill.style.width = '0%';
+    skipBtn.classList.remove('ready');
+
+    var elapsed = 0;
+    _adTimerID = setInterval(function(){
+      elapsed++;
+      fill.style.width = Math.min(100, (elapsed / _adDurationSec) * 100).toFixed(1) + '%';
+      if(elapsed >= _adDurationSec){
+        clearInterval(_adTimerID);
+        _adTimerID = null;
+        skipBtn.classList.add('ready');
+      }
+    }, 1000);
+  }
+
+  function skip(){
+    // Only works after ad completed
+    var skipBtn = document.getElementById('ad-skip-btn');
+    if(!skipBtn.classList.contains('ready')) return;
+    
+    if(_adTimerID){ clearInterval(_adTimerID); _adTimerID = null; }
+    document.getElementById('ad-overlay').classList.remove('on');
+    _adWatchCount++;
+    _adRevivalCount++;
+
+    if(_onReward){
+      _onReward();
+      _onReward = null;
+    }
+  }
+
+  function resetGame(){
+    _adRevivalCount = 0;
+  }
+
+  function getStats(){
+    return { totalAdsWatched: _adWatchCount, adRevivalsThisGame: _adRevivalCount };
+  }
+
+  return {
+    canShowAd: canShowAd,
+    showRewarded: showRewarded,
+    skip: skip,
+    resetGame: resetGame,
+    getStats: getStats,
+    initSDK: initSDK
+  };
+})();
+
+function revivalWatchAd(){
+  if(!AdManager.canShowAd()) return;
+  // Close revival overlay, show ad
+  if(_revivalTimerID){ clearInterval(_revivalTimerID); _revivalTimerID = null; }
+  document.getElementById('revival-overlay').classList.remove('on');
+  document.getElementById('revival-ring').style.stroke = '#a78bfa';
+  document.getElementById('revival-timer-num').style.color = '#fff';
+  
+  AdManager.showRewarded(function(){
+    // Reward: revive the player
+    doRevive();
+    charBubble('תודה על הצפייה! 💜');
+  });
 }
 
 // ===== END REVIVAL SYSTEM =====
@@ -4050,7 +4217,7 @@ function resumeFromFailure(){
   totR = _failState.totR;
   totA = _failState.totA;
   lives = 3; gStr = 0; tStr = 0; answered = false;
-  _revivalCount = 0; _gameOverCount = 0;
+  _revivalCount = 0; _gameOverCount = 0; AdManager.resetGame();
   updateComboGlow(0); updateStreakMult(0,1);
   resetPowerUps(); showChar(); showScreen('game-screen'); updHUD();
   playCountdown(function(){ loadQ(); });
@@ -4110,7 +4277,7 @@ function startGame(){
     }
   }
   score=0;lives=3;answered=false;lvlIdx=0;tIdx=0;pIdx=0;tStr=0;gStr=0;maxStr=0;totR=0;totA=0;
-  _revivalCount=0;_gameOverCount=0;
+  _revivalCount=0;_gameOverCount=0;AdManager.resetGame();
   resetPowerUps();showChar();showScreen('game-screen');updHUD();
   playCountdown(function(){loadQ();});
   saveProgress();
@@ -4118,7 +4285,7 @@ function startGame(){
 function restartGame(){
   clearProgress();_failState=null;
   achievements={};score=0;lives=3;answered=false;lvlIdx=0;tIdx=0;pIdx=0;tStr=0;gStr=0;maxStr=0;totR=0;totA=0;
-  _revivalCount=0;_gameOverCount=0;
+  _revivalCount=0;_gameOverCount=0;AdManager.resetGame();
   updateComboGlow(0);updateStreakMult(0,1);
   resetPowerUps();showChar();showScreen('game-screen');updHUD();
   playCountdown(function(){loadQ();});
