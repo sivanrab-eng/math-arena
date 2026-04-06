@@ -1028,11 +1028,19 @@ body{background-color:#1a0a3e;background:radial-gradient(ellipse at top, #2d1b69
   <div class="name-title">Math Arena</div>
   <div class="name-sub">כיתה ד׳ עד י׳ • כל נושאי הלימוד 🎮</div>
   <div class="name-features"><div class="name-feat">🔥 Streaks</div><div class="name-feat">⚡ Speed Bonus</div><div class="name-feat">✂️ Powers</div><div class="name-feat">⚔️ Duels</div><div class="name-feat">🎵 Music</div><div class="name-feat">💥 Multipliers</div></div>
-  <div class="name-input-wrap">
-    <input id="name-input" type="text" placeholder="What's your name? ✏️" maxlength="16" autocomplete="off"/>
-  </div>
   <button id="btn-start" onclick="submitName()">🚀 LET'S GO!</button>
   <button onclick="shareGameLink()" style="margin-top:12px;padding:10px 24px;background:rgba(59,130,246,.12);border:1.5px solid rgba(59,130,246,.35);border-radius:14px;color:#60a5fa;font-size:14px;font-weight:700;cursor:pointer;font-family:inherit;">🔗 שתף את המשחק עם חבר</button>
+</div>
+
+<!-- NAME PROMPT POPUP (after level 1) -->
+<div id="name-prompt-overlay" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.75);z-index:9999;align-items:center;justify-content:center;padding:24px;">
+  <div style="background:linear-gradient(135deg,#1e1b4b,#312e81);border-radius:24px;padding:32px 24px;max-width:340px;width:100%;text-align:center;border:2px solid rgba(139,92,246,.4);box-shadow:0 0 40px rgba(139,92,246,.3);">
+    <div style="font-size:40px;margin-bottom:12px;">🏆</div>
+    <div id="name-prompt-msg" style="font-size:17px;font-weight:700;color:#fff;margin-bottom:18px;line-height:1.5;direction:rtl;"></div>
+    <input id="name-prompt-input" type="text" placeholder="הכנס את שמך ✏️" maxlength="16" autocomplete="off" style="width:100%;padding:14px 18px;background:rgba(255,255,255,.12);border:2px solid rgba(139,92,246,.5);border-radius:14px;color:#fff;font-size:18px;font-weight:700;text-align:center;outline:none;font-family:inherit;box-sizing:border-box;margin-bottom:14px;"/>
+    <button onclick="confirmNamePrompt()" style="width:100%;padding:14px;background:linear-gradient(135deg,#7c3aed,#6d28d9);border:none;border-radius:14px;color:#fff;font-size:17px;font-weight:800;cursor:pointer;font-family:inherit;margin-bottom:8px;">✅ זה אני!</button>
+    <button onclick="skipNamePrompt()" style="width:100%;padding:10px;background:transparent;border:1px solid rgba(255,255,255,.2);border-radius:14px;color:rgba(255,255,255,.5);font-size:14px;cursor:pointer;font-family:inherit;">אולי אחר כך</button>
+  </div>
 </div>
 
 
@@ -3533,7 +3541,7 @@ function startDuel(){
   if(nameInput && nameInput.value.trim()){
     playerName = nameInput.value.trim();
   }
-  if(!playerName || playerName === 'Player'){
+  if(!playerName || playerName === 'Player' || playerName === 'שחקן'){
     if(nameInput){ nameInput.focus(); nameInput.style.borderColor='#ef4444'; }
     return;
   }
@@ -3644,7 +3652,7 @@ function shareDuelResult(){
 }
 
 function shareDuelInvite(){
-  if(!playerName){ alert('הכנס שם קודם'); return; }
+  if(!playerName || playerName === 'שחקן'){ alert('הכנס שם קודם'); return; }
   var duelUrl = makeDuelUrl(playerName, score, true);
   var text = '━━━━━━━━━━━━━━━\n' +
              '⚔️  *Math Arena*  ⚔️\n' +
@@ -3658,13 +3666,13 @@ function shareDuelInvite(){
 }
 
 // ===== PLAYER & LEADERBOARD =====
-var playerName = '';
+var playerName = 'שחקן';
 var LS_KEY = 'mathArenaScores';
 
 function submitName(){
-  var n = document.getElementById('name-input').value.trim();
-  if(!n){ document.getElementById('name-input').focus(); return; }
-  playerName = n;
+  if(!playerName || playerName === 'שחקן'){
+    playerName = 'שחקן';
+  }
   addPlayerToCount(playerName);
   showGradeScreen();
 }
@@ -3675,17 +3683,43 @@ try {(function(){
     var ids=['geo','frac','pct','num'];
     for(var i=0;i<ids.length;i++){
       var saved = JSON.parse(localStorage.getItem('mathArena_progress_'+ids[i])||'null');
-      if(saved && saved.playerName){
-        document.getElementById('name-input').value = saved.playerName;
+      if(saved && saved.playerName && saved.playerName !== 'שחקן'){
+        playerName = saved.playerName;
         break;
       }
     }
   } catch(e){}
 })();}catch(e){}
 
-// Allow Enter key on name input
-try{document.getElementById('name-input').addEventListener('keydown', function(e){
-  if(e.key === 'Enter') submitName();
+// Name input removed - name is asked after level 1
+
+// === NAME PROMPT after level 1 ===
+var _namePromptCallback = null;
+function showNamePrompt(rank, total, callback){
+  _namePromptCallback = callback;
+  document.getElementById('name-prompt-msg').textContent = 'שחקן, אתה במקום ' + rank + ' מתוך ' + total + ' — רוצה ששמך יופיע בלוח התוצאות?';
+  var overlay = document.getElementById('name-prompt-overlay');
+  overlay.style.display = 'flex';
+  var inp = document.getElementById('name-prompt-input');
+  inp.value = '';
+  setTimeout(function(){ inp.focus(); }, 300);
+}
+function confirmNamePrompt(){
+  var n = document.getElementById('name-prompt-input').value.trim();
+  if(!n){ document.getElementById('name-prompt-input').focus(); document.getElementById('name-prompt-input').style.borderColor='#ef4444'; return; }
+  playerName = n;
+  addPlayerToCount(playerName);
+  saveProgress();
+  saveScore();
+  document.getElementById('name-prompt-overlay').style.display = 'none';
+  if(_namePromptCallback){ var fn=_namePromptCallback; _namePromptCallback=null; fn(); }
+}
+function skipNamePrompt(){
+  document.getElementById('name-prompt-overlay').style.display = 'none';
+  if(_namePromptCallback){ var fn=_namePromptCallback; _namePromptCallback=null; fn(); }
+}
+try{document.getElementById('name-prompt-input').addEventListener('keydown', function(e){
+  if(e.key === 'Enter') confirmNamePrompt();
 });}catch(e){}
 
 // Allow Enter key on duel name input
@@ -4245,19 +4279,43 @@ function showTopicCut(){
 function showLvlCut(){
   if(lvlIdx>=LV.length-1){score+=LV[lvlIdx].bonus;updHUD();showWin();return;}
   var baseBonus=LV[lvlIdx].bonus;
+  var prevLvl=lvlIdx;
   lvlIdx++;tIdx=0;pIdx=0;tStr=0;saveProgress();
   var next=LV[lvlIdx];
   showPrizeBox('Level Up! 🔥', next.name, baseBonus, function(){
-    saveScore();
-    showLB('Level Up! 🔥',next.emoji,function(){
-      document.getElementById('cut-emoji').textContent=next.emoji;
-      document.getElementById('cut-heading').textContent='New Level!';
-      document.getElementById('cut-next').textContent=next.name;
-      document.getElementById('cut-score').textContent=score;
-      document.getElementById('cut-streak').textContent=maxStr+'🔥';
-      document.getElementById('level-cut').classList.add('on');
-      setTimeout(function(){document.getElementById('level-cut').classList.remove('on');updHUD();fadeNext(loadQ);},1800);
-    });
+    // After first level, ask for name if still default
+    if(prevLvl===0 && playerName==='שחקן'){
+      var bots=generateBotScores(lvlIdx);
+      var all=[];
+      for(var bi=0;bi<bots.length;bi++) all.push({score:bots[bi].score});
+      all.push({score:score,isMe:true});
+      all.sort(function(a,b){return b.score-a.score;});
+      var rank=1; for(var i=0;i<all.length;i++){if(all[i].isMe){rank=i+1;break;}}
+      var total=all.length; var rc=getPlayerCount(); if(rc>total) total=rc;
+      showNamePrompt(rank, total, function(){
+        saveScore();
+        showLB('Level Up! 🔥',next.emoji,function(){
+          document.getElementById('cut-emoji').textContent=next.emoji;
+          document.getElementById('cut-heading').textContent='New Level!';
+          document.getElementById('cut-next').textContent=next.name;
+          document.getElementById('cut-score').textContent=score;
+          document.getElementById('cut-streak').textContent=maxStr+'🔥';
+          document.getElementById('level-cut').classList.add('on');
+          setTimeout(function(){document.getElementById('level-cut').classList.remove('on');updHUD();fadeNext(loadQ);},1800);
+        });
+      });
+    } else {
+      saveScore();
+      showLB('Level Up! 🔥',next.emoji,function(){
+        document.getElementById('cut-emoji').textContent=next.emoji;
+        document.getElementById('cut-heading').textContent='New Level!';
+        document.getElementById('cut-next').textContent=next.name;
+        document.getElementById('cut-score').textContent=score;
+        document.getElementById('cut-streak').textContent=maxStr+'🔥';
+        document.getElementById('level-cut').classList.add('on');
+        setTimeout(function(){document.getElementById('level-cut').classList.remove('on');updHUD();fadeNext(loadQ);},1800);
+      });
+    }
   });
 }
 function showWin(){
