@@ -13,6 +13,20 @@
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="application-name" content="Math Arena">
 
+<!-- Google Analytics 4 -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+<script>
+window.dataLayer=window.dataLayer||[];
+function gtag(){dataLayer.push(arguments);}
+gtag('js',new Date());
+gtag('config','G-XXXXXXXXXX');
+
+/* ─── Custom GA4 event helpers ─── */
+function gaEvent(name,params){
+  if(typeof gtag==='function') gtag('event',name,params||{});
+}
+</script>
+
 <style>
 *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
 :root{
@@ -982,9 +996,12 @@ body{background-color:#1a0a3e;background:radial-gradient(ellipse at top, #2d1b69
 </style>
 <meta name="description" content="Math Arena — כיתה ד׳ עד י׳ — משחק מתמטיקה">
 <meta name="theme-color" content="#1a0a3e">
-<meta property="og:title" content="Math Arena — כיתה ד׳-י׳">
-<meta property="og:description" content="Math Arena — משחק מתמטיקה ממכר לכיתות ד׳ עד ט׳">
+<meta property="og:title" content="⚡ Math Arena — אתגר מתמטי ⚡">
+<meta property="og:description" content="כמה שאלות תצליח לפתור לפני שנגמרים לך החיים? 🏟️🔥">
 <meta property="og:url" content="https://sivanrab-eng.github.io/math-arena/">
+<meta property="og:image" content="https://sivanrab-eng.github.io/math-arena/og-image.png">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="he_IL">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📐</text></svg>">
 </head>
 <body style="background:#1a0a3e;color:#fff;">
@@ -4019,6 +4036,7 @@ function closeLB(){
 
 function startGame(){
   achievements={};_failState=null;
+  gaEvent('game_start');
   // Check for saved progress
   var saved = loadProgress();
   if(saved && saved.lvlIdx > 0){
@@ -4320,6 +4338,7 @@ function showLvlCut(){
 }
 function showWin(){
   stopTmr();clearAuto();
+  gaEvent('game_over',{score:score,level:lvlIdx+1,accuracy:totA>0?Math.round(totR/totA*100):0,max_streak:maxStr});
   // Save failure state for resume
   saveFailState();
   var acc=totA>0?Math.round(totR/totA*100):0;
