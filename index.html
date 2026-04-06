@@ -4147,7 +4147,7 @@ function loadQ(){
   _curQ=null; // clear cache so cQ() generates fresh
   var q=cQ(),tp=LV[lvlIdx].topics[tIdx];
   var diff=Math.floor((LV.slice(0,lvlIdx).reduce(function(a,l){return a+l.topics.length;},0)+tIdx)*.3+1);
-  document.getElementById('qtext').textContent=q.t;
+  var qtEl=document.getElementById('qtext');qtEl.textContent=q.t;qtEl.style.direction=/^[\d\(\-]/.test(q.t)?'ltr':'rtl';
   document.getElementById('shape-area').innerHTML=q.s||'';
   document.getElementById('qbadge').textContent=tp.label;
   var opts=document.getElementById('opts');opts.innerHTML='';
