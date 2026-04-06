@@ -3918,14 +3918,25 @@ var duelArenaId = null;
 window.addEventListener('DOMContentLoaded', function(){
   var challenger = null, beatScore = null, challState = null;
   
-  // Try hash-based format first: #b/base64data
+  // Try compact format first: #d/name~score~grade~arena~l.t.p.sc.ms.tr.ta
   var hash = window.location.hash;
-  if(hash && hash.indexOf('#b/') === 0){
+  if(hash && hash.indexOf('#d/') === 0){
+    try {
+      var parts = hash.substring(3).split('~');
+      challenger = decodeURIComponent(parts[0]) || null;
+      beatScore = parts[1] || null;
+      duelGrade = parts[2] || null;
+      duelArenaId = parts[3] || null;
+      if(parts[4]){var st=parts[4].split('.');challState={l:+st[0],t:+st[1],p:+st[2],sc:+st[3],ms:+st[4],tr:+st[5],ta:+st[6]};}
+    } catch(e){}
+  }
+  // Legacy format: #b/base64data
+  if(!challenger && hash && hash.indexOf('#b/') === 0){
     try {
       var data = JSON.parse(decodeURIComponent(escape(atob(hash.substring(3)))));
       challenger = data.n || null;
       beatScore = data.s != null ? String(data.s) : null;
-      challState = data.st || null; // challenger's state for ping-pong
+      challState = data.st || null;
       duelGrade = data.g || null;
       duelArenaId = data.a || null;
     } catch(e){}
@@ -4091,11 +4102,9 @@ function endDuel(){
 }
 
 function makeDuelUrl(name, score, includeState){
-  var data = { n: name, s: score, g: currentGrade, a: currentArena };
-  if(includeState){
-    data.st = { l: lvlIdx, t: tIdx, p: pIdx, sc: score, ms: maxStr, tr: totR, ta: totA };
-  }
-  return GAME_URL + '#b/' + btoa(unescape(encodeURIComponent(JSON.stringify(data))));
+  var parts=[encodeURIComponent(name),score,currentGrade,currentArena];
+  if(includeState) parts.push([lvlIdx,tIdx,pIdx,score,maxStr,totR,totA].join('.'));
+  return GAME_URL+'#d/'+parts.join('~');
 }
 
 function shareDuelResult(){
