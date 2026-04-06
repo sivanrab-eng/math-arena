@@ -2246,49 +2246,67 @@ var currentGrade = 6;
 // ===== כיתה א׳ — LEVEL DATA =====
 var LV_G1_NUMS = [
   {name:'ספירה עד 10',emoji:'🔢',bonus:50,topics:[
-    {id:'g1n1',label:'ספירה',ex:{title:'ספירה',body:'סופרים חפצים!',formula:'1, 2, 3...'},pool:[],
-     gen:function(){var a=randInt(1,10);var emj=['🍎','🌟','⚽','🐱','🎈'][randInt(0,4)];var s='';for(var i=0;i<a;i++)s+=emj;var r=mkO(a,'',[a+1,a>1?a-1:a+2,a+2]);return{t:'כמה '+emj+' יש?<br>'+s,s:'',o:r.o,a:r.a,p:50,e:'יש '+a+' '+emj};}}
+    {id:'g1n1a',label:'ספירה עד 5',ex:{title:'ספירה',body:'סופרים חפצים!',formula:'1, 2, 3...'},pool:[],
+     gen:function(){var a=randInt(1,5);var emj=['🍎','🌟','⚽','🐱','🎈'][randInt(0,4)];var s='';for(var i=0;i<a;i++)s+=emj;var r=mkO(a,'',[a+1,a>1?a-1:a+2,a+2]);return{t:'כמה '+emj+' יש?<br>'+s,s:'',o:r.o,a:r.a,p:40,e:'יש '+a+' '+emj};}},
+    {id:'g1n1b',label:'ספירה עד 10',ex:{title:'ספירה',body:'סופרים עד 10!',formula:'1, 2, 3...10'},pool:[],
+     gen:function(){var a=randInt(4,10);var emj=['🍎','🌟','⚽','🐱','🎈'][randInt(0,4)];var s='';for(var i=0;i<a;i++)s+=emj;var r=mkO(a,'',[a+1,a>1?a-1:a+2,a-2>0?a-2:a+3]);return{t:'כמה '+emj+' יש?<br>'+s,s:'',o:r.o,a:r.a,p:50,e:'יש '+a+' '+emj};}}
   ]},
   {name:'עשרות ואחדות',emoji:'🧮',bonus:60,topics:[
-    {id:'g1n2',label:'עשרות ואחדות',ex:{title:'עשרות ואחדות',body:'15 = 1 עשרת + 5 אחדות',formula:''},pool:[],
-     gen:function(){var t=randInt(1,3),u=randInt(1,9),n=t*10+u;var r=mkO(t,'',[u,t+1,t+u]);return{t:'כמה עשרות ב-'+n+'?',s:'',o:r.o,a:r.a,p:60,e:n+' = '+t+' עשרות + '+u+' אחדות'};}}
+    {id:'g1n2a',label:'כמה עשרות?',ex:{title:'עשרות',body:'15 = 1 עשרת + 5 אחדות',formula:''},pool:[],
+     gen:function(){var t=randInt(1,2),u=randInt(1,9),n=t*10+u;var r=mkO(t,'',[u,t+1,t+u]);return{t:'כמה עשרות ב-'+n+'?',s:'',o:r.o,a:r.a,p:55,e:n+' = '+t+' עשרות + '+u+' אחדות'};}},
+    {id:'g1n2b',label:'כמה אחדות?',ex:{title:'אחדות',body:'15 = 1 עשרת + 5 אחדות',formula:''},pool:[],
+     gen:function(){var t=randInt(1,3),u=randInt(1,9),n=t*10+u;var r=mkO(u,'',[t,u+1>9?u-1:u+1,t+u]);return{t:'כמה אחדות ב-'+n+'?',s:'',o:r.o,a:r.a,p:65,e:n+' = '+t+' עשרות + '+u+' אחדות'};}}
   ]},
   {name:'מי גדול יותר?',emoji:'⚖️',bonus:60,topics:[
-    {id:'g1n3',label:'השוואה',ex:{title:'השוואת מספרים',body:'מי גדול יותר?',formula:''},pool:[],
-     gen:function(){var a=randInt(1,20),b;do{b=randInt(1,20);}while(b===a);var big=Math.max(a,b);var r=mkO(big,'',[Math.min(a,b),a+b,big+1]);return{t:'מי גדול יותר: '+a+' או '+b+'?',s:'',o:r.o,a:r.a,p:60,e:big+' > '+Math.min(a,b)};}}
+    {id:'g1n3a',label:'השוואה עד 10',ex:{title:'השוואה',body:'מי גדול יותר?',formula:''},pool:[],
+     gen:function(){var a=randInt(1,10),b;do{b=randInt(1,10);}while(b===a);var big=Math.max(a,b);var r=mkO(big,'',[Math.min(a,b),a+b,Math.abs(a-b)]);return{t:'מי גדול יותר: '+a+' או '+b+'?',s:'',o:r.o,a:r.a,p:50,e:big+' > '+Math.min(a,b)};}},
+    {id:'g1n3b',label:'השוואה עד 30',ex:{title:'השוואה',body:'משווים מספרים גדולים!',formula:''},pool:[],
+     gen:function(){var a=randInt(5,30),b;do{b=randInt(5,30);}while(b===a);var big=Math.max(a,b);var r=mkO(big,'',[Math.min(a,b),a+b,big+1]);return{t:'מי גדול יותר: '+a+' או '+b+'?',s:'',o:r.o,a:r.a,p:65,e:big+' > '+Math.min(a,b)};}}
   ]}
 ];
 var LV_G1_ADD = [
-  {name:'חיבור עד 10',emoji:'➕',bonus:50,topics:[
-    {id:'g1a1',label:'חיבור קל',ex:{title:'חיבור',body:'סופרים ביחד!',formula:'a + b = ?'},pool:[],
-     gen:function(){var a=randInt(1,5),b=randInt(1,5),c=a+b;var r=mkO(c,'',[c+1,c-1,a]);return{t:a+' + '+b+' = ?',s:'',o:r.o,a:r.a,p:50,e:a+'+'+b+'='+c};}}
+  {name:'חיבור',emoji:'➕',bonus:50,topics:[
+    {id:'g1a1a',label:'חיבור עד 5',ex:{title:'חיבור',body:'סופרים ביחד!',formula:'a + b = ?'},pool:[],
+     gen:function(){var a=randInt(1,3),b=randInt(1,2),c=a+b;var r=mkO(c,'',[c+1,a,b]);return{t:a+' + '+b+' = ?',s:'',o:r.o,a:r.a,p:40,e:a+'+'+b+'='+c};}},
+    {id:'g1a1b',label:'חיבור עד 10',ex:{title:'חיבור',body:'חיבור עד 10!',formula:'a + b = ?'},pool:[],
+     gen:function(){var a=randInt(2,7),b=randInt(2,8-a>1?8-a:2),c=a+b;if(c>10){b=10-a;}c=a+b;var r=mkO(c,'',[c+1,c-1,a]);return{t:a+' + '+b+' = ?',s:'',o:r.o,a:r.a,p:55,e:a+'+'+b+'='+c};}}
   ]},
-  {name:'חיבור עד 20',emoji:'➕',bonus:60,topics:[
-    {id:'g1a2',label:'חיבור',ex:{title:'חיבור',body:'חיבור בתחום 20!',formula:'a + b = ?'},pool:[],
-     gen:function(){var a=randInt(3,12),b=randInt(2,8),c=a+b;if(c>20){a=randInt(2,10);b=randInt(1,10);c=a+b;}var r=mkO(c,'',[c+1,c-1,c+2]);return{t:a+' + '+b+' = ?',s:'',o:r.o,a:r.a,p:60,e:a+'+'+b+'='+c};}}
+  {name:'חיסור',emoji:'➖',bonus:55,topics:[
+    {id:'g1a2a',label:'חיסור עד 5',ex:{title:'חיסור',body:'כמה נשאר?',formula:'a − b = ?'},pool:[],
+     gen:function(){var a=randInt(3,5),b=randInt(1,a-1),c=a-b;var r=mkO(c,'',[c+1,a,b]);return{t:a+' − '+b+' = ?',s:'',o:r.o,a:r.a,p:40,e:a+'−'+b+'='+c};}},
+    {id:'g1a2b',label:'חיסור עד 10',ex:{title:'חיסור',body:'חיסור עד 10!',formula:'a − b = ?'},pool:[],
+     gen:function(){var a=randInt(5,10),b=randInt(1,a-1),c=a-b;var r=mkO(c,'',[c+1,b,a]);return{t:a+' − '+b+' = ?',s:'',o:r.o,a:r.a,p:55,e:a+'−'+b+'='+c};}}
   ]},
-  {name:'חיסור עד 20',emoji:'➖',bonus:60,topics:[
-    {id:'g1a3',label:'חיסור',ex:{title:'חיסור',body:'כמה נשאר?',formula:'a − b = ?'},pool:[],
-     gen:function(){var c=randInt(1,10),b=randInt(1,8),a=c+b;if(a>20){c=randInt(1,8);b=randInt(1,6);a=c+b;}var r=mkO(c,'',[c+1,b,a]);return{t:a+' − '+b+' = ?',s:'',o:r.o,a:r.a,p:60,e:a+'−'+b+'='+c};}}
+  {name:'חיבור וחיסור עד 20',emoji:'🔢',bonus:65,topics:[
+    {id:'g1a3a',label:'חיבור עד 20',ex:{title:'חיבור',body:'עוברים את 10!',formula:'a + b = ?'},pool:[],
+     gen:function(){var a=randInt(5,12),b=randInt(3,8),c=a+b;if(c>20){a=randInt(4,10);b=randInt(2,10);c=a+b;if(c>20){b=20-a;}c=a+b;}var r=mkO(c,'',[c+1,c-1,c+2]);return{t:a+' + '+b+' = ?',s:'',o:r.o,a:r.a,p:60,e:a+'+'+b+'='+c};}},
+    {id:'g1a3b',label:'חיסור עד 20',ex:{title:'חיסור',body:'חיסור עד 20!',formula:'a − b = ?'},pool:[],
+     gen:function(){var a=randInt(11,20),b=randInt(2,a-2),c=a-b;var r=mkO(c,'',[c+1,b,a]);return{t:a+' − '+b+' = ?',s:'',o:r.o,a:r.a,p:65,e:a+'−'+b+'='+c};}}
   ]}
 ];
 var LV_G1_SHAPES = [
   {name:'זיהוי צורות',emoji:'🔷',bonus:50,topics:[
-    {id:'g1s1',label:'צורות',ex:{title:'צורות',body:'משולש, ריבוע, עיגול, מלבן',formula:''},pool:[
-      {t:'לצורה 3 צלעות — מה היא?',s:'',o:['ריבוע','עיגול','משולש','מלבן'],a:2,p:50,e:'3 צלעות = משולש'},
-      {t:'לצורה 4 צלעות שוות — מה היא?',s:'',o:['ריבוע','משולש','עיגול','מלבן'],a:0,p:50,e:'4 צלעות שוות = ריבוע'},
-      {t:'לצורה אין צלעות בכלל, היא עגולה — מה היא?',s:'',o:['ריבוע','משולש','עיגול','מלבן'],a:2,p:50,e:'עגולה = עיגול'},
-      {t:'לצורה 4 צלעות, 2 ארוכות ו-2 קצרות — מה היא?',s:'',o:['ריבוע','משולש','עיגול','מלבן'],a:3,p:60,e:'מלבן!'},
-      {t:'כמה צלעות לריבוע?',s:'',o:['3','4','5','6'],a:1,p:50,e:'ריבוע = 4 צלעות'}
+    {id:'g1s1a',label:'מהי הצורה?',ex:{title:'צורות',body:'משולש, ריבוע, עיגול, מלבן',formula:''},pool:[
+      {t:'צורה עגולה ללא צלעות — מה היא?',s:'',o:['ריבוע','משולש','עיגול','מלבן'],a:2,p:40,e:'עגולה = עיגול'},
+      {t:'לצורה 3 צלעות — מה היא?',s:'',o:['ריבוע','עיגול','משולש','מלבן'],a:2,p:45,e:'3 צלעות = משולש'},
+      {t:'לצורה 4 צלעות שוות — מה היא?',s:'',o:['ריבוע','משולש','עיגול','מלבן'],a:0,p:50,e:'4 צלעות שוות = ריבוע'}
+    ]},
+    {id:'g1s1b',label:'ריבוע או מלבן?',ex:{title:'ריבוע ומלבן',body:'שניהם עם 4 צלעות!',formula:''},pool:[
+      {t:'4 צלעות שוות — ריבוע או מלבן?',s:'',o:['ריבוע','מלבן','שניהם','אף אחד'],a:0,p:55,e:'4 צלעות שוות = ריבוע'},
+      {t:'4 צלעות, 2 ארוכות ו-2 קצרות — מה היא?',s:'',o:['ריבוע','מלבן','משולש','עיגול'],a:1,p:60,e:'2+2 = מלבן'},
+      {t:'כמה צלעות למשושה?',s:'',o:['4','5','6','8'],a:2,p:65,e:'משושה = 6 צלעות'}
     ]}
   ]},
-  {name:'ספירת צלעות',emoji:'📐',bonus:60,topics:[
-    {id:'g1s2',label:'צלעות',ex:{title:'ספירת צלעות',body:'סופרים צלעות!',formula:''},pool:[
-      {t:'כמה צלעות למשולש?',s:'',o:['2','3','4','5'],a:1,p:50,e:'משולש = 3 צלעות'},
-      {t:'כמה פינות (קודקודים) לריבוע?',s:'',o:['2','3','4','5'],a:2,p:50,e:'ריבוע = 4 פינות'},
-      {t:'כמה צלעות למחומש?',s:'',o:['4','5','6','7'],a:1,p:60,e:'מחומש = 5 צלעות'},
-      {t:'כמה צלעות למשושה?',s:'',o:['4','5','6','8'],a:2,p:60,e:'משושה = 6 צלעות'},
-      {t:'כמה פינות למשולש?',s:'',o:['2','3','4','5'],a:1,p:50,e:'משולש = 3 פינות'}
+  {name:'ספירת צלעות ופינות',emoji:'📐',bonus:60,topics:[
+    {id:'g1s2a',label:'צלעות',ex:{title:'ספירת צלעות',body:'סופרים צלעות!',formula:''},pool:[
+      {t:'כמה צלעות למשולש?',s:'',o:['2','3','4','5'],a:1,p:45,e:'משולש = 3 צלעות'},
+      {t:'כמה צלעות לריבוע?',s:'',o:['3','4','5','6'],a:1,p:45,e:'ריבוע = 4 צלעות'},
+      {t:'כמה צלעות למחומש?',s:'',o:['4','5','6','7'],a:1,p:55,e:'מחומש = 5 צלעות'}
+    ]},
+    {id:'g1s2b',label:'פינות (קודקודים)',ex:{title:'פינות',body:'כל פינה = קודקוד!',formula:''},pool:[
+      {t:'כמה פינות למשולש?',s:'',o:['2','3','4','5'],a:1,p:50,e:'משולש = 3 פינות'},
+      {t:'כמה פינות לריבוע?',s:'',o:['2','3','4','5'],a:2,p:50,e:'ריבוע = 4 פינות'},
+      {t:'כמה פינות למשושה?',s:'',o:['4','5','6','8'],a:2,p:60,e:'משושה = 6 פינות'}
     ]}
   ]}
 ];
@@ -2296,49 +2314,67 @@ var LV_G1_SHAPES = [
 // ===== כיתה ב׳ — LEVEL DATA =====
 var LV_G2_CALC = [
   {name:'חיבור עד 100',emoji:'➕',bonus:60,topics:[
-    {id:'g2c1',label:'חיבור',ex:{title:'חיבור',body:'חיבור בתחום 100!',formula:'a + b = ?'},pool:[],
-     gen:function(){var a=randInt(10,50),b=randInt(5,49),c=a+b;if(c>100){a=randInt(10,40);b=randInt(5,30);c=a+b;}var r=mkO(c,'',[c+10,c-10,a]);return{t:a+' + '+b+' = ?',s:'',o:r.o,a:r.a,p:70,e:a+'+'+b+'='+c};}}
+    {id:'g2c1a',label:'חיבור עשרות',ex:{title:'חיבור עשרות',body:'20+30 = ?',formula:'עשרות עגולות'},pool:[],
+     gen:function(){var a=randInt(1,5)*10,b=randInt(1,4)*10,c=a+b;var r=mkO(c,'',[c+10,c-10,a]);return{t:a+' + '+b+' = ?',s:'',o:r.o,a:r.a,p:55,e:a+'+'+b+'='+c};}},
+    {id:'g2c1b',label:'חיבור עד 100',ex:{title:'חיבור',body:'חיבור בתחום 100!',formula:'a + b = ?'},pool:[],
+     gen:function(){var a=randInt(12,55),b=randInt(10,44),c=a+b;if(c>100){b=100-a-randInt(0,5);if(b<5)b=5;c=a+b;}var r=mkO(c,'',[c+10,c-10,a]);return{t:a+' + '+b+' = ?',s:'',o:r.o,a:r.a,p:70,e:a+'+'+b+'='+c};}}
   ]},
   {name:'חיסור עד 100',emoji:'➖',bonus:70,topics:[
-    {id:'g2c2',label:'חיסור',ex:{title:'חיסור',body:'חיסור בתחום 100!',formula:'a − b = ?'},pool:[],
-     gen:function(){var a=randInt(20,99),b=randInt(5,a-1),c=a-b;var r=mkO(c,'',[c+10,a,b]);return{t:a+' − '+b+' = ?',s:'',o:r.o,a:r.a,p:70,e:a+'−'+b+'='+c};}}
+    {id:'g2c2a',label:'חיסור עשרות',ex:{title:'חיסור עשרות',body:'50−20 = ?',formula:'עשרות עגולות'},pool:[],
+     gen:function(){var a=randInt(3,9)*10,b=randInt(1,Math.floor(a/10)-1)*10,c=a-b;var r=mkO(c,'',[c+10,b,a]);return{t:a+' − '+b+' = ?',s:'',o:r.o,a:r.a,p:55,e:a+'−'+b+'='+c};}},
+    {id:'g2c2b',label:'חיסור עד 100',ex:{title:'חיסור',body:'חיסור בתחום 100!',formula:'a − b = ?'},pool:[],
+     gen:function(){var a=randInt(30,99),b=randInt(5,a-5),c=a-b;var r=mkO(c,'',[c+10,a,b]);return{t:a+' − '+b+' = ?',s:'',o:r.o,a:r.a,p:70,e:a+'−'+b+'='+c};}}
   ]},
   {name:'מספר חסר',emoji:'❓',bonus:80,topics:[
-    {id:'g2c3',label:'מספר חסר',ex:{title:'מספר חסר',body:'מה חסר במשפט?',formula:'a + ? = c'},pool:[],
-     gen:function(){var a=randInt(5,30),b=randInt(5,30),c=a+b;var r=mkO(b,'',[a,c,b+5]);return{t:a+' + ___ = '+c,s:'',o:r.o,a:r.a,p:80,e:c+'−'+a+'='+b};}}
+    {id:'g2c3a',label:'מספר חסר בחיבור',ex:{title:'מספר חסר',body:'a + ? = c',formula:'c − a = ?'},pool:[],
+     gen:function(){var a=randInt(3,15),b=randInt(3,15),c=a+b;var r=mkO(b,'',[a,c,b+3]);return{t:a+' + ___ = '+c,s:'',o:r.o,a:r.a,p:70,e:c+'−'+a+'='+b};}},
+    {id:'g2c3b',label:'מספר חסר בחיסור',ex:{title:'מספר חסר',body:'a − ? = c',formula:'a − c = ?'},pool:[],
+     gen:function(){var b=randInt(3,15),c=randInt(2,15),a=b+c;var r=mkO(b,'',[c,a,b+2]);return{t:a+' − ___ = '+c,s:'',o:r.o,a:r.a,p:80,e:a+'−'+c+'='+b};}}
   ]}
 ];
 var LV_G2_MULT = [
   {name:'לוח כפל — קל',emoji:'✖️',bonus:60,topics:[
-    {id:'g2m1',label:'כפל קל',ex:{title:'לוח הכפל',body:'2×, 5×, 10×',formula:'a × b = ?'},pool:[],
-     gen:function(){var facts=[2,5,10];var a=facts[randInt(0,2)],b=randInt(1,10),c=a*b;var r=mkO(c,'',[c+a,c-a,a+b]);return{t:a+' × '+b+' = ?',s:'',o:r.o,a:r.a,p:60,e:a+'×'+b+'='+c};}}
+    {id:'g2m1a',label:'כפל ב-2 וב-5',ex:{title:'כפל',body:'2×, 5×',formula:'a × b = ?'},pool:[],
+     gen:function(){var facts=[2,5];var a=facts[randInt(0,1)],b=randInt(1,7),c=a*b;var r=mkO(c,'',[c+a,c-a,a+b]);return{t:a+' × '+b+' = ?',s:'',o:r.o,a:r.a,p:55,e:a+'×'+b+'='+c};}},
+    {id:'g2m1b',label:'כפל ב-10',ex:{title:'כפל',body:'10×',formula:'פשוט מוסיפים 0!'},pool:[],
+     gen:function(){var b=randInt(1,10),c=10*b;var r=mkO(c,'',[c+10,b,c-10>0?c-10:c+5]);return{t:'10 × '+b+' = ?',s:'',o:r.o,a:r.a,p:60,e:'10×'+b+'='+c};}}
   ]},
   {name:'לוח כפל — בינוני',emoji:'✖️',bonus:80,topics:[
-    {id:'g2m2',label:'כפל',ex:{title:'לוח הכפל',body:'3×, 4×, 6×',formula:'a × b = ?'},pool:[],
-     gen:function(){var facts=[3,4,6];var a=facts[randInt(0,2)],b=randInt(2,9),c=a*b;var r=mkO(c,'',[c+a,c-b,(a+1)*b]);return{t:a+' × '+b+' = ?',s:'',o:r.o,a:r.a,p:80,e:a+'×'+b+'='+c};}}
+    {id:'g2m2a',label:'כפל ב-3 וב-4',ex:{title:'כפל',body:'3×, 4×',formula:'a × b = ?'},pool:[],
+     gen:function(){var facts=[3,4];var a=facts[randInt(0,1)],b=randInt(2,8),c=a*b;var r=mkO(c,'',[c+a,c-b,(a+1)*b]);return{t:a+' × '+b+' = ?',s:'',o:r.o,a:r.a,p:70,e:a+'×'+b+'='+c};}},
+    {id:'g2m2b',label:'כפל ב-6 וב-7',ex:{title:'כפל',body:'6×, 7×',formula:'a × b = ?'},pool:[],
+     gen:function(){var facts=[6,7];var a=facts[randInt(0,1)],b=randInt(2,8),c=a*b;var r=mkO(c,'',[c+a,c-b,(a-1)*b]);return{t:a+' × '+b+' = ?',s:'',o:r.o,a:r.a,p:80,e:a+'×'+b+'='+c};}}
   ]},
   {name:'לוח כפל — מתקדם',emoji:'✖️',bonus:90,topics:[
-    {id:'g2m3',label:'כפל מתקדם',ex:{title:'לוח הכפל',body:'7×, 8×, 9×',formula:'a × b = ?'},pool:[],
-     gen:function(){var a=randInt(7,9),b=randInt(2,9),c=a*b;var r=mkO(c,'',[c+a,c-b,(a-1)*b]);return{t:a+' × '+b+' = ?',s:'',o:r.o,a:r.a,p:90,e:a+'×'+b+'='+c};}}
+    {id:'g2m3a',label:'כפל ב-8 וב-9',ex:{title:'כפל',body:'8×, 9×',formula:'a × b = ?'},pool:[],
+     gen:function(){var a=randInt(8,9),b=randInt(2,9),c=a*b;var r=mkO(c,'',[c+a,c-b,(a-1)*b]);return{t:a+' × '+b+' = ?',s:'',o:r.o,a:r.a,p:85,e:a+'×'+b+'='+c};}},
+    {id:'g2m3b',label:'כפל מעורב',ex:{title:'כפל מעורב',body:'כל לוח הכפל!',formula:'a × b = ?'},pool:[],
+     gen:function(){var a=randInt(2,9),b=randInt(2,9),c=a*b;var r=mkO(c,'',[c+a,c-b,(a+1)*b]);return{t:a+' × '+b+' = ?',s:'',o:r.o,a:r.a,p:90,e:a+'×'+b+'='+c};}}
   ]}
 ];
 var LV_G2_SHAPES = [
   {name:'תכונות צורות',emoji:'🔷',bonus:60,topics:[
-    {id:'g2s1',label:'תכונות',ex:{title:'תכונות צורות',body:'אורך, רוחב, צלעות',formula:''},pool:[
-      {t:'כמה זוויות ישרות לריבוע?',s:'',o:['2','3','4','6'],a:2,p:60,e:'ריבוע = 4 זוויות ישרות'},
-      {t:'מה שונה בין ריבוע למלבן?',s:'',o:['לריבוע כל הצלעות שוות','למלבן 3 צלעות','לריבוע 5 צלעות','אין הבדל'],a:0,p:70,e:'בריבוע כל הצלעות שוות'},
-      {t:'כמה צלעות שוות למלבן?',s:'',o:['0','2 זוגות','3','4'],a:1,p:70,e:'למלבן 2 זוגות צלעות שוות'},
-      {t:'איזו צורה עגולה לגמרי?',s:'',o:['משולש','ריבוע','עיגול','מלבן'],a:2,p:50,e:'עיגול!'},
-      {t:'למשולש שווה-צלעות — כמה צלעות שוות?',s:'',o:['1','2','3','4'],a:2,p:70,e:'3 צלעות שוות'}
+    {id:'g2s1a',label:'תכונות בסיסיות',ex:{title:'תכונות',body:'כל צורה מיוחדת!',formula:''},pool:[
+      {t:'איזו צורה עגולה לגמרי?',s:'',o:['משולש','ריבוע','עיגול','מלבן'],a:2,p:45,e:'עיגול!'},
+      {t:'כמה זוויות ישרות לריבוע?',s:'',o:['2','3','4','6'],a:2,p:55,e:'ריבוע = 4 זוויות ישרות'},
+      {t:'למשולש שווה-צלעות — כמה צלעות שוות?',s:'',o:['1','2','3','4'],a:2,p:60,e:'3 צלעות שוות'}
+    ]},
+    {id:'g2s1b',label:'ריבוע vs מלבן',ex:{title:'ריבוע ומלבן',body:'מה ההבדל?',formula:''},pool:[
+      {t:'מה שונה בין ריבוע למלבן?',s:'',o:['לריבוע כל הצלעות שוות','למלבן 3 צלעות','לריבוע 5 צלעות','אין הבדל'],a:0,p:60,e:'בריבוע כל הצלעות שוות'},
+      {t:'כמה זוגות צלעות שוות למלבן?',s:'',o:['0','1','2','4'],a:2,p:65,e:'למלבן 2 זוגות צלעות שוות'},
+      {t:'האם ריבוע הוא גם מלבן?',s:'',o:['כן','לא','לפעמים','לא יודע'],a:0,p:70,e:'כן! ריבוע = מלבן מיוחד'}
     ]}
   ]},
   {name:'מדידת אורך',emoji:'📏',bonus:70,topics:[
-    {id:'g2s2',label:'מדידה',ex:{title:'מדידת אורך',body:'ס"מ ומטרים',formula:'1 מטר = 100 ס"מ'},pool:[
-      {t:'כמה ס"מ במטר אחד?',s:'',o:['10','50','100','1000'],a:2,p:60,e:'1 מטר = 100 ס"מ'},
-      {t:'מה ארוך יותר: 50 ס"מ או 1 מטר?',s:'',o:['50 ס"מ','1 מטר','שווים','אי אפשר לדעת'],a:1,p:60,e:'1 מטר = 100 ס"מ > 50 ס"מ'},
-      {t:'עפרון באורך 15 ס"מ. כמה ס"מ חסרים ל-20?',s:'',o:['3','5','10','15'],a:1,p:70,e:'20−15=5'},
-      {t:'2 מטרים = כמה ס"מ?',s:'',o:['20','200','2000','150'],a:1,p:70,e:'2×100=200 ס"מ'},
-      {t:'שולחן באורך 120 ס"מ. זה יותר או פחות ממטר?',s:'',o:['פחות','יותר','בדיוק מטר','אי אפשר לדעת'],a:1,p:60,e:'120 > 100, אז יותר ממטר'}
+    {id:'g2s2a',label:'ס"מ ומטרים',ex:{title:'מדידה',body:'1 מטר = 100 ס"מ',formula:''},pool:[
+      {t:'כמה ס"מ במטר אחד?',s:'',o:['10','50','100','1000'],a:2,p:50,e:'1 מטר = 100 ס"מ'},
+      {t:'מה ארוך יותר: 50 ס"מ או 1 מטר?',s:'',o:['50 ס"מ','1 מטר','שווים','אי אפשר לדעת'],a:1,p:55,e:'1 מטר = 100 ס"מ > 50 ס"מ'},
+      {t:'2 מטרים = כמה ס"מ?',s:'',o:['20','200','2000','150'],a:1,p:60,e:'2×100=200 ס"מ'}
+    ]},
+    {id:'g2s2b',label:'בעיות מדידה',ex:{title:'בעיות',body:'חישובי אורך',formula:''},pool:[
+      {t:'עפרון באורך 15 ס"מ. כמה חסר ל-20?',s:'',o:['3','5','10','15'],a:1,p:65,e:'20−15=5'},
+      {t:'שולחן באורך 120 ס"מ. יותר או פחות ממטר?',s:'',o:['פחות','יותר','בדיוק מטר','אי אפשר'],a:1,p:65,e:'120>100, יותר ממטר'},
+      {t:'חוט באורך 3 מטרים. כמה ס"מ?',s:'',o:['30','300','3000','150'],a:1,p:70,e:'3×100=300 ס"מ'}
     ]}
   ]}
 ];
@@ -2346,42 +2382,63 @@ var LV_G2_SHAPES = [
 // ===== כיתה ג׳ — LEVEL DATA =====
 var LV_G3_CALC = [
   {name:'כפל במאונך',emoji:'✖️',bonus:80,topics:[
-    {id:'g3c1',label:'כפל',ex:{title:'כפל',body:'כפל דו-ספרתי!',formula:'a × b = ?'},pool:[],
-     gen:function(){var a=randInt(11,25),b=randInt(2,9),c=a*b;var r=mkO(c,'',[c+b,c-a,(a+1)*b]);return{t:a+' × '+b+' = ?',s:'',o:r.o,a:r.a,p:90,e:a+'×'+b+'='+c};}}
+    {id:'g3c1a',label:'כפל קטן',ex:{title:'כפל',body:'כפל דו-ספרתי!',formula:'a × b = ?'},pool:[],
+     gen:function(){var a=randInt(11,15),b=randInt(2,5),c=a*b;var r=mkO(c,'',[c+b,c-a,(a+1)*b]);return{t:a+' × '+b+' = ?',s:'',o:r.o,a:r.a,p:75,e:a+'×'+b+'='+c};}},
+    {id:'g3c1b',label:'כפל גדול',ex:{title:'כפל',body:'מספרים גדולים!',formula:'a × b = ?'},pool:[],
+     gen:function(){var a=randInt(15,30),b=randInt(3,9),c=a*b;var r=mkO(c,'',[c+b,c-a,(a-1)*b]);return{t:a+' × '+b+' = ?',s:'',o:r.o,a:r.a,p:95,e:a+'×'+b+'='+c};}}
   ]},
-  {name:'חילוק',emoji:'➗',bonus:80,topics:[
-    {id:'g3c2',label:'חילוק',ex:{title:'חילוק',body:'הפעולה ההפוכה לכפל!',formula:'a ÷ b = ?'},pool:[],
-     gen:function(){var b=randInt(2,9),c=randInt(2,10),a=b*c;var r=mkO(c,'',[c+1,b,c+2]);return{t:a+' ÷ '+b+' = ?',s:'',o:r.o,a:r.a,p:80,e:a+'÷'+b+'='+c};}}
+  {name:'חילוק',emoji:'➗',bonus:85,topics:[
+    {id:'g3c2a',label:'חילוק ללא שארית',ex:{title:'חילוק',body:'הפעולה ההפוכה לכפל!',formula:'a ÷ b = ?'},pool:[],
+     gen:function(){var b=randInt(2,7),c=randInt(2,8),a=b*c;var r=mkO(c,'',[c+1,b,c+2]);return{t:a+' ÷ '+b+' = ?',s:'',o:r.o,a:r.a,p:75,e:a+'÷'+b+'='+c};}},
+    {id:'g3c2b',label:'חילוק עם שארית',ex:{title:'שארית',body:'מה נשאר?',formula:'a ÷ b = מנה ושארית r'},pool:[],
+     gen:function(){var b=randInt(3,8),q=randInt(2,8),rem=randInt(1,b-1),a=b*q+rem;var r=mkO(rem,'',[rem+1,b-rem,0]);return{t:a+' ÷ '+b+' — מה השארית?',s:'',o:r.o,a:r.a,p:95,e:a+'='+b+'×'+q+'+'+rem+', שארית '+rem};}}
   ]},
-  {name:'חילוק עם שארית',emoji:'➗',bonus:90,topics:[
-    {id:'g3c3',label:'שארית',ex:{title:'חילוק עם שארית',body:'מה נשאר?',formula:'a ÷ b = מנה שארית r'},pool:[],
-     gen:function(){var b=randInt(3,8),q=randInt(2,8),rem=randInt(1,b-1),a=b*q+rem;var r=mkO(rem,'',[rem+1,b-rem,0]);return{t:a+' ÷ '+b+' — מה השארית?',s:'',o:r.o,a:r.a,p:100,e:a+'='+b+'×'+q+'+'+rem+', שארית '+rem};}}
+  {name:'פעולות מעורבות',emoji:'🔢',bonus:100,topics:[
+    {id:'g3c3a',label:'כפל וחילוק מעורב',ex:{title:'מעורב',body:'כפל וחילוק!',formula:''},pool:[],
+     gen:function(){if(randInt(0,1)){var a=randInt(11,20),b=randInt(2,6),c=a*b;var r=mkO(c,'',[c+b,c-a,(a+1)*b]);return{t:a+' × '+b+' = ?',s:'',o:r.o,a:r.a,p:85,e:a+'×'+b+'='+c};}else{var b2=randInt(2,9),c2=randInt(3,10),a2=b2*c2;var r2=mkO(c2,'',[c2+1,b2,c2+2]);return{t:a2+' ÷ '+b2+' = ?',s:'',o:r2.o,a:r2.a,p:85,e:a2+'÷'+b2+'='+c2};}}},
+    {id:'g3c3b',label:'בעיות מילוליות',ex:{title:'בעיות מילוליות',body:'קוראים ופותרים!',formula:''},pool:[
+      {t:'בכיתה 24 תלמידים. חולקו ל-4 קבוצות. כמה בכל קבוצה?',s:'',o:['4','6','8','12'],a:1,p:90,e:'24÷4=6'},
+      {t:'בחנות 5 מדפים, בכל מדף 12 ספרים. כמה ספרים?',s:'',o:['17','50','60','120'],a:2,p:95,e:'5×12=60'},
+      {t:'ל-3 ילדים 27 סוכריות לחלק שווה. כמה לכל אחד?',s:'',o:['7','8','9','10'],a:2,p:90,e:'27÷3=9'},
+      {t:'קנו 8 חבילות עם 6 עוגיות בכל אחת. כמה עוגיות?',s:'',o:['14','42','48','56'],a:2,p:100,e:'8×6=48'}
+    ]}
   ]}
 ];
 var LV_G3_FRAC = [
-  {name:'חלק מהשלם',emoji:'🍕',bonus:70,topics:[
-    {id:'g3f1',label:'זיהוי שבר',ex:{title:'שברים',body:'כמה חלקים צבועים?',formula:'מונה/מכנה'},pool:[],
-     gen:function(){var d=randInt(2,6),n=randInt(1,d-1);return{t:'כמה צבוע?',s:mFracPie(n,d),o:[n+'/'+d,(d-n)+'/'+d,n+'/'+(d+1),(n+1)+'/'+d],a:0,p:70,e:n+' חלקים מתוך '+d};}}
+  {name:'מהו שבר?',emoji:'🍕',bonus:70,topics:[
+    {id:'g3f1a',label:'זיהוי שבר',ex:{title:'שברים',body:'כמה חלקים צבועים?',formula:'מונה/מכנה'},pool:[],
+     gen:function(){var d=randInt(2,4),n=randInt(1,d-1);return{t:'כמה צבוע?',s:mFracPie(n,d),o:[n+'/'+d,(d-n)+'/'+d,n+'/'+(d+1),'1/'+d],a:0,p:65,e:n+' חלקים מתוך '+d};}},
+    {id:'g3f1b',label:'שבר מתוך כמות',ex:{title:'שבר של כמות',body:'1/4 מתוך 20 = 5',formula:'X÷מכנה×מונה'},pool:[],
+     gen:function(){var d=randInt(2,5),total=d*randInt(2,6),ans=total/d;var r=mkO(ans,'',[total/d+d,total*d,total-d]);return{t:'1/'+d+' מתוך '+total+' = ?',s:'',o:r.o,a:r.a,p:80,e:total+'÷'+d+'='+ans};}}
   ]},
   {name:'השוואת שברים',emoji:'⚖️',bonus:80,topics:[
-    {id:'g3f2',label:'מי גדול?',ex:{title:'השוואה',body:'אותו מכנה → בודקים מונה',formula:'a/c > b/c כי a > b'},pool:[],
-     gen:function(){var d=randInt(3,6),a=randInt(1,d-1),b;do{b=randInt(1,d-1);}while(b===a);var big=Math.max(a,b),sm=Math.min(a,b);return{t:'מי גדול יותר: '+a+'/'+d+' או '+b+'/'+d+'?',s:'',o:[big+'/'+d,sm+'/'+d,'שווים','אי אפשר לדעת'],a:0,p:80,e:big+'>'+sm+' → '+big+'/'+d+' גדול יותר'};}}
+    {id:'g3f2a',label:'מכנה זהה',ex:{title:'השוואה',body:'אותו מכנה → בודקים מונה',formula:''},pool:[],
+     gen:function(){var d=randInt(3,6),a=randInt(1,d-1),b;do{b=randInt(1,d-1);}while(b===a);var big=Math.max(a,b),sm=Math.min(a,b);return{t:'מי גדול: '+a+'/'+d+' או '+b+'/'+d+'?',s:'',o:[big+'/'+d,sm+'/'+d,'שווים','אי אפשר לדעת'],a:0,p:75,e:big+'>'+sm+' → '+big+'/'+d};}},
+    {id:'g3f2b',label:'שברים שקולים',ex:{title:'שברים שקולים',body:'1/2 = 2/4 = 3/6',formula:'כופלים מונה ומכנה באותו מספר'},pool:[],
+     gen:function(){var n=randInt(1,3),d=randInt(n+1,5),k=randInt(2,3),en=n*k,ed=d*k;return{t:n+'/'+d+' = ?/'+ed,s:mFracPie(n,d),o:[String(en),String(en+1),String(en-1),String(d)],a:0,p:90,e:n+'/'+d+' = '+en+'/'+ed+' (כפלנו ב-'+k+')'};}}
   ]},
-  {name:'חיבור שברים (מכנה זהה)',emoji:'🍕',bonus:90,topics:[
-    {id:'g3f3',label:'חיבור שברים',ex:{title:'חיבור שברים',body:'אותו מכנה? מחברים מונים!',formula:'a/d + b/d = (a+b)/d'},pool:[],
-     gen:function(){var d=randInt(3,8),a=randInt(1,d-2),b=randInt(1,d-a),c=a+b;return{t:a+'/'+d+' + '+b+'/'+d+' = ?',s:mFracPie(a,d),o:[c+'/'+d,(a+b)+'/'+(2*d),a+'/'+d,c+'/'+(d+1)],a:0,p:90,e:a+'+'+b+'='+c+', אז '+c+'/'+d};}}
+  {name:'חיבור וחיסור שברים',emoji:'🍕',bonus:95,topics:[
+    {id:'g3f3a',label:'חיבור שברים',ex:{title:'חיבור',body:'אותו מכנה? מחברים מונים!',formula:'a/d + b/d = (a+b)/d'},pool:[],
+     gen:function(){var d=randInt(3,8),a=randInt(1,d-2),b=randInt(1,d-a),c=a+b;return{t:a+'/'+d+' + '+b+'/'+d+' = ?',s:mFracPie(a,d),o:[c+'/'+d,(a+b)+'/'+(2*d),a+'/'+d,c+'/'+(d+1)],a:0,p:85,e:a+'+'+b+'='+c+', אז '+c+'/'+d};}},
+    {id:'g3f3b',label:'חיסור שברים',ex:{title:'חיסור',body:'אותו מכנה? מחסרים מונים!',formula:'a/d − b/d = (a−b)/d'},pool:[],
+     gen:function(){var d=randInt(3,8),a=randInt(2,d-1),b=randInt(1,a-1),c=a-b;return{t:a+'/'+d+' − '+b+'/'+d+' = ?',s:mFracPie(a,d),o:[c+'/'+d,(a+b)+'/'+d,b+'/'+d,a+'/'+(d-1)],a:0,p:95,e:a+'−'+b+'='+c+', אז '+c+'/'+d};}}
   ]}
 ];
 var LV_G3_OPS = [
-  {name:'סדר פעולות — קל',emoji:'📝',bonus:80,topics:[
-    {id:'g3o1',label:'סדר פעולות',ex:{title:'סדר פעולות',body:'כפל וחילוק לפני חיבור וחיסור!',formula:'× ÷ לפני + −'},pool:[],
-     gen:function(){var a=randInt(2,8),b=randInt(2,5),c=randInt(1,5),ans=a+b*c,w=(a+b)*c;var r=mkO(ans,'',[w,a*b+c,a+b+c]);return{t:a+' + '+b+' × '+c+' = ?',s:'',o:r.o,a:r.a,p:90,e:'כפל קודם: '+b+'×'+c+'='+(b*c)+', אז '+a+'+'+(b*c)+'='+ans};}}
+  {name:'סדר פעולות',emoji:'📝',bonus:80,topics:[
+    {id:'g3o1a',label:'כפל לפני חיבור',ex:{title:'סדר פעולות',body:'כפל לפני חיבור וחיסור!',formula:'× לפני +'},pool:[],
+     gen:function(){var a=randInt(2,6),b=randInt(2,4),c=randInt(1,4),ans=a+b*c,w=(a+b)*c;var r=mkO(ans,'',[w,a*b+c,a+b+c]);return{t:a+' + '+b+' × '+c+' = ?',s:'',o:r.o,a:r.a,p:80,e:'כפל קודם: '+b+'×'+c+'='+(b*c)+', אז '+a+'+'+(b*c)+'='+ans};}},
+    {id:'g3o1b',label:'חיסור וכפל',ex:{title:'סדר פעולות',body:'כפל/חילוק לפני חיבור/חיסור!',formula:'× ÷ לפני + −'},pool:[],
+     gen:function(){var a=randInt(10,25),b=randInt(2,4),c=randInt(2,5),ans=a-b*c;if(ans<1){a=b*c+randInt(2,10);ans=a-b*c;}var w=(a-b)*c;var r=mkO(ans,'',[w,a-b-c,a*b-c]);return{t:a+' − '+b+' × '+c+' = ?',s:'',o:r.o,a:r.a,p:90,e:'כפל קודם: '+b+'×'+c+'='+(b*c)+', אז '+a+'−'+(b*c)+'='+ans};}}
   ]},
-  {name:'סדר פעולות — סוגריים',emoji:'📝',bonus:100,topics:[
-    {id:'g3o2',label:'סוגריים',ex:{title:'סוגריים קודם!',body:'(  ) לפני הכל!',formula:'(a + b) × c'},pool:[],
-     gen:function(){var a=randInt(2,6),b=randInt(2,6),c=randInt(2,5),ans=(a+b)*c,w=a+b*c;var r=mkO(ans,'',[w,a*c+b,(a+b)+c]);return{t:'('+a+' + '+b+') × '+c+' = ?',s:'',o:r.o,a:r.a,p:100,e:'סוגריים: '+a+'+'+b+'='+(a+b)+', אז '+(a+b)+'×'+c+'='+ans};}}
+  {name:'סוגריים',emoji:'📝',bonus:100,topics:[
+    {id:'g3o2a',label:'סוגריים פשוטים',ex:{title:'סוגריים',body:'(  ) לפני הכל!',formula:'(a + b) × c'},pool:[],
+     gen:function(){var a=randInt(2,5),b=randInt(1,4),c=randInt(2,4),ans=(a+b)*c,w=a+b*c;var r=mkO(ans,'',[w,a*c+b,(a+b)+c]);return{t:'('+a+' + '+b+') × '+c+' = ?',s:'',o:r.o,a:r.a,p:90,e:'סוגריים: '+a+'+'+b+'='+(a+b)+', ואז '+(a+b)+'×'+c+'='+ans};}},
+    {id:'g3o2b',label:'סוגריים מורכבים',ex:{title:'סוגריים',body:'תמיד פותרים סוגריים ראשון!',formula:'c × (a − b)'},pool:[],
+     gen:function(){var a=randInt(5,12),b=randInt(1,4),c=randInt(2,5),ans=c*(a-b),w=c*a-b;var r=mkO(ans,'',[w,c+a-b,c*a+b]);return{t:c+' × ('+a+' − '+b+') = ?',s:'',o:r.o,a:r.a,p:105,e:'סוגריים: '+a+'−'+b+'='+(a-b)+', ואז '+c+'×'+(a-b)+'='+ans};}}
   ]}
 ];
+
 
 // ===== כיתה ד׳ — LEVEL DATA =====
 var LV_G4_CALC = [
