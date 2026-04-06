@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>Math Arena — כיתה ד׳-י׳</title>
+<title>Math Arena — כיתה א׳-י׳</title>
 <link rel="manifest" href="manifest.json">
 <meta name="theme-color" content="#6c35de">
 <meta name="apple-mobile-web-app-capable" content="yes">
@@ -476,6 +476,12 @@ body{background-color:#1a0a3e;background:radial-gradient(ellipse at top, #2d1b69
   position:absolute;top:8px;left:8px;padding:2px 8px;border-radius:12px;
   font-size:9px;font-weight:800;letter-spacing:.5px;
 }
+.gc-1{background:linear-gradient(135deg,#0e4429,#0a3d22);border-color:#6ee7b7;}
+.gc-1 .gc-badge{background:#34d399;color:#064e3b;}
+.gc-2{background:linear-gradient(135deg,#1e3a5f,#0c2340);border-color:#93c5fd;}
+.gc-2 .gc-badge{background:#60a5fa;color:#172554;}
+.gc-3{background:linear-gradient(135deg,#3b0764,#1e1b4b);border-color:#c084fc;}
+.gc-3 .gc-badge{background:#a855f7;color:#f3e8ff;}
 .gc-4{background:linear-gradient(135deg,#065f46,#064e3b);border-color:#34d399;}
 .gc-4 .gc-badge{background:#10b981;color:#d1fae5;}
 .gc-5{background:linear-gradient(135deg,#1e3a5f,#172554);border-color:#60a5fa;}
@@ -1027,7 +1033,7 @@ body{background-color:#1a0a3e;background:radial-gradient(ellipse at top, #2d1b69
   box-shadow:none;
 }
 </style>
-<meta name="description" content="Math Arena — כיתה ד׳ עד י׳ — משחק מתמטיקה">
+<meta name="description" content="Math Arena — כיתה א׳ עד י׳ — משחק מתמטיקה">
 <meta name="theme-color" content="#1a0a3e">
 <meta property="og:title" content="⚡ Math Arena — אתגר מתמטי ⚡">
 <meta property="og:description" content="כמה שאלות תצליח לפתור לפני שנגמרים לך החיים? 🏟️🔥">
@@ -1076,7 +1082,7 @@ body{background-color:#1a0a3e;background:radial-gradient(ellipse at top, #2d1b69
 <div id="name-screen" class="screen on" style="display:flex;">
   <div class="name-logo">📐</div>
   <div class="name-title">Math Arena</div>
-  <div class="name-sub">כיתה ד׳ עד י׳ • כל נושאי הלימוד 🎮</div>
+  <div class="name-sub">כיתה א׳ עד י׳ • כל נושאי הלימוד 🎮</div>
   <div class="name-features"><div class="name-feat">🔥 Streaks</div><div class="name-feat">⚡ Speed Bonus</div><div class="name-feat">✂️ Powers</div><div class="name-feat">⚔️ Duels</div><div class="name-feat">🎵 Music</div><div class="name-feat">💥 Multipliers</div></div>
   <button id="btn-start" onclick="submitName()">🚀 LET'S GO!</button>
   <button onclick="shareGameLink()" style="margin-top:12px;padding:10px 24px;background:rgba(59,130,246,.12);border:1.5px solid rgba(59,130,246,.35);border-radius:14px;color:#60a5fa;font-size:14px;font-weight:700;cursor:pointer;font-family:inherit;">🔗 שתף את המשחק עם חבר</button>
@@ -1099,6 +1105,24 @@ body{background-color:#1a0a3e;background:radial-gradient(ellipse at top, #2d1b69
   <div class="grade-title">🏟️ Math Arena</div>
   <div class="grade-sub">בחרו כיתה!</div>
   <div class="grade-grid">
+    <div class="grade-card gc-1" onclick="selectGrade(1)">
+      <div class="gc-emoji">🐣</div>
+      <div class="gc-name">כיתה א׳</div>
+      <div class="gc-topics">חיבור • חיסור • מספרים • צורות</div>
+      <div class="gc-badge">יסודי</div>
+    </div>
+    <div class="grade-card gc-2" onclick="selectGrade(2)">
+      <div class="gc-emoji">🐥</div>
+      <div class="gc-name">כיתה ב׳</div>
+      <div class="gc-topics">חיבור וחיסור • לוח כפל • צורות</div>
+      <div class="gc-badge">יסודי</div>
+    </div>
+    <div class="grade-card gc-3" onclick="selectGrade(3)">
+      <div class="gc-emoji">🦊</div>
+      <div class="gc-name">כיתה ג׳</div>
+      <div class="gc-topics">כפל • חילוק • שברים • סדר פעולות</div>
+      <div class="gc-badge">יסודי</div>
+    </div>
     <div class="grade-card gc-4" onclick="selectGrade(4)">
       <div class="gc-emoji">🌟</div>
       <div class="gc-name">כיתה ד׳</div>
@@ -2219,6 +2243,146 @@ var LV_NUM=[
 // ============================================================
 var currentGrade = 6;
 
+// ===== כיתה א׳ — LEVEL DATA =====
+var LV_G1_NUMS = [
+  {name:'ספירה עד 10',emoji:'🔢',bonus:50,topics:[
+    {id:'g1n1',label:'ספירה',ex:{title:'ספירה',body:'סופרים חפצים!',formula:'1, 2, 3...'},pool:[],
+     gen:function(){var a=randInt(1,10);var emj=['🍎','🌟','⚽','🐱','🎈'][randInt(0,4)];var s='';for(var i=0;i<a;i++)s+=emj;var r=mkO(a,'',[a+1,a>1?a-1:a+2,a+2]);return{t:'כמה '+emj+' יש?<br>'+s,s:'',o:r.o,a:r.a,p:50,e:'יש '+a+' '+emj};}}
+  ]},
+  {name:'עשרות ואחדות',emoji:'🧮',bonus:60,topics:[
+    {id:'g1n2',label:'עשרות ואחדות',ex:{title:'עשרות ואחדות',body:'15 = 1 עשרת + 5 אחדות',formula:''},pool:[],
+     gen:function(){var t=randInt(1,3),u=randInt(1,9),n=t*10+u;var r=mkO(t,'',[u,t+1,t+u]);return{t:'כמה עשרות ב-'+n+'?',s:'',o:r.o,a:r.a,p:60,e:n+' = '+t+' עשרות + '+u+' אחדות'};}}
+  ]},
+  {name:'מי גדול יותר?',emoji:'⚖️',bonus:60,topics:[
+    {id:'g1n3',label:'השוואה',ex:{title:'השוואת מספרים',body:'מי גדול יותר?',formula:''},pool:[],
+     gen:function(){var a=randInt(1,20),b;do{b=randInt(1,20);}while(b===a);var big=Math.max(a,b);var r=mkO(big,'',[Math.min(a,b),a+b,big+1]);return{t:'מי גדול יותר: '+a+' או '+b+'?',s:'',o:r.o,a:r.a,p:60,e:big+' > '+Math.min(a,b)};}}
+  ]}
+];
+var LV_G1_ADD = [
+  {name:'חיבור עד 10',emoji:'➕',bonus:50,topics:[
+    {id:'g1a1',label:'חיבור קל',ex:{title:'חיבור',body:'סופרים ביחד!',formula:'a + b = ?'},pool:[],
+     gen:function(){var a=randInt(1,5),b=randInt(1,5),c=a+b;var r=mkO(c,'',[c+1,c-1,a]);return{t:a+' + '+b+' = ?',s:'',o:r.o,a:r.a,p:50,e:a+'+'+b+'='+c};}}
+  ]},
+  {name:'חיבור עד 20',emoji:'➕',bonus:60,topics:[
+    {id:'g1a2',label:'חיבור',ex:{title:'חיבור',body:'חיבור בתחום 20!',formula:'a + b = ?'},pool:[],
+     gen:function(){var a=randInt(3,12),b=randInt(2,8),c=a+b;if(c>20){a=randInt(2,10);b=randInt(1,10);c=a+b;}var r=mkO(c,'',[c+1,c-1,c+2]);return{t:a+' + '+b+' = ?',s:'',o:r.o,a:r.a,p:60,e:a+'+'+b+'='+c};}}
+  ]},
+  {name:'חיסור עד 20',emoji:'➖',bonus:60,topics:[
+    {id:'g1a3',label:'חיסור',ex:{title:'חיסור',body:'כמה נשאר?',formula:'a − b = ?'},pool:[],
+     gen:function(){var c=randInt(1,10),b=randInt(1,8),a=c+b;if(a>20){c=randInt(1,8);b=randInt(1,6);a=c+b;}var r=mkO(c,'',[c+1,b,a]);return{t:a+' − '+b+' = ?',s:'',o:r.o,a:r.a,p:60,e:a+'−'+b+'='+c};}}
+  ]}
+];
+var LV_G1_SHAPES = [
+  {name:'זיהוי צורות',emoji:'🔷',bonus:50,topics:[
+    {id:'g1s1',label:'צורות',ex:{title:'צורות',body:'משולש, ריבוע, עיגול, מלבן',formula:''},pool:[
+      {t:'לצורה 3 צלעות — מה היא?',s:'',o:['ריבוע','עיגול','משולש','מלבן'],a:2,p:50,e:'3 צלעות = משולש'},
+      {t:'לצורה 4 צלעות שוות — מה היא?',s:'',o:['ריבוע','משולש','עיגול','מלבן'],a:0,p:50,e:'4 צלעות שוות = ריבוע'},
+      {t:'לצורה אין צלעות בכלל, היא עגולה — מה היא?',s:'',o:['ריבוע','משולש','עיגול','מלבן'],a:2,p:50,e:'עגולה = עיגול'},
+      {t:'לצורה 4 צלעות, 2 ארוכות ו-2 קצרות — מה היא?',s:'',o:['ריבוע','משולש','עיגול','מלבן'],a:3,p:60,e:'מלבן!'},
+      {t:'כמה צלעות לריבוע?',s:'',o:['3','4','5','6'],a:1,p:50,e:'ריבוע = 4 צלעות'}
+    ]}
+  ]},
+  {name:'ספירת צלעות',emoji:'📐',bonus:60,topics:[
+    {id:'g1s2',label:'צלעות',ex:{title:'ספירת צלעות',body:'סופרים צלעות!',formula:''},pool:[
+      {t:'כמה צלעות למשולש?',s:'',o:['2','3','4','5'],a:1,p:50,e:'משולש = 3 צלעות'},
+      {t:'כמה פינות (קודקודים) לריבוע?',s:'',o:['2','3','4','5'],a:2,p:50,e:'ריבוע = 4 פינות'},
+      {t:'כמה צלעות למחומש?',s:'',o:['4','5','6','7'],a:1,p:60,e:'מחומש = 5 צלעות'},
+      {t:'כמה צלעות למשושה?',s:'',o:['4','5','6','8'],a:2,p:60,e:'משושה = 6 צלעות'},
+      {t:'כמה פינות למשולש?',s:'',o:['2','3','4','5'],a:1,p:50,e:'משולש = 3 פינות'}
+    ]}
+  ]}
+];
+
+// ===== כיתה ב׳ — LEVEL DATA =====
+var LV_G2_CALC = [
+  {name:'חיבור עד 100',emoji:'➕',bonus:60,topics:[
+    {id:'g2c1',label:'חיבור',ex:{title:'חיבור',body:'חיבור בתחום 100!',formula:'a + b = ?'},pool:[],
+     gen:function(){var a=randInt(10,50),b=randInt(5,49),c=a+b;if(c>100){a=randInt(10,40);b=randInt(5,30);c=a+b;}var r=mkO(c,'',[c+10,c-10,a]);return{t:a+' + '+b+' = ?',s:'',o:r.o,a:r.a,p:70,e:a+'+'+b+'='+c};}}
+  ]},
+  {name:'חיסור עד 100',emoji:'➖',bonus:70,topics:[
+    {id:'g2c2',label:'חיסור',ex:{title:'חיסור',body:'חיסור בתחום 100!',formula:'a − b = ?'},pool:[],
+     gen:function(){var a=randInt(20,99),b=randInt(5,a-1),c=a-b;var r=mkO(c,'',[c+10,a,b]);return{t:a+' − '+b+' = ?',s:'',o:r.o,a:r.a,p:70,e:a+'−'+b+'='+c};}}
+  ]},
+  {name:'מספר חסר',emoji:'❓',bonus:80,topics:[
+    {id:'g2c3',label:'מספר חסר',ex:{title:'מספר חסר',body:'מה חסר במשפט?',formula:'a + ? = c'},pool:[],
+     gen:function(){var a=randInt(5,30),b=randInt(5,30),c=a+b;var r=mkO(b,'',[a,c,b+5]);return{t:a+' + ___ = '+c,s:'',o:r.o,a:r.a,p:80,e:c+'−'+a+'='+b};}}
+  ]}
+];
+var LV_G2_MULT = [
+  {name:'לוח כפל — קל',emoji:'✖️',bonus:60,topics:[
+    {id:'g2m1',label:'כפל קל',ex:{title:'לוח הכפל',body:'2×, 5×, 10×',formula:'a × b = ?'},pool:[],
+     gen:function(){var facts=[2,5,10];var a=facts[randInt(0,2)],b=randInt(1,10),c=a*b;var r=mkO(c,'',[c+a,c-a,a+b]);return{t:a+' × '+b+' = ?',s:'',o:r.o,a:r.a,p:60,e:a+'×'+b+'='+c};}}
+  ]},
+  {name:'לוח כפל — בינוני',emoji:'✖️',bonus:80,topics:[
+    {id:'g2m2',label:'כפל',ex:{title:'לוח הכפל',body:'3×, 4×, 6×',formula:'a × b = ?'},pool:[],
+     gen:function(){var facts=[3,4,6];var a=facts[randInt(0,2)],b=randInt(2,9),c=a*b;var r=mkO(c,'',[c+a,c-b,(a+1)*b]);return{t:a+' × '+b+' = ?',s:'',o:r.o,a:r.a,p:80,e:a+'×'+b+'='+c};}}
+  ]},
+  {name:'לוח כפל — מתקדם',emoji:'✖️',bonus:90,topics:[
+    {id:'g2m3',label:'כפל מתקדם',ex:{title:'לוח הכפל',body:'7×, 8×, 9×',formula:'a × b = ?'},pool:[],
+     gen:function(){var a=randInt(7,9),b=randInt(2,9),c=a*b;var r=mkO(c,'',[c+a,c-b,(a-1)*b]);return{t:a+' × '+b+' = ?',s:'',o:r.o,a:r.a,p:90,e:a+'×'+b+'='+c};}}
+  ]}
+];
+var LV_G2_SHAPES = [
+  {name:'תכונות צורות',emoji:'🔷',bonus:60,topics:[
+    {id:'g2s1',label:'תכונות',ex:{title:'תכונות צורות',body:'אורך, רוחב, צלעות',formula:''},pool:[
+      {t:'כמה זוויות ישרות לריבוע?',s:'',o:['2','3','4','6'],a:2,p:60,e:'ריבוע = 4 זוויות ישרות'},
+      {t:'מה שונה בין ריבוע למלבן?',s:'',o:['לריבוע כל הצלעות שוות','למלבן 3 צלעות','לריבוע 5 צלעות','אין הבדל'],a:0,p:70,e:'בריבוע כל הצלעות שוות'},
+      {t:'כמה צלעות שוות למלבן?',s:'',o:['0','2 זוגות','3','4'],a:1,p:70,e:'למלבן 2 זוגות צלעות שוות'},
+      {t:'איזו צורה עגולה לגמרי?',s:'',o:['משולש','ריבוע','עיגול','מלבן'],a:2,p:50,e:'עיגול!'},
+      {t:'למשולש שווה-צלעות — כמה צלעות שוות?',s:'',o:['1','2','3','4'],a:2,p:70,e:'3 צלעות שוות'}
+    ]}
+  ]},
+  {name:'מדידת אורך',emoji:'📏',bonus:70,topics:[
+    {id:'g2s2',label:'מדידה',ex:{title:'מדידת אורך',body:'ס"מ ומטרים',formula:'1 מטר = 100 ס"מ'},pool:[
+      {t:'כמה ס"מ במטר אחד?',s:'',o:['10','50','100','1000'],a:2,p:60,e:'1 מטר = 100 ס"מ'},
+      {t:'מה ארוך יותר: 50 ס"מ או 1 מטר?',s:'',o:['50 ס"מ','1 מטר','שווים','אי אפשר לדעת'],a:1,p:60,e:'1 מטר = 100 ס"מ > 50 ס"מ'},
+      {t:'עפרון באורך 15 ס"מ. כמה ס"מ חסרים ל-20?',s:'',o:['3','5','10','15'],a:1,p:70,e:'20−15=5'},
+      {t:'2 מטרים = כמה ס"מ?',s:'',o:['20','200','2000','150'],a:1,p:70,e:'2×100=200 ס"מ'},
+      {t:'שולחן באורך 120 ס"מ. זה יותר או פחות ממטר?',s:'',o:['פחות','יותר','בדיוק מטר','אי אפשר לדעת'],a:1,p:60,e:'120 > 100, אז יותר ממטר'}
+    ]}
+  ]}
+];
+
+// ===== כיתה ג׳ — LEVEL DATA =====
+var LV_G3_CALC = [
+  {name:'כפל במאונך',emoji:'✖️',bonus:80,topics:[
+    {id:'g3c1',label:'כפל',ex:{title:'כפל',body:'כפל דו-ספרתי!',formula:'a × b = ?'},pool:[],
+     gen:function(){var a=randInt(11,25),b=randInt(2,9),c=a*b;var r=mkO(c,'',[c+b,c-a,(a+1)*b]);return{t:a+' × '+b+' = ?',s:'',o:r.o,a:r.a,p:90,e:a+'×'+b+'='+c};}}
+  ]},
+  {name:'חילוק',emoji:'➗',bonus:80,topics:[
+    {id:'g3c2',label:'חילוק',ex:{title:'חילוק',body:'הפעולה ההפוכה לכפל!',formula:'a ÷ b = ?'},pool:[],
+     gen:function(){var b=randInt(2,9),c=randInt(2,10),a=b*c;var r=mkO(c,'',[c+1,b,c+2]);return{t:a+' ÷ '+b+' = ?',s:'',o:r.o,a:r.a,p:80,e:a+'÷'+b+'='+c};}}
+  ]},
+  {name:'חילוק עם שארית',emoji:'➗',bonus:90,topics:[
+    {id:'g3c3',label:'שארית',ex:{title:'חילוק עם שארית',body:'מה נשאר?',formula:'a ÷ b = מנה שארית r'},pool:[],
+     gen:function(){var b=randInt(3,8),q=randInt(2,8),rem=randInt(1,b-1),a=b*q+rem;var r=mkO(rem,'',[rem+1,b-rem,0]);return{t:a+' ÷ '+b+' — מה השארית?',s:'',o:r.o,a:r.a,p:100,e:a+'='+b+'×'+q+'+'+rem+', שארית '+rem};}}
+  ]}
+];
+var LV_G3_FRAC = [
+  {name:'חלק מהשלם',emoji:'🍕',bonus:70,topics:[
+    {id:'g3f1',label:'זיהוי שבר',ex:{title:'שברים',body:'כמה חלקים צבועים?',formula:'מונה/מכנה'},pool:[],
+     gen:function(){var d=randInt(2,6),n=randInt(1,d-1);return{t:'כמה צבוע?',s:mFracPie(n,d),o:[n+'/'+d,(d-n)+'/'+d,n+'/'+(d+1),(n+1)+'/'+d],a:0,p:70,e:n+' חלקים מתוך '+d};}}
+  ]},
+  {name:'השוואת שברים',emoji:'⚖️',bonus:80,topics:[
+    {id:'g3f2',label:'מי גדול?',ex:{title:'השוואה',body:'אותו מכנה → בודקים מונה',formula:'a/c > b/c כי a > b'},pool:[],
+     gen:function(){var d=randInt(3,6),a=randInt(1,d-1),b;do{b=randInt(1,d-1);}while(b===a);var big=Math.max(a,b),sm=Math.min(a,b);return{t:'מי גדול יותר: '+a+'/'+d+' או '+b+'/'+d+'?',s:'',o:[big+'/'+d,sm+'/'+d,'שווים','אי אפשר לדעת'],a:0,p:80,e:big+'>'+sm+' → '+big+'/'+d+' גדול יותר'};}}
+  ]},
+  {name:'חיבור שברים (מכנה זהה)',emoji:'🍕',bonus:90,topics:[
+    {id:'g3f3',label:'חיבור שברים',ex:{title:'חיבור שברים',body:'אותו מכנה? מחברים מונים!',formula:'a/d + b/d = (a+b)/d'},pool:[],
+     gen:function(){var d=randInt(3,8),a=randInt(1,d-2),b=randInt(1,d-a),c=a+b;return{t:a+'/'+d+' + '+b+'/'+d+' = ?',s:mFracPie(a,d),o:[c+'/'+d,(a+b)+'/'+(2*d),a+'/'+d,c+'/'+(d+1)],a:0,p:90,e:a+'+'+b+'='+c+', אז '+c+'/'+d};}}
+  ]}
+];
+var LV_G3_OPS = [
+  {name:'סדר פעולות — קל',emoji:'📝',bonus:80,topics:[
+    {id:'g3o1',label:'סדר פעולות',ex:{title:'סדר פעולות',body:'כפל וחילוק לפני חיבור וחיסור!',formula:'× ÷ לפני + −'},pool:[],
+     gen:function(){var a=randInt(2,8),b=randInt(2,5),c=randInt(1,5),ans=a+b*c,w=(a+b)*c;var r=mkO(ans,'',[w,a*b+c,a+b+c]);return{t:a+' + '+b+' × '+c+' = ?',s:'',o:r.o,a:r.a,p:90,e:'כפל קודם: '+b+'×'+c+'='+(b*c)+', אז '+a+'+'+(b*c)+'='+ans};}}
+  ]},
+  {name:'סדר פעולות — סוגריים',emoji:'📝',bonus:100,topics:[
+    {id:'g3o2',label:'סוגריים',ex:{title:'סוגריים קודם!',body:'(  ) לפני הכל!',formula:'(a + b) × c'},pool:[],
+     gen:function(){var a=randInt(2,6),b=randInt(2,6),c=randInt(2,5),ans=(a+b)*c,w=a+b*c;var r=mkO(ans,'',[w,a*c+b,(a+b)+c]);return{t:'('+a+' + '+b+') × '+c+' = ?',s:'',o:r.o,a:r.a,p:100,e:'סוגריים: '+a+'+'+b+'='+(a+b)+', אז '+(a+b)+'×'+c+'='+ans};}}
+  ]}
+];
+
 // ===== כיתה ד׳ — LEVEL DATA =====
 var LV_G4_CALC = [
   {name:'כפל בסיסי',emoji:'✖️',bonus:80,topics:[
@@ -2719,6 +2883,21 @@ var LV_G10_STAT = [
 // GRADE ARENA DEFINITIONS
 // ============================================================
 var GRADE_ARENAS = {
+  1: {
+    nums:   {lv:LV_G1_NUMS,   name:'מספרים', emoji:'🔢', color:'#22c55e', levels:3},
+    add:    {lv:LV_G1_ADD,    name:'חיבור וחיסור', emoji:'➕', color:'#3b82f6', levels:3},
+    shapes: {lv:LV_G1_SHAPES, name:'צורות', emoji:'🔷', color:'#f97316', levels:2}
+  },
+  2: {
+    calc:   {lv:LV_G2_CALC,   name:'חיבור וחיסור', emoji:'➕', color:'#22c55e', levels:3},
+    mult:   {lv:LV_G2_MULT,   name:'לוח הכפל', emoji:'✖️', color:'#7c3aed', levels:3},
+    shapes: {lv:LV_G2_SHAPES, name:'צורות ומדידה', emoji:'📏', color:'#f97316', levels:2}
+  },
+  3: {
+    calc: {lv:LV_G3_CALC, name:'כפל וחילוק', emoji:'✖️', color:'#22c55e', levels:3},
+    frac: {lv:LV_G3_FRAC, name:'שברים', emoji:'🍕', color:'#f97316', levels:3},
+    ops:  {lv:LV_G3_OPS,  name:'סדר פעולות', emoji:'📝', color:'#7c3aed', levels:2}
+  },
   4: {
     calc: {lv:LV_G4_CALC, name:'חשבון', emoji:'🔢', color:'#22c55e', levels:5},
     frac: {lv:LV_G4_FRAC, name:'שברים', emoji:'🍕', color:'#f97316', levels:4},
@@ -2762,8 +2941,8 @@ var GRADE_ARENAS = {
   }
 };
 
-var GRADE_NAMES = {4:'כיתה ד׳',5:'כיתה ה׳',6:'כיתה ו׳',7:'כיתה ז׳',8:'כיתה ח׳',9:'כיתה ט׳',10:'כיתה י׳'};
-var GRADE_EMOJIS = {4:'🌟',5:'⭐',6:'🔥',7:'💎',8:'🚀',9:'👑',10:'🎓'};
+var GRADE_NAMES = {1:'כיתה א׳',2:'כיתה ב׳',3:'כיתה ג׳',4:'כיתה ד׳',5:'כיתה ה׳',6:'כיתה ו׳',7:'כיתה ז׳',8:'כיתה ח׳',9:'כיתה ט׳',10:'כיתה י׳'};
+var GRADE_EMOJIS = {1:'🐣',2:'🐥',3:'🦊',4:'🌟',5:'⭐',6:'🔥',7:'💎',8:'🚀',9:'👑',10:'🎓'};
 
 function selectGrade(g){
   currentGrade = g;
