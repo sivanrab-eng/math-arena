@@ -1832,6 +1832,7 @@ function mUnits(from,to){
 
 // Helper for generators
 function randInt(a,b){return Math.floor(Math.random()*(b-a+1))+a;}
+function dRand(min,max){var boost=Math.min(Math.floor(pIdx*0.4),Math.max(2,Math.floor((max-min)*0.5)));return randInt(min,max+boost);}
 function mkO(correct,unit,distractors){
   var opts=[correct+''+unit];
   distractors.forEach(function(d){if(d!==correct)opts.push(d+''+unit);});
@@ -1971,12 +1972,12 @@ var LV_GEO=[
   {name:'שלב 1 — שטח מלבן וריבוע',emoji:'🟦',bonus:60,topics:[
     {id:'ra',label:'שטח מלבן וריבוע',ex:{title:'שטח מלבן',body:'שטח = כמה מקום בפנים 📦<br>כופלים אורך × רוחב!',formula:'שטח = אורך × רוחב'},
      pool:[{t:'מלבן 5×3 — השטח?',s:mR(5,3),o:['15 סמ"ר','8 סמ"ר','16 סמ"ר','30 סמ"ר'],a:0,p:80,e:'5×3=15'},{t:'מלבן 4×6 — השטח?',s:mR(4,6),o:['10 סמ"ר','24 סמ"ר','20 סמ"ר','48 סמ"ר'],a:1,p:80,e:'4×6=24'},{t:'ריבוע 5×5 — השטח?',s:mS(5),o:['10 סמ"ר','20 סמ"ר','25 סמ"ר','15 סמ"ר'],a:2,p:80,e:'5×5=25'},{t:'מלבן 9×7 — השטח?',s:mR(9,7),o:['16 סמ"ר','63 סמ"ר','32 סמ"ר','72 סמ"ר'],a:1,p:100,e:'9×7=63'},{t:'מלבן 12×3 — השטח?',s:mR(12,3),o:['36 סמ"ר','15 סמ"ר','30 סמ"ר','24 סמ"ר'],a:0,p:100,e:'12×3=36'},{t:'ריבוע 7×7 — השטח?',s:mS(7),o:['28 סמ"ר','49 סמ"ר','14 סמ"ר','42 סמ"ר'],a:1,p:100,e:'7×7=49'}],
-     gen:function(){var w=randInt(3,14),h=randInt(2,10),a=w*h;var r=mkO(a,' סמ"ר',[w+h,2*(w+h),w*h+w]);return{t:'מלבן '+w+'×'+h+' — השטח?',s:mR(w,h),o:r.o,a:r.a,p:90,e:w+'×'+h+'='+a};}}
+     gen:function(){var w=dRand(3,14),h=dRand(2,10),a=w*h;var r=mkO(a,' סמ"ר',[w+h,2*(w+h),w*h+w]);return{t:'מלבן '+w+'×'+h+' — השטח?',s:mR(w,h),o:r.o,a:r.a,p:90,e:w+'×'+h+'='+a};}}
   ]},
   {name:'שלב 2 — היקף מלבן וריבוע',emoji:'🟨',bonus:70,topics:[
     {id:'rp',label:'היקף מלבן וריבוע',ex:{title:'היקף מלבן',body:'היקף = הקו מסביב 🔄<br>2 ×(אורך+רוחב)',formula:'היקף = 2×(אורך+רוחב)'},
      pool:[{t:'מלבן 5×3 — ההיקף?',s:mRP(5,3),o:['15 ס"מ','8 ס"מ','16 ס"מ','30 ס"מ'],a:2,p:80,e:'2×(5+3)=16'},{t:'מלבן 8×5 — ההיקף?',s:mRP(8,5),o:['13 ס"מ','40 ס"מ','26 ס"מ','20 ס"מ'],a:2,p:80,e:'2×(8+5)=26'},{t:'ריבוע צלע 6 — ההיקף?',s:mSP(6),o:['12 ס"מ','36 ס"מ','24 ס"מ','18 ס"מ'],a:2,p:80,e:'4×6=24'},{t:'מלבן 13×5 — ההיקף?',s:mRP(13,5),o:['65 ס"מ','18 ס"מ','36 ס"מ','26 ס"מ'],a:2,p:100,e:'2×(13+5)=36'},{t:'מלבן 15×8 — ההיקף?',s:mRP(15,8),o:['120 ס"מ','23 ס"מ','46 ס"מ','30 ס"מ'],a:2,p:100,e:'2×(15+8)=46'},{t:'ריבוע צלע 10 — ההיקף?',s:mSP(10),o:['100 ס"מ','20 ס"מ','40 ס"מ','50 ס"מ'],a:2,p:100,e:'4×10=40'}],
-     gen:function(){var w=randInt(3,15),h=randInt(2,10),p=2*(w+h);var r=mkO(p,' ס"מ',[w*h,w+h,4*w]);return{t:'מלבן '+w+'×'+h+' — ההיקף?',s:mRP(w,h),o:r.o,a:r.a,p:90,e:'2×('+w+'+'+h+')='+p};}}
+     gen:function(){var w=dRand(3,15),h=dRand(2,10),p=2*(w+h);var r=mkO(p,' ס"מ',[w*h,w+h,4*w]);return{t:'מלבן '+w+'×'+h+' — ההיקף?',s:mRP(w,h),o:r.o,a:r.a,p:90,e:'2×('+w+'+'+h+')='+p};}}
   ]},
   {name:'שלב 3 — משולש + מלבן הפוך',emoji:'🔺',bonus:80,topics:[
     {id:'trip',label:'היקף משולש',ex:{title:'היקף משולש',body:'מחברים 3 צלעות!',formula:'היקף = צ1+צ2+צ3'},
@@ -1991,7 +1992,7 @@ var LV_GEO=[
   {name:'שלב 5 — שטח מקבילית',emoji:'🔶',bonus:110,topics:[
     {id:'par',label:'שטח מקבילית',ex:{title:'שטח מקבילית',body:'בסיס × גובה (לא הצלע הנטויה!)',formula:'שטח = בסיס×גובה'},
      pool:[{t:'מקבילית: בסיס 8, גובה 5 — שטח?',s:mPar(8,5),o:['26 סמ"ר','40 סמ"ר','13 סמ"ר','80 סמ"ר'],a:1,p:120,e:'8×5=40'},{t:'מקבילית: בסיס 7, גובה 4 — שטח?',s:mPar(7,4),o:['11 סמ"ר','22 סמ"ר','28 סמ"ר','42 סמ"ר'],a:2,p:120,e:'7×4=28'},{t:'מקבילית: בסיס 9, גובה 6 — שטח?',s:mPar(9,6),o:['30 סמ"ר','54 סמ"ר','15 סמ"ר','45 סמ"ר'],a:1,p:120,e:'9×6=54'},{t:'מקבילית: בסיס 10, גובה 3 — שטח?',s:mPar(10,3),o:['13 סמ"ר','30 סמ"ר','26 סמ"ר','60 סמ"ר'],a:1,p:120,e:'10×3=30'}],
-     gen:function(){var b=randInt(4,12),h=randInt(3,9),a=b*h;var r=mkO(a,' סמ"ר',[2*(b+h),b+h,b*h+b]);return{t:'מקבילית: בסיס '+b+', גובה '+h+' — שטח?',s:mPar(b,h),o:r.o,a:r.a,p:120,e:b+'×'+h+'='+a};}}
+     gen:function(){var b=dRand(4,12),h=dRand(3,9),a=b*h;var r=mkO(a,' סמ"ר',[2*(b+h),b+h,b*h+b]);return{t:'מקבילית: בסיס '+b+', גובה '+h+' — שטח?',s:mPar(b,h),o:r.o,a:r.a,p:120,e:b+'×'+h+'='+a};}}
   ]},
   {name:'שלב 6 — היקף מקבילית',emoji:'🔷',bonus:110,topics:[
     {id:'parp',label:'היקף מקבילית',ex:{title:'היקף מקבילית',body:'2×(צלע+צלע)',formula:'היקף = 2×(א+ב)'},
@@ -2001,7 +2002,7 @@ var LV_GEO=[
   {name:'שלב 7 — משולש חד-זווית',emoji:'🔺',bonus:130,topics:[
     {id:'tr1',label:'שטח משולש חד',ex:{title:'שטח משולש',body:'(בסיס×גובה)÷2 ✂️<br>הגובה בתוך המשולש',formula:'שטח = (בסיס×גובה)÷2'},
      pool:[{t:'משולש: בסיס 10, גובה 6 — שטח?',s:mT(10,6),o:['60 סמ"ר','30 סמ"ר','16 סמ"ר','48 סמ"ר'],a:1,p:150,e:'(10×6)÷2=30'},{t:'משולש: בסיס 8, גובה 5 — שטח?',s:mT(8,5),o:['40 סמ"ר','20 סמ"ר','13 סמ"ר','16 סמ"ר'],a:1,p:150,e:'(8×5)÷2=20'},{t:'משולש: בסיס 14, גובה 5 — שטח?',s:mT(14,5),o:['70 סמ"ר','35 סמ"ר','19 סמ"ר','42 סמ"ר'],a:1,p:150,e:'(14×5)÷2=35'},{t:'משולש: בסיס 6, גובה 8 — שטח?',s:mT(6,8),o:['48 סמ"ר','24 סמ"ר','14 סמ"ר','32 סמ"ר'],a:1,p:150,e:'(6×8)÷2=24'}],
-     gen:function(){var b=randInt(4,14),h=randInt(3,10),a=(b*h)/2;var r=mkO(a,' סמ"ר',[b*h,b+h,a+b]);return{t:'משולש: בסיס '+b+', גובה '+h+' — שטח?',s:mT(b,h),o:r.o,a:r.a,p:150,e:'('+b+'×'+h+')÷2='+a};}}
+     gen:function(){var b=dRand(4,14),h=dRand(3,10),a=(b*h)/2;var r=mkO(a,' סמ"ר',[b*h,b+h,a+b]);return{t:'משולש: בסיס '+b+', גובה '+h+' — שטח?',s:mT(b,h),o:r.o,a:r.a,p:150,e:'('+b+'×'+h+')÷2='+a};}}
   ]},
   {name:'שלב 8 — משולש ישר-זווית',emoji:'📏',bonus:130,topics:[
     {id:'tr2',label:'שטח משולש ישר',ex:{title:'שטח משולש ישר',body:'הניצבים = הבסיס והגובה!',formula:'שטח = (ניצב×ניצב)÷2'},
@@ -2019,7 +2020,7 @@ var LV_GEO=[
   {name:'שלב 11 — טרפז — קל',emoji:'🔷',bonus:150,topics:[
     {id:'tp1',label:'שטח טרפז',ex:{title:'שטח טרפז',body:'(בסיס1+בסיס2)×גובה÷2',formula:'שטח = (a+b)×h÷2'},
      pool:[{t:'טרפז: 6,10, גובה 4 — שטח?',s:mTrap(6,10,4),o:['40 סמ"ר','32 סמ"ר','24 סמ"ר','60 סמ"ר'],a:1,p:170,e:'(6+10)×4÷2=32'},{t:'טרפז: 5,9, גובה 6 — שטח?',s:mTrap(5,9,6),o:['27 סמ"ר','42 סמ"ר','54 סמ"ר','30 סמ"ר'],a:1,p:170,e:'(5+9)×6÷2=42'},{t:'טרפז: 4,8, גובה 5 — שטח?',s:mTrap(4,8,5),o:['20 סמ"ר','40 סמ"ר','30 סמ"ר','60 סמ"ר'],a:2,p:170,e:'(4+8)×5÷2=30'},{t:'טרפז: 3,7, גובה 6 — שטח?',s:mTrap(3,7,6),o:['21 סמ"ר','30 סמ"ר','60 סמ"ר','42 סמ"ר'],a:1,p:170,e:'(3+7)×6÷2=30'}],
-     gen:function(){var a=randInt(3,8),b=randInt(a+2,a+8),h=randInt(3,7),s=(a+b)*h/2;var r=mkO(s,' סמ"ר',[(a+b)*h,a*h,b*h]);return{t:'טרפז: '+a+','+b+', גובה '+h+' — שטח?',s:mTrap(a,b,h),o:r.o,a:r.a,p:170,e:'('+a+'+'+b+')×'+h+'÷2='+s};}}
+     gen:function(){var a=dRand(3,8),b=dRand(a+2,a+8),h=dRand(3,7),s=(a+b)*h/2;var r=mkO(s,' סמ"ר',[(a+b)*h,a*h,b*h]);return{t:'טרפז: '+a+','+b+', גובה '+h+' — שטח?',s:mTrap(a,b,h),o:r.o,a:r.a,p:170,e:'('+a+'+'+b+')×'+h+'÷2='+s};}}
   ]},
   {name:'שלב 12 — טרפז — בינוני',emoji:'🔷',bonus:150,topics:[
     {id:'tp2',label:'טרפז+',ex:{title:'טרפז',body:'מספרים גדולים — אותו דבר!',formula:'שטח = (a+b)×h÷2'},
@@ -2040,7 +2041,7 @@ var LV_GEO=[
   {name:'שלב 16 — היקף מעגל',emoji:'⭕',bonus:170,topics:[
     {id:'cp1',label:'היקף מעגל',ex:{title:'היקף מעגל',body:'π≈3.14 ⭕ היקף=2×π×r',formula:'היקף = 2×π×r'},
      pool:[{t:'מעגל r=5 — היקף? (π≈3.14)',s:mCirc(5),o:['15.7','31.4','25','78.5'],a:1,p:210,e:'2×3.14×5=31.4'},{t:'מעגל r=7 — היקף? (π≈3.14)',s:mCirc(7),o:['21.98','43.96','49','153.86'],a:1,p:210,e:'2×3.14×7=43.96'},{t:'מעגל r=10 — היקף? (π≈3.14)',s:mCirc(10),o:['31.4','62.8','100','314'],a:1,p:210,e:'2×3.14×10=62.8'},{t:'מעגל r=3 — היקף? (π≈3.14)',s:mCirc(3),o:['9.42','18.84','28.26','6.28'],a:1,p:210,e:'2×3.14×3=18.84'}],
-     gen:function(){var r2=randInt(2,12),c=Math.round(2*3.14*r2*100)/100;var r=mkO(c,'',[3.14*r2,r2*r2,r2*4]);return{t:'מעגל r='+r2+' — היקף? (π≈3.14)',s:mCirc(r2),o:r.o,a:r.a,p:210,e:'2×3.14×'+r2+'='+c};}}
+     gen:function(){var r2=dRand(2,12),c=Math.round(2*3.14*r2*100)/100;var r=mkO(c,'',[3.14*r2,r2*r2,r2*4]);return{t:'מעגל r='+r2+' — היקף? (π≈3.14)',s:mCirc(r2),o:r.o,a:r.a,p:210,e:'2×3.14×'+r2+'='+c};}}
   ]},
   {name:'שלב 17 — היקף מעגל — קוטר',emoji:'⭕',bonus:170,topics:[
     {id:'cp2',label:'היקף (קוטר)',ex:{title:'היקף מעגל',body:'קוטר = 2×r → היקף = π×d',formula:'היקף = π×d'},
@@ -2049,7 +2050,7 @@ var LV_GEO=[
   {name:'שלב 18 — שטח מעגל',emoji:'🟣',bonus:180,topics:[
     {id:'ca1',label:'שטח מעגל',ex:{title:'שטח מעגל',body:'r² קודם, ואז ×π!',formula:'שטח = π×r²'},
      pool:[{t:'מעגל r=5 — שטח? (π≈3.14)',s:mCirc(5),o:['31.4 סמ"ר','78.5 סמ"ר','25 סמ"ר','15.7 סמ"ר'],a:1,p:220,e:'3.14×25=78.5'},{t:'מעגל r=3 — שטח? (π≈3.14)',s:mCirc(3),o:['9.42 סמ"ר','28.26 סמ"ר','18.84 סמ"ר','6 סמ"ר'],a:1,p:220,e:'3.14×9=28.26'},{t:'מעגל r=10 — שטח? (π≈3.14)',s:mCirc(10),o:['31.4 סמ"ר','314 סמ"ר','100 סמ"ר','628 סמ"ר'],a:1,p:220,e:'3.14×100=314'},{t:'מעגל r=4 — שטח? (π≈3.14)',s:mCirc(4),o:['50.24 סמ"ר','25.12 סמ"ר','12.56 סמ"ר','16 סמ"ר'],a:0,p:220,e:'3.14×16=50.24'}],
-     gen:function(){var r2=randInt(2,10),a=Math.round(3.14*r2*r2*100)/100;var r=mkO(a,' סמ"ר',[2*3.14*r2,r2*r2,3.14*r2]);return{t:'מעגל r='+r2+' — שטח? (π≈3.14)',s:mCirc(r2),o:r.o,a:r.a,p:220,e:'3.14×'+r2+'²='+a};}}
+     gen:function(){var r2=dRand(2,10),a=Math.round(3.14*r2*r2*100)/100;var r=mkO(a,' סמ"ר',[2*3.14*r2,r2*r2,3.14*r2]);return{t:'מעגל r='+r2+' — שטח? (π≈3.14)',s:mCirc(r2),o:r.o,a:r.a,p:220,e:'3.14×'+r2+'²='+a};}}
   ]},
   {name:'שלב 19 — שטח מעגל+',emoji:'🟣',bonus:180,topics:[
     {id:'ca2',label:'שטח מעגל+',ex:{title:'שטח מעגל',body:'r² ואז ×3.14',formula:'שטח = π×r²'},
@@ -2074,7 +2075,7 @@ var LV_GEO=[
   {name:'שלב 24 — נפח תיבה',emoji:'📦',bonus:220,topics:[
     {id:'v1',label:'נפח תיבה',ex:{title:'נפח תיבה',body:'אורך×רוחב×גובה 📦',formula:'נפח = א×ב×ג'},
      pool:[{t:'תיבה 3×4×5 — נפח?',s:mBox3D(3,4,5),o:['12 סמ"ק','60 סמ"ק','24 סמ"ק','35 סמ"ק'],a:1,p:260,e:'3×4×5=60'},{t:'תיבה 2×6×3 — נפח?',s:mBox3D(2,6,3),o:['11 סמ"ק','36 סמ"ק','18 סמ"ק','24 סמ"ק'],a:1,p:260,e:'2×6×3=36'},{t:'תיבה 10×5×2 — נפח?',s:mBox3D(10,5,2),o:['50 סמ"ק','100 סמ"ק','17 סמ"ק','70 סמ"ק'],a:1,p:260,e:'10×5×2=100'},{t:'תיבה 4×3×2 — נפח?',s:mBox3D(4,3,2),o:['24 סמ"ק','9 סמ"ק','12 סמ"ק','20 סמ"ק'],a:0,p:260,e:'4×3×2=24'}],
-     gen:function(){var a=randInt(2,8),b=randInt(2,8),c=randInt(2,6),v=a*b*c;var r=mkO(v,' סמ"ק',[a*b,a+b+c,a*b*2]);return{t:'תיבה '+a+'×'+b+'×'+c+' — נפח?',s:mBox3D(a,b,c),o:r.o,a:r.a,p:260,e:a+'×'+b+'×'+c+'='+v};}}
+     gen:function(){var a=dRand(2,8),b=dRand(2,8),c=dRand(2,6),v=a*b*c;var r=mkO(v,' סמ"ק',[a*b,a+b+c,a*b*2]);return{t:'תיבה '+a+'×'+b+'×'+c+' — נפח?',s:mBox3D(a,b,c),o:r.o,a:r.a,p:260,e:a+'×'+b+'×'+c+'='+v};}}
   ]},
   {name:'שלב 25 — נפח קוביה',emoji:'🎲',bonus:220,topics:[
     {id:'v2',label:'נפח קוביה',ex:{title:'נפח קוביה',body:'צלע×צלע×צלע 🎲',formula:'נפח = צלע³'},
@@ -2099,7 +2100,7 @@ var LV_FRAC=[
   {name:'שלב 2 — השוואת שברים',emoji:'⚖️',bonus:70,topics:[
     {id:'fcmp',label:'השוואת שברים',ex:{title:'השוואת שברים',body:'מרחיבים למכנה משותף ⚖️<br>או משווים בצלב!',formula:'a/b ? c/d → a×d ? c×b'},
      pool:[{t:'מה גדול יותר?',s:mFrac2(1,3,1,4),o:['1/3 > 1/4','1/3 < 1/4','1/3 = 1/4','אי אפשר'],a:0,p:80,e:'1/3 = 0.33 > 1/4 = 0.25'},{t:'מה גדול יותר?',s:mFrac2(2,5,3,10),o:['2/5 < 3/10','2/5 > 3/10','2/5 = 3/10','אי אפשר'],a:1,p:80,e:'4/10 > 3/10'},{t:'מה גדול יותר?',s:mFrac2(3,4,5,8),o:['3/4 < 5/8','3/4 > 5/8','3/4 = 5/8','אי אפשר'],a:1,p:90,e:'6/8 > 5/8'},{t:'מה גדול יותר?',s:mFrac2(1,2,3,6),o:['1/2 < 3/6','1/2 > 3/6','1/2 = 3/6','אי אפשר'],a:2,p:90,e:'3/6 = 1/2'}],
-     gen:function(){var d1=randInt(2,8),n1=randInt(1,d1-1),d2=randInt(2,8),n2=randInt(1,d2-1);var v1=n1/d1,v2=n2/d2;var sign=v1>v2?'>':v1<v2?'<':'=';var r={o:[fStr(n1,d1)+' > '+fStr(n2,d2),fStr(n1,d1)+' < '+fStr(n2,d2),fStr(n1,d1)+' = '+fStr(n2,d2),'אי אפשר'],a:sign==='>'?0:sign==='<'?1:2};return{t:'מה הקשר?',s:mFrac2(n1,d1,n2,d2),o:r.o,a:r.a,p:85,e:fStr(n1,d1)+' '+sign+' '+fStr(n2,d2)};}}
+     gen:function(){var d1=dRand(2,8),n1=dRand(1,d1-1),d2=dRand(2,8),n2=dRand(1,d2-1);var v1=n1/d1,v2=n2/d2;var sign=v1>v2?'>':v1<v2?'<':'=';var r={o:[fStr(n1,d1)+' > '+fStr(n2,d2),fStr(n1,d1)+' < '+fStr(n2,d2),fStr(n1,d1)+' = '+fStr(n2,d2),'אי אפשר'],a:sign==='>'?0:sign==='<'?1:2};return{t:'מה הקשר?',s:mFrac2(n1,d1,n2,d2),o:r.o,a:r.a,p:85,e:fStr(n1,d1)+' '+sign+' '+fStr(n2,d2)};}}
   ]},
   {name:'שלב 3 — צמצום שברים',emoji:'✂️',bonus:80,topics:[
     {id:'fred',label:'צמצום',ex:{title:'צמצום שברים',body:'מחלקים מונה ומכנה במספר זהה ✂️',formula:'צמצום = חלוקה ב-מ.מ.ג'},
@@ -2155,7 +2156,7 @@ var LV_PCT=[
   {name:'שלב 2 — אחוז ממספר',emoji:'🔢',bonus:70,topics:[
     {id:'pof',label:'אחוז ממספר',ex:{title:'אחוז ממספר',body:'מחלקים ב-100, כופלים באחוז 🔢',formula:'X% מ-N = N×X÷100'},
      pool:[{t:'50% מ-80 = ?',s:mPctBar(50,'80'),o:['40','45','50','60'],a:0,p:80,e:'80×50÷100=40'},{t:'10% מ-200 = ?',s:mPctBar(10,'200'),o:['10','20','30','2'],a:1,p:80,e:'200×10÷100=20'},{t:'25% מ-120 = ?',s:mPctBar(25,'120'),o:['25','30','40','60'],a:1,p:90,e:'120×25÷100=30'},{t:'20% מ-150 = ?',s:mPctBar(20,'150'),o:['15','30','35','75'],a:1,p:90,e:'150×20÷100=30'}],
-     gen:function(){var pcts=[10,20,25,50,75];var p=pcts[randInt(0,4)];var n=randInt(2,20)*10;var ans=n*p/100;var r=mkO(ans,'',[n-ans,ans+10,n/p]);return{t:p+'% מ-'+n+' = ?',s:mPctBar(p,String(n)),o:r.o,a:r.a,p:85,e:n+'×'+p+'÷100='+ans};}}
+     gen:function(){var pcts=[10,20,25,50,75];var p=pcts[randInt(0,4)];var n=dRand(2,20)*10;var ans=n*p/100;var r=mkO(ans,'',[n-ans,ans+10,n/p]);return{t:p+'% מ-'+n+' = ?',s:mPctBar(p,String(n)),o:r.o,a:r.a,p:85,e:n+'×'+p+'÷100='+ans};}}
   ]},
   {name:'שלב 3 — שבר לאחוז',emoji:'🔄',bonus:80,topics:[
     {id:'f2p',label:'שבר → אחוז',ex:{title:'שבר לאחוז',body:'כופלים ב-100! 🔄',formula:'a/b = (a÷b)×100%'},
@@ -2208,7 +2209,7 @@ var LV_NUM=[
   {name:'שלב 4 — חיבור עשרוניים',emoji:'➕',bonus:90,topics:[
     {id:'nadd',label:'חיבור עשרוניים',ex:{title:'חיבור עשרוניים',body:'מיישרים נקודות! ➕',formula:'1.5 + 2.3 = 3.8'},
      pool:[{t:'1.5 + 2.3 = ?',s:mNumLine(0,5,[1.5,2.3,3.8]),o:['3.8','3.5','4.8','3.2'],a:0,p:80,e:'1.5+2.3=3.8'},{t:'0.7 + 0.8 = ?',s:mNumLine(0,2,[0.7,0.8,1.5]),o:['0.15','1.5','1.6','0.78'],a:1,p:80,e:'0.7+0.8=1.5'},{t:'3.25 + 1.75 = ?',s:mNumLine(3,6,[3.25,5]),o:['4.00','4.10','5.00','4.90'],a:2,p:100,e:'3.25+1.75=5.00'},{t:'2.4 + 3.9 = ?',s:mNumLine(2,7,[2.4,3.9,6.3]),o:['5.3','6.3','5.13','6.13'],a:1,p:90,e:'2.4+3.9=6.3'}],
-     gen:function(){var a2=randInt(1,9),b2=randInt(1,9),a3=a2/10,b3=b2/10;var w1=randInt(0,5),w2=randInt(0,4);var n1=w1+a3,n2=w2+b3;var s2=Math.round((n1+n2)*10)/10;var r=mkO(s2,'',[Math.round((n1-n2)*10)/10,s2+1,s2-1]);return{t:n1+' + '+n2+' = ?',s:mNumLine(0,Math.ceil(s2+1),[n1,n2,s2]),o:r.o,a:r.a,p:85,e:n1+'+'+n2+'='+s2};}}
+     gen:function(){var a2=dRand(1,9),b2=dRand(1,9),a3=a2/10,b3=b2/10;var w1=dRand(0,5),w2=dRand(0,4);var n1=w1+a3,n2=w2+b3;var s2=Math.round((n1+n2)*10)/10;var r=mkO(s2,'',[Math.round((n1-n2)*10)/10,s2+1,s2-1]);return{t:n1+' + '+n2+' = ?',s:mNumLine(0,Math.ceil(s2+1),[n1,n2,s2]),o:r.o,a:r.a,p:85,e:n1+'+'+n2+'='+s2};}}
   ]},
   {name:'שלב 5 — חיסור עשרוניים',emoji:'➖',bonus:90,topics:[
     {id:'nsub',label:'חיסור עשרוניים',ex:{title:'חיסור עשרוניים',body:'מיישרים נקודות! ➖',formula:'4.5 − 1.2 = 3.3'},
@@ -2247,29 +2248,29 @@ var currentGrade = 6;
 var LV_G1_NUMS = [
   {name:'ספירה עד 10',emoji:'🔢',bonus:50,topics:[
     {id:'g1n1a',label:'ספירה עד 5',ex:{title:'ספירה',body:'סופרים חפצים!',formula:'1, 2, 3...'},pool:[],
-     gen:function(){var a=randInt(1,5);var emj=['🍎','🌟','⚽','🐱','🎈'][randInt(0,4)];var s='';for(var i=0;i<a;i++)s+=emj;var r=mkO(a,'',[a+1,a>1?a-1:a+2,a+2]);return{t:'כמה '+emj+' יש?<br>'+s,s:'',o:r.o,a:r.a,p:40,e:'יש '+a+' '+emj};}},
+     gen:function(){var a=dRand(1,5);var emj=['🍎','🌟','⚽','🐱','🎈'][randInt(0,4)];var s='';for(var i=0;i<a;i++)s+=emj;var r=mkO(a,'',[a+1,a>1?a-1:a+2,a+2]);return{t:'כמה '+emj+' יש?<br>'+s,s:'',o:r.o,a:r.a,p:40,e:'יש '+a+' '+emj};}},
     {id:'g1n1b',label:'ספירה עד 10',ex:{title:'ספירה',body:'סופרים עד 10!',formula:'1, 2, 3...10'},pool:[],
      gen:function(){var a=randInt(4,10);var emj=['🍎','🌟','⚽','🐱','🎈'][randInt(0,4)];var s='';for(var i=0;i<a;i++)s+=emj;var r=mkO(a,'',[a+1,a>1?a-1:a+2,a-2>0?a-2:a+3]);return{t:'כמה '+emj+' יש?<br>'+s,s:'',o:r.o,a:r.a,p:50,e:'יש '+a+' '+emj};}}
   ]},
   {name:'עשרות ואחדות',emoji:'🧮',bonus:60,topics:[
     {id:'g1n2a',label:'כמה עשרות?',ex:{title:'עשרות',body:'15 = 1 עשרת + 5 אחדות',formula:''},pool:[],
-     gen:function(){var t=randInt(1,2),u=randInt(1,9),n=t*10+u;var r=mkO(t,'',[u,t+1,t+u]);return{t:'כמה עשרות ב-'+n+'?',s:'',o:r.o,a:r.a,p:55,e:n+' = '+t+' עשרות + '+u+' אחדות'};}},
+     gen:function(){var t=dRand(1,2),u=dRand(1,9),n=t*10+u;var r=mkO(t,'',[u,t+1,t+u]);return{t:'כמה עשרות ב-'+n+'?',s:'',o:r.o,a:r.a,p:55,e:n+' = '+t+' עשרות + '+u+' אחדות'};}},
     {id:'g1n2b',label:'כמה אחדות?',ex:{title:'אחדות',body:'15 = 1 עשרת + 5 אחדות',formula:''},pool:[],
-     gen:function(){var t=randInt(1,3),u=randInt(1,9),n=t*10+u;var r=mkO(u,'',[t,u+1>9?u-1:u+1,t+u]);return{t:'כמה אחדות ב-'+n+'?',s:'',o:r.o,a:r.a,p:65,e:n+' = '+t+' עשרות + '+u+' אחדות'};}}
+     gen:function(){var t=dRand(1,3),u=dRand(1,9),n=t*10+u;var r=mkO(u,'',[t,u+1>9?u-1:u+1,t+u]);return{t:'כמה אחדות ב-'+n+'?',s:'',o:r.o,a:r.a,p:65,e:n+' = '+t+' עשרות + '+u+' אחדות'};}}
   ]},
   {name:'מי גדול יותר?',emoji:'⚖️',bonus:60,topics:[
     {id:'g1n3a',label:'השוואה עד 10',ex:{title:'השוואה',body:'מי גדול יותר?',formula:''},pool:[],
-     gen:function(){var a=randInt(1,10),b;do{b=randInt(1,10);}while(b===a);var big=Math.max(a,b);var r=mkO(big,'',[Math.min(a,b),a+b,Math.abs(a-b)]);return{t:'מי גדול יותר: '+a+' או '+b+'?',s:'',o:r.o,a:r.a,p:50,e:big+' > '+Math.min(a,b)};}},
+     gen:function(){var a=dRand(1,10),b;do{b=dRand(1,10);}while(b===a);var big=Math.max(a,b);var r=mkO(big,'',[Math.min(a,b),a+b,Math.abs(a-b)]);return{t:'מי גדול יותר: '+a+' או '+b+'?',s:'',o:r.o,a:r.a,p:50,e:big+' > '+Math.min(a,b)};}},
     {id:'g1n3b',label:'השוואה עד 30',ex:{title:'השוואה',body:'משווים מספרים גדולים!',formula:''},pool:[],
-     gen:function(){var a=randInt(5,30),b;do{b=randInt(5,30);}while(b===a);var big=Math.max(a,b);var r=mkO(big,'',[Math.min(a,b),a+b,big+1]);return{t:'מי גדול יותר: '+a+' או '+b+'?',s:'',o:r.o,a:r.a,p:65,e:big+' > '+Math.min(a,b)};}}
+     gen:function(){var a=dRand(5,30),b;do{b=dRand(5,30);}while(b===a);var big=Math.max(a,b);var r=mkO(big,'',[Math.min(a,b),a+b,big+1]);return{t:'מי גדול יותר: '+a+' או '+b+'?',s:'',o:r.o,a:r.a,p:65,e:big+' > '+Math.min(a,b)};}}
   ]}
 ];
 var LV_G1_ADD = [
   {name:'חיבור',emoji:'➕',bonus:50,topics:[
     {id:'g1a1a',label:'חיבור עד 5',ex:{title:'חיבור',body:'סופרים ביחד!',formula:'a + b = ?'},pool:[],
-     gen:function(){var a=randInt(1,3),b=randInt(1,2),c=a+b;var r=mkO(c,'',[c+1,a,b]);return{t:a+' + '+b+' = ?',s:'',o:r.o,a:r.a,p:40,e:a+'+'+b+'='+c};}},
+     gen:function(){var a=dRand(1,3),b=dRand(1,2),c=a+b;var r=mkO(c,'',[c+1,a,b]);return{t:a+' + '+b+' = ?',s:'',o:r.o,a:r.a,p:40,e:a+'+'+b+'='+c};}},
     {id:'g1a1b',label:'חיבור עד 10',ex:{title:'חיבור',body:'חיבור עד 10!',formula:'a + b = ?'},pool:[],
-     gen:function(){var a=randInt(2,7),b=randInt(2,8-a>1?8-a:2),c=a+b;if(c>10){b=10-a;}c=a+b;var r=mkO(c,'',[c+1,c-1,a]);return{t:a+' + '+b+' = ?',s:'',o:r.o,a:r.a,p:55,e:a+'+'+b+'='+c};}}
+     gen:function(){var a=dRand(2,7),b=dRand(2,8-a>1?8-a:2),c=a+b;if(c>10){b=10-a;}c=a+b;var r=mkO(c,'',[c+1,c-1,a]);return{t:a+' + '+b+' = ?',s:'',o:r.o,a:r.a,p:55,e:a+'+'+b+'='+c};}}
   ]},
   {name:'חיסור',emoji:'➖',bonus:55,topics:[
     {id:'g1a2a',label:'חיסור עד 5',ex:{title:'חיסור',body:'כמה נשאר?',formula:'a − b = ?'},pool:[],
@@ -2279,7 +2280,7 @@ var LV_G1_ADD = [
   ]},
   {name:'חיבור וחיסור עד 20',emoji:'🔢',bonus:65,topics:[
     {id:'g1a3a',label:'חיבור עד 20',ex:{title:'חיבור',body:'עוברים את 10!',formula:'a + b = ?'},pool:[],
-     gen:function(){var a=randInt(5,12),b=randInt(3,8),c=a+b;if(c>20){a=randInt(4,10);b=randInt(2,10);c=a+b;if(c>20){b=20-a;}c=a+b;}var r=mkO(c,'',[c+1,c-1,c+2]);return{t:a+' + '+b+' = ?',s:'',o:r.o,a:r.a,p:60,e:a+'+'+b+'='+c};}},
+     gen:function(){var a=dRand(5,12),b=dRand(3,8),c=a+b;if(c>20){a=dRand(4,10);b=dRand(2,10);c=a+b;if(c>20){b=20-a;}c=a+b;}var r=mkO(c,'',[c+1,c-1,c+2]);return{t:a+' + '+b+' = ?',s:'',o:r.o,a:r.a,p:60,e:a+'+'+b+'='+c};}},
     {id:'g1a3b',label:'חיסור עד 20',ex:{title:'חיסור',body:'חיסור עד 20!',formula:'a − b = ?'},pool:[],
      gen:function(){var a=randInt(11,20),b=randInt(2,a-2),c=a-b;var r=mkO(c,'',[c+1,b,a]);return{t:a+' − '+b+' = ?',s:'',o:r.o,a:r.a,p:65,e:a+'−'+b+'='+c};}}
   ]}
@@ -2315,33 +2316,33 @@ var LV_G1_SHAPES = [
 var LV_G2_CALC = [
   {name:'חיבור עד 100',emoji:'➕',bonus:60,topics:[
     {id:'g2c1a',label:'חיבור עשרות',ex:{title:'חיבור עשרות',body:'20+30 = ?',formula:'עשרות עגולות'},pool:[],
-     gen:function(){var a=randInt(1,5)*10,b=randInt(1,4)*10,c=a+b;var r=mkO(c,'',[c+10,c-10,a]);return{t:a+' + '+b+' = ?',s:'',o:r.o,a:r.a,p:55,e:a+'+'+b+'='+c};}},
+     gen:function(){var a=dRand(1,5)*10,b=dRand(1,4)*10,c=a+b;var r=mkO(c,'',[c+10,c-10,a]);return{t:a+' + '+b+' = ?',s:'',o:r.o,a:r.a,p:55,e:a+'+'+b+'='+c};}},
     {id:'g2c1b',label:'חיבור עד 100',ex:{title:'חיבור',body:'חיבור בתחום 100!',formula:'a + b = ?'},pool:[],
-     gen:function(){var a=randInt(12,55),b=randInt(10,44),c=a+b;if(c>100){b=100-a-randInt(0,5);if(b<5)b=5;c=a+b;}var r=mkO(c,'',[c+10,c-10,a]);return{t:a+' + '+b+' = ?',s:'',o:r.o,a:r.a,p:70,e:a+'+'+b+'='+c};}}
+     gen:function(){var a=dRand(12,55),b=dRand(10,44),c=a+b;if(c>100){b=100-a-dRand(0,5);if(b<5)b=5;c=a+b;}var r=mkO(c,'',[c+10,c-10,a]);return{t:a+' + '+b+' = ?',s:'',o:r.o,a:r.a,p:70,e:a+'+'+b+'='+c};}}
   ]},
   {name:'חיסור עד 100',emoji:'➖',bonus:70,topics:[
     {id:'g2c2a',label:'חיסור עשרות',ex:{title:'חיסור עשרות',body:'50−20 = ?',formula:'עשרות עגולות'},pool:[],
-     gen:function(){var a=randInt(3,9)*10,b=randInt(1,Math.floor(a/10)-1)*10,c=a-b;var r=mkO(c,'',[c+10,b,a]);return{t:a+' − '+b+' = ?',s:'',o:r.o,a:r.a,p:55,e:a+'−'+b+'='+c};}},
+     gen:function(){var a=dRand(3,9)*10,b=dRand(1,Math.floor(a/10)-1)*10,c=a-b;var r=mkO(c,'',[c+10,b,a]);return{t:a+' − '+b+' = ?',s:'',o:r.o,a:r.a,p:55,e:a+'−'+b+'='+c};}},
     {id:'g2c2b',label:'חיסור עד 100',ex:{title:'חיסור',body:'חיסור בתחום 100!',formula:'a − b = ?'},pool:[],
-     gen:function(){var a=randInt(30,99),b=randInt(5,a-5),c=a-b;var r=mkO(c,'',[c+10,a,b]);return{t:a+' − '+b+' = ?',s:'',o:r.o,a:r.a,p:70,e:a+'−'+b+'='+c};}}
+     gen:function(){var a=dRand(30,99),b=dRand(5,a-5),c=a-b;var r=mkO(c,'',[c+10,a,b]);return{t:a+' − '+b+' = ?',s:'',o:r.o,a:r.a,p:70,e:a+'−'+b+'='+c};}}
   ]},
   {name:'מספר חסר',emoji:'❓',bonus:80,topics:[
     {id:'g2c3a',label:'מספר חסר בחיבור',ex:{title:'מספר חסר',body:'a + ? = c',formula:'c − a = ?'},pool:[],
-     gen:function(){var a=randInt(3,15),b=randInt(3,15),c=a+b;var r=mkO(b,'',[a,c,b+3]);return{t:a+' + ___ = '+c,s:'',o:r.o,a:r.a,p:70,e:c+'−'+a+'='+b};}},
+     gen:function(){var a=dRand(3,15),b=dRand(3,15),c=a+b;var r=mkO(b,'',[a,c,b+3]);return{t:a+' + ___ = '+c,s:'',o:r.o,a:r.a,p:70,e:c+'−'+a+'='+b};}},
     {id:'g2c3b',label:'מספר חסר בחיסור',ex:{title:'מספר חסר',body:'a − ? = c',formula:'a − c = ?'},pool:[],
-     gen:function(){var b=randInt(3,15),c=randInt(2,15),a=b+c;var r=mkO(b,'',[c,a,b+2]);return{t:a+' − ___ = '+c,s:'',o:r.o,a:r.a,p:80,e:a+'−'+c+'='+b};}}
+     gen:function(){var b=dRand(3,15),c=dRand(2,15),a=b+c;var r=mkO(b,'',[c,a,b+2]);return{t:a+' − ___ = '+c,s:'',o:r.o,a:r.a,p:80,e:a+'−'+c+'='+b};}}
   ]}
 ];
 var LV_G2_MULT = [
   {name:'לוח כפל — קל',emoji:'✖️',bonus:60,topics:[
     {id:'g2m1a',label:'כפל ב-2 וב-5',ex:{title:'כפל',body:'2×, 5×',formula:'a × b = ?'},pool:[],
-     gen:function(){var facts=[2,5];var a=facts[randInt(0,1)],b=randInt(1,7),c=a*b;var r=mkO(c,'',[c+a,c-a,a+b]);return{t:a+' × '+b+' = ?',s:'',o:r.o,a:r.a,p:55,e:a+'×'+b+'='+c};}},
+     gen:function(){var facts=[2,5];var a=facts[randInt(0,1)],b=dRand(1,7),c=a*b;var r=mkO(c,'',[c+a,c-a,a+b]);return{t:a+' × '+b+' = ?',s:'',o:r.o,a:r.a,p:55,e:a+'×'+b+'='+c};}},
     {id:'g2m1b',label:'כפל ב-10',ex:{title:'כפל',body:'10×',formula:'פשוט מוסיפים 0!'},pool:[],
-     gen:function(){var b=randInt(1,10),c=10*b;var r=mkO(c,'',[c+10,b,c-10>0?c-10:c+5]);return{t:'10 × '+b+' = ?',s:'',o:r.o,a:r.a,p:60,e:'10×'+b+'='+c};}}
+     gen:function(){var b=dRand(1,10),c=10*b;var r=mkO(c,'',[c+10,b,c-10>0?c-10:c+5]);return{t:'10 × '+b+' = ?',s:'',o:r.o,a:r.a,p:60,e:'10×'+b+'='+c};}}
   ]},
   {name:'לוח כפל — בינוני',emoji:'✖️',bonus:80,topics:[
     {id:'g2m2a',label:'כפל ב-3 וב-4',ex:{title:'כפל',body:'3×, 4×',formula:'a × b = ?'},pool:[],
-     gen:function(){var facts=[3,4];var a=facts[randInt(0,1)],b=randInt(2,8),c=a*b;var r=mkO(c,'',[c+a,c-b,(a+1)*b]);return{t:a+' × '+b+' = ?',s:'',o:r.o,a:r.a,p:70,e:a+'×'+b+'='+c};}},
+     gen:function(){var facts=[3,4];var a=facts[randInt(0,1)],b=dRand(2,8),c=a*b;var r=mkO(c,'',[c+a,c-b,(a+1)*b]);return{t:a+' × '+b+' = ?',s:'',o:r.o,a:r.a,p:70,e:a+'×'+b+'='+c};}},
     {id:'g2m2b',label:'כפל ב-6 וב-7',ex:{title:'כפל',body:'6×, 7×',formula:'a × b = ?'},pool:[],
      gen:function(){var facts=[6,7];var a=facts[randInt(0,1)],b=randInt(2,8),c=a*b;var r=mkO(c,'',[c+a,c-b,(a-1)*b]);return{t:a+' × '+b+' = ?',s:'',o:r.o,a:r.a,p:80,e:a+'×'+b+'='+c};}}
   ]},
@@ -2349,7 +2350,7 @@ var LV_G2_MULT = [
     {id:'g2m3a',label:'כפל ב-8 וב-9',ex:{title:'כפל',body:'8×, 9×',formula:'a × b = ?'},pool:[],
      gen:function(){var a=randInt(8,9),b=randInt(2,9),c=a*b;var r=mkO(c,'',[c+a,c-b,(a-1)*b]);return{t:a+' × '+b+' = ?',s:'',o:r.o,a:r.a,p:85,e:a+'×'+b+'='+c};}},
     {id:'g2m3b',label:'כפל מעורב',ex:{title:'כפל מעורב',body:'כל לוח הכפל!',formula:'a × b = ?'},pool:[],
-     gen:function(){var a=randInt(2,9),b=randInt(2,9),c=a*b;var r=mkO(c,'',[c+a,c-b,(a+1)*b]);return{t:a+' × '+b+' = ?',s:'',o:r.o,a:r.a,p:90,e:a+'×'+b+'='+c};}}
+     gen:function(){var a=dRand(2,9),b=dRand(2,9),c=a*b;var r=mkO(c,'',[c+a,c-b,(a+1)*b]);return{t:a+' × '+b+' = ?',s:'',o:r.o,a:r.a,p:90,e:a+'×'+b+'='+c};}}
   ]}
 ];
 var LV_G2_SHAPES = [
@@ -2383,19 +2384,19 @@ var LV_G2_SHAPES = [
 var LV_G3_CALC = [
   {name:'כפל במאונך',emoji:'✖️',bonus:80,topics:[
     {id:'g3c1a',label:'כפל קטן',ex:{title:'כפל',body:'כפל דו-ספרתי!',formula:'a × b = ?'},pool:[],
-     gen:function(){var a=randInt(11,15),b=randInt(2,5),c=a*b;var r=mkO(c,'',[c+b,c-a,(a+1)*b]);return{t:a+' × '+b+' = ?',s:'',o:r.o,a:r.a,p:75,e:a+'×'+b+'='+c};}},
+     gen:function(){var a=dRand(11,15),b=dRand(2,5),c=a*b;var r=mkO(c,'',[c+b,c-a,(a+1)*b]);return{t:a+' × '+b+' = ?',s:'',o:r.o,a:r.a,p:75,e:a+'×'+b+'='+c};}},
     {id:'g3c1b',label:'כפל גדול',ex:{title:'כפל',body:'מספרים גדולים!',formula:'a × b = ?'},pool:[],
      gen:function(){var a=randInt(15,30),b=randInt(3,9),c=a*b;var r=mkO(c,'',[c+b,c-a,(a-1)*b]);return{t:a+' × '+b+' = ?',s:'',o:r.o,a:r.a,p:95,e:a+'×'+b+'='+c};}}
   ]},
   {name:'חילוק',emoji:'➗',bonus:85,topics:[
     {id:'g3c2a',label:'חילוק ללא שארית',ex:{title:'חילוק',body:'הפעולה ההפוכה לכפל!',formula:'a ÷ b = ?'},pool:[],
-     gen:function(){var b=randInt(2,7),c=randInt(2,8),a=b*c;var r=mkO(c,'',[c+1,b,c+2]);return{t:a+' ÷ '+b+' = ?',s:'',o:r.o,a:r.a,p:75,e:a+'÷'+b+'='+c};}},
+     gen:function(){var b=dRand(2,7),c=dRand(2,8),a=b*c;var r=mkO(c,'',[c+1,b,c+2]);return{t:a+' ÷ '+b+' = ?',s:'',o:r.o,a:r.a,p:75,e:a+'÷'+b+'='+c};}},
     {id:'g3c2b',label:'חילוק עם שארית',ex:{title:'שארית',body:'מה נשאר?',formula:'a ÷ b = מנה ושארית r'},pool:[],
-     gen:function(){var b=randInt(3,8),q=randInt(2,8),rem=randInt(1,b-1),a=b*q+rem;var r=mkO(rem,'',[rem+1,b-rem,0]);return{t:a+' ÷ '+b+' — מה השארית?',s:'',o:r.o,a:r.a,p:95,e:a+'='+b+'×'+q+'+'+rem+', שארית '+rem};}}
+     gen:function(){var b=dRand(3,8),q=dRand(2,8),rem=dRand(1,b-1),a=b*q+rem;var r=mkO(rem,'',[rem+1,b-rem,0]);return{t:a+' ÷ '+b+' — מה השארית?',s:'',o:r.o,a:r.a,p:95,e:a+'='+b+'×'+q+'+'+rem+', שארית '+rem};}}
   ]},
   {name:'פעולות מעורבות',emoji:'🔢',bonus:100,topics:[
     {id:'g3c3a',label:'כפל וחילוק מעורב',ex:{title:'מעורב',body:'כפל וחילוק!',formula:''},pool:[],
-     gen:function(){if(randInt(0,1)){var a=randInt(11,20),b=randInt(2,6),c=a*b;var r=mkO(c,'',[c+b,c-a,(a+1)*b]);return{t:a+' × '+b+' = ?',s:'',o:r.o,a:r.a,p:85,e:a+'×'+b+'='+c};}else{var b2=randInt(2,9),c2=randInt(3,10),a2=b2*c2;var r2=mkO(c2,'',[c2+1,b2,c2+2]);return{t:a2+' ÷ '+b2+' = ?',s:'',o:r2.o,a:r2.a,p:85,e:a2+'÷'+b2+'='+c2};}}},
+     gen:function(){if(randInt(0,1)){var a=dRand(11,20),b=dRand(2,6),c=a*b;var r=mkO(c,'',[c+b,c-a,(a+1)*b]);return{t:a+' × '+b+' = ?',s:'',o:r.o,a:r.a,p:85,e:a+'×'+b+'='+c};}else{var b2=randInt(2,9),c2=randInt(3,10),a2=b2*c2;var r2=mkO(c2,'',[c2+1,b2,c2+2]);return{t:a2+' ÷ '+b2+' = ?',s:'',o:r2.o,a:r2.a,p:85,e:a2+'÷'+b2+'='+c2};}}},
     {id:'g3c3b',label:'בעיות מילוליות',ex:{title:'בעיות מילוליות',body:'קוראים ופותרים!',formula:''},pool:[
       {t:'בכיתה 24 תלמידים. חולקו ל-4 קבוצות. כמה בכל קבוצה?',s:'',o:['4','6','8','12'],a:1,p:90,e:'24÷4=6'},
       {t:'בחנות 5 מדפים, בכל מדף 12 ספרים. כמה ספרים?',s:'',o:['17','50','60','120'],a:2,p:95,e:'5×12=60'},
@@ -2409,13 +2410,13 @@ var LV_G3_FRAC = [
     {id:'g3f1a',label:'זיהוי שבר',ex:{title:'שברים',body:'כמה חלקים צבועים?',formula:'מונה/מכנה'},pool:[],
      gen:function(){var d=randInt(2,4),n=randInt(1,d-1);return{t:'כמה צבוע?',s:mFracPie(n,d),o:[n+'/'+d,(d-n)+'/'+d,n+'/'+(d+1),'1/'+d],a:0,p:65,e:n+' חלקים מתוך '+d};}},
     {id:'g3f1b',label:'שבר מתוך כמות',ex:{title:'שבר של כמות',body:'1/4 מתוך 20 = 5',formula:'X÷מכנה×מונה'},pool:[],
-     gen:function(){var d=randInt(2,5),total=d*randInt(2,6),ans=total/d;var r=mkO(ans,'',[total/d+d,total*d,total-d]);return{t:'1/'+d+' מתוך '+total+' = ?',s:'',o:r.o,a:r.a,p:80,e:total+'÷'+d+'='+ans};}}
+     gen:function(){var d=dRand(2,5),total=d*dRand(2,6),ans=total/d;var r=mkO(ans,'',[total/d+d,total*d,total-d]);return{t:'1/'+d+' מתוך '+total+' = ?',s:'',o:r.o,a:r.a,p:80,e:total+'÷'+d+'='+ans};}}
   ]},
   {name:'השוואת שברים',emoji:'⚖️',bonus:80,topics:[
     {id:'g3f2a',label:'מכנה זהה',ex:{title:'השוואה',body:'אותו מכנה → בודקים מונה',formula:''},pool:[],
      gen:function(){var d=randInt(3,6),a=randInt(1,d-1),b;do{b=randInt(1,d-1);}while(b===a);var big=Math.max(a,b),sm=Math.min(a,b);return{t:'מי גדול: '+a+'/'+d+' או '+b+'/'+d+'?',s:'',o:[big+'/'+d,sm+'/'+d,'שווים','אי אפשר לדעת'],a:0,p:75,e:big+'>'+sm+' → '+big+'/'+d};}},
     {id:'g3f2b',label:'שברים שקולים',ex:{title:'שברים שקולים',body:'1/2 = 2/4 = 3/6',formula:'כופלים מונה ומכנה באותו מספר'},pool:[],
-     gen:function(){var n=randInt(1,3),d=randInt(n+1,5),k=randInt(2,3),en=n*k,ed=d*k;return{t:n+'/'+d+' = ?/'+ed,s:mFracPie(n,d),o:[String(en),String(en+1),String(en-1),String(d)],a:0,p:90,e:n+'/'+d+' = '+en+'/'+ed+' (כפלנו ב-'+k+')'};}}
+     gen:function(){var n=dRand(1,3),d=dRand(n+1,5),k=dRand(2,3),en=n*k,ed=d*k;return{t:n+'/'+d+' = ?/'+ed,s:mFracPie(n,d),o:[String(en),String(en+1),String(en-1),String(d)],a:0,p:90,e:n+'/'+d+' = '+en+'/'+ed+' (כפלנו ב-'+k+')'};}}
   ]},
   {name:'חיבור וחיסור שברים',emoji:'🍕',bonus:95,topics:[
     {id:'g3f3a',label:'חיבור שברים',ex:{title:'חיבור',body:'אותו מכנה? מחברים מונים!',formula:'a/d + b/d = (a+b)/d'},pool:[],
@@ -2427,15 +2428,15 @@ var LV_G3_FRAC = [
 var LV_G3_OPS = [
   {name:'סדר פעולות',emoji:'📝',bonus:80,topics:[
     {id:'g3o1a',label:'כפל לפני חיבור',ex:{title:'סדר פעולות',body:'כפל לפני חיבור וחיסור!',formula:'× לפני +'},pool:[],
-     gen:function(){var a=randInt(2,6),b=randInt(2,4),c=randInt(1,4),ans=a+b*c,w=(a+b)*c;var r=mkO(ans,'',[w,a*b+c,a+b+c]);return{t:a+' + '+b+' × '+c+' = ?',s:'',o:r.o,a:r.a,p:80,e:'כפל קודם: '+b+'×'+c+'='+(b*c)+', אז '+a+'+'+(b*c)+'='+ans};}},
+     gen:function(){var a=dRand(2,6),b=dRand(2,4),c=dRand(1,4),ans=a+b*c,w=(a+b)*c;var r=mkO(ans,'',[w,a*b+c,a+b+c]);return{t:a+' + '+b+' × '+c+' = ?',s:'',o:r.o,a:r.a,p:80,e:'כפל קודם: '+b+'×'+c+'='+(b*c)+', אז '+a+'+'+(b*c)+'='+ans};}},
     {id:'g3o1b',label:'חיסור וכפל',ex:{title:'סדר פעולות',body:'כפל/חילוק לפני חיבור/חיסור!',formula:'× ÷ לפני + −'},pool:[],
-     gen:function(){var a=randInt(10,25),b=randInt(2,4),c=randInt(2,5),ans=a-b*c;if(ans<1){a=b*c+randInt(2,10);ans=a-b*c;}var w=(a-b)*c;var r=mkO(ans,'',[w,a-b-c,a*b-c]);return{t:a+' − '+b+' × '+c+' = ?',s:'',o:r.o,a:r.a,p:90,e:'כפל קודם: '+b+'×'+c+'='+(b*c)+', אז '+a+'−'+(b*c)+'='+ans};}}
+     gen:function(){var a=dRand(10,25),b=dRand(2,4),c=dRand(2,5),ans=a-b*c;if(ans<1){a=b*c+dRand(2,10);ans=a-b*c;}var w=(a-b)*c;var r=mkO(ans,'',[w,a-b-c,a*b-c]);return{t:a+' − '+b+' × '+c+' = ?',s:'',o:r.o,a:r.a,p:90,e:'כפל קודם: '+b+'×'+c+'='+(b*c)+', אז '+a+'−'+(b*c)+'='+ans};}}
   ]},
   {name:'סוגריים',emoji:'📝',bonus:100,topics:[
     {id:'g3o2a',label:'סוגריים פשוטים',ex:{title:'סוגריים',body:'(  ) לפני הכל!',formula:'(a + b) × c'},pool:[],
-     gen:function(){var a=randInt(2,5),b=randInt(1,4),c=randInt(2,4),ans=(a+b)*c,w=a+b*c;var r=mkO(ans,'',[w,a*c+b,(a+b)+c]);return{t:'('+a+' + '+b+') × '+c+' = ?',s:'',o:r.o,a:r.a,p:90,e:'סוגריים: '+a+'+'+b+'='+(a+b)+', ואז '+(a+b)+'×'+c+'='+ans};}},
+     gen:function(){var a=dRand(2,5),b=dRand(1,4),c=dRand(2,4),ans=(a+b)*c,w=a+b*c;var r=mkO(ans,'',[w,a*c+b,(a+b)+c]);return{t:'('+a+' + '+b+') × '+c+' = ?',s:'',o:r.o,a:r.a,p:90,e:'סוגריים: '+a+'+'+b+'='+(a+b)+', ואז '+(a+b)+'×'+c+'='+ans};}},
     {id:'g3o2b',label:'סוגריים מורכבים',ex:{title:'סוגריים',body:'תמיד פותרים סוגריים ראשון!',formula:'c × (a − b)'},pool:[],
-     gen:function(){var a=randInt(5,12),b=randInt(1,4),c=randInt(2,5),ans=c*(a-b),w=c*a-b;var r=mkO(ans,'',[w,c+a-b,c*a+b]);return{t:c+' × ('+a+' − '+b+') = ?',s:'',o:r.o,a:r.a,p:105,e:'סוגריים: '+a+'−'+b+'='+(a-b)+', ואז '+c+'×'+(a-b)+'='+ans};}}
+     gen:function(){var a=dRand(5,12),b=dRand(1,4),c=dRand(2,5),ans=c*(a-b),w=c*a-b;var r=mkO(ans,'',[w,c+a-b,c*a+b]);return{t:c+' × ('+a+' − '+b+') = ?',s:'',o:r.o,a:r.a,p:105,e:'סוגריים: '+a+'−'+b+'='+(a-b)+', ואז '+c+'×'+(a-b)+'='+ans};}}
   ]}
 ];
 
@@ -2444,23 +2445,23 @@ var LV_G3_OPS = [
 var LV_G4_CALC = [
   {name:'כפל בסיסי',emoji:'✖️',bonus:80,topics:[
     {id:'g4m1',label:'כפל',ex:{title:'כפל',body:'לוח הכפל!',formula:'a × b = ?'},pool:[],
-     gen:function(){var a=randInt(2,9),b=randInt(2,9),c=a*b;var r=mkO(c,'',[c+a,c-b,a+b]);return{t:a+' × '+b+' = ?',s:'',o:r.o,a:r.a,p:80,e:a+'×'+b+'='+c};}}
+     gen:function(){var a=dRand(2,9),b=dRand(2,9),c=a*b;var r=mkO(c,'',[c+a,c-b,a+b]);return{t:a+' × '+b+' = ?',s:'',o:r.o,a:r.a,p:80,e:a+'×'+b+'='+c};}}
   ]},
   {name:'כפל מתקדם',emoji:'✖️',bonus:90,topics:[
     {id:'g4m2',label:'כפל גדול',ex:{title:'כפל',body:'כפל במספרים גדולים',formula:'a × b = ?'},pool:[],
-     gen:function(){var a=randInt(10,25),b=randInt(2,9),c=a*b;var r=mkO(c,'',[c+b,c-a,(a+1)*b]);return{t:a+' × '+b+' = ?',s:'',o:r.o,a:r.a,p:100,e:a+'×'+b+'='+c};}}
+     gen:function(){var a=dRand(10,25),b=dRand(2,9),c=a*b;var r=mkO(c,'',[c+b,c-a,(a+1)*b]);return{t:a+' × '+b+' = ?',s:'',o:r.o,a:r.a,p:100,e:a+'×'+b+'='+c};}}
   ]},
   {name:'חילוק',emoji:'➗',bonus:90,topics:[
     {id:'g4d1',label:'חילוק',ex:{title:'חילוק',body:'הפעולה ההפוכה לכפל',formula:'a ÷ b = ?'},pool:[],
-     gen:function(){var b=randInt(2,9),c=randInt(2,12),a=b*c;var r=mkO(c,'',[c+1,b,c+2]);return{t:a+' ÷ '+b+' = ?',s:'',o:r.o,a:r.a,p:90,e:a+'÷'+b+'='+c};}}
+     gen:function(){var b=dRand(2,9),c=dRand(2,12),a=b*c;var r=mkO(c,'',[c+1,b,c+2]);return{t:a+' ÷ '+b+' = ?',s:'',o:r.o,a:r.a,p:90,e:a+'÷'+b+'='+c};}}
   ]},
   {name:'חילוק עם שארית',emoji:'➗',bonus:100,topics:[
     {id:'g4d2',label:'שארית',ex:{title:'חילוק עם שארית',body:'מה נשאר?',formula:'a ÷ b = מנה שארית r'},pool:[],
-     gen:function(){var b=randInt(3,9),q=randInt(2,10),rem=randInt(1,b-1),a=b*q+rem;var r=mkO(rem,'',[rem+1,b-rem,0]);return{t:a+' ÷ '+b+' — מה השארית?',s:'',o:r.o,a:r.a,p:100,e:a+'='+b+'×'+q+'+'+rem+', שארית '+rem};}}
+     gen:function(){var b=dRand(3,9),q=dRand(2,10),rem=dRand(1,b-1),a=b*q+rem;var r=mkO(rem,'',[rem+1,b-rem,0]);return{t:a+' ÷ '+b+' — מה השארית?',s:'',o:r.o,a:r.a,p:100,e:a+'='+b+'×'+q+'+'+rem+', שארית '+rem};}}
   ]},
   {name:'סדר פעולות',emoji:'📝',bonus:110,topics:[
     {id:'g4op',label:'סדר פעולות',ex:{title:'סדר פעולות',body:'כפל/חילוק לפני חיבור/חיסור!',formula:'× ÷ לפני + −'},pool:[],
-     gen:function(){var a=randInt(2,8),b=randInt(2,5),c=randInt(1,5),ans=a+b*c,w=(a+b)*c;var r=mkO(ans,'',[w,a*b+c,a+b+c]);return{t:a+' + '+b+' × '+c+' = ?',s:'',o:r.o,a:r.a,p:110,e:'כפל קודם: '+b+'×'+c+'='+(b*c)+', אז '+a+'+'+(b*c)+'='+ans};}}
+     gen:function(){var a=dRand(2,8),b=dRand(2,5),c=dRand(1,5),ans=a+b*c,w=(a+b)*c;var r=mkO(ans,'',[w,a*b+c,a+b+c]);return{t:a+' + '+b+' × '+c+' = ?',s:'',o:r.o,a:r.a,p:110,e:'כפל קודם: '+b+'×'+c+'='+(b*c)+', אז '+a+'+'+(b*c)+'='+ans};}}
   ]}
 ];
 var LV_G4_FRAC = [
@@ -2474,11 +2475,11 @@ var LV_G4_FRAC = [
   ]},
   {name:'שבר של כמות',emoji:'🎯',bonus:100,topics:[
     {id:'g4f3',label:'שבר של כמות',ex:{title:'שבר של כמות',body:'1/4 מתוך 20 = 20÷4 = 5',formula:'n/d של X = X÷d×n'},pool:[],
-     gen:function(){var d=randInt(2,5),n=1,total=d*randInt(2,8),ans=total/d;var r=mkO(ans,'',[total/d+d,total*d,total-d]);return{t:'1/'+d+' מתוך '+total+' = ?',s:'',o:r.o,a:r.a,p:100,e:total+'÷'+d+'='+ans};}}
+     gen:function(){var d=dRand(2,5),n=1,total=d*dRand(2,8),ans=total/d;var r=mkO(ans,'',[total/d+d,total*d,total-d]);return{t:'1/'+d+' מתוך '+total+' = ?',s:'',o:r.o,a:r.a,p:100,e:total+'÷'+d+'='+ans};}}
   ]},
   {name:'שברים שווים',emoji:'🔄',bonus:110,topics:[
     {id:'g4f4',label:'שברים שקולים',ex:{title:'שברים שקולים',body:'1/2 = 2/4 = 3/6',formula:'כופלים מונה ומכנה באותו מספר'},pool:[],
-     gen:function(){var n=randInt(1,3),d=randInt(n+1,6),k=randInt(2,4),en=n*k,ed=d*k;return{t:n+'/'+d+' = ?/'+ed,s:mFracPie(n,d),o:[String(en),String(en+1),String(en-1),String(d)],a:0,p:100,e:n+'/'+d+' = '+en+'/'+ed+' (כפלנו ב-'+k+')'};}}
+     gen:function(){var n=dRand(1,3),d=dRand(n+1,6),k=dRand(2,4),en=n*k,ed=d*k;return{t:n+'/'+d+' = ?/'+ed,s:mFracPie(n,d),o:[String(en),String(en+1),String(en-1),String(d)],a:0,p:100,e:n+'/'+d+' = '+en+'/'+ed+' (כפלנו ב-'+k+')'};}}
   ]}
 ];
 var LV_G4_GEO = [
@@ -2492,15 +2493,15 @@ var LV_G4_GEO = [
   ]},
   {name:'היקף ריבוע',emoji:'🟦',bonus:90,topics:[
     {id:'g4g2',label:'היקף ריבוע',ex:{title:'היקף ריבוע',body:'4 כפול הצלע',formula:'היקף = 4 × צלע'},pool:[],
-     gen:function(){var a=randInt(2,15),p=4*a;var r=mkO(p,' ס"מ',[a*a,2*a,3*a]);return{t:'ריבוע עם צלע '+a+' — היקף?',s:mSP(a),o:r.o,a:r.a,p:90,e:'4×'+a+'='+p};}}
+     gen:function(){var a=dRand(2,15),p=4*a;var r=mkO(p,' ס"מ',[a*a,2*a,3*a]);return{t:'ריבוע עם צלע '+a+' — היקף?',s:mSP(a),o:r.o,a:r.a,p:90,e:'4×'+a+'='+p};}}
   ]},
   {name:'היקף מלבן',emoji:'🟩',bonus:100,topics:[
     {id:'g4g3',label:'היקף מלבן',ex:{title:'היקף מלבן',body:'2×(אורך+רוחב)',formula:'היקף = 2×(a+b)'},pool:[],
-     gen:function(){var a=randInt(3,12),b=randInt(3,12),p=2*(a+b);var r=mkO(p,' ס"מ',[a*b,a+b,4*a]);return{t:'מלבן '+a+'×'+b+' — היקף?',s:mRP(a,b),o:r.o,a:r.a,p:100,e:'2×('+a+'+'+b+')='+p};}}
+     gen:function(){var a=dRand(3,12),b=dRand(3,12),p=2*(a+b);var r=mkO(p,' ס"מ',[a*b,a+b,4*a]);return{t:'מלבן '+a+'×'+b+' — היקף?',s:mRP(a,b),o:r.o,a:r.a,p:100,e:'2×('+a+'+'+b+')='+p};}}
   ]},
   {name:'שטח ריבוע ומלבן',emoji:'📏',bonus:110,topics:[
     {id:'g4g4',label:'שטח בסיסי',ex:{title:'שטח',body:'אורך × רוחב',formula:'שטח = a × b'},pool:[],
-     gen:function(){var sq=Math.random()>.5;if(sq){var a=randInt(2,10),s=a*a;var r=mkO(s,' סמ"ר',[4*a,2*a,a*a+a]);return{t:'שטח ריבוע צלע '+a+'?',s:mS(a),o:r.o,a:r.a,p:100,e:a+'×'+a+'='+s};}else{var a=randInt(3,10),b=randInt(2,8),s=a*b;var r=mkO(s,' סמ"ר',[2*(a+b),a+b,s+a]);return{t:'שטח מלבן '+a+'×'+b+'?',s:mR(a,b),o:r.o,a:r.a,p:100,e:a+'×'+b+'='+s};}}}
+     gen:function(){var sq=Math.random()>.5;if(sq){var a=dRand(2,10),s=a*a;var r=mkO(s,' סמ"ר',[4*a,2*a,a*a+a]);return{t:'שטח ריבוע צלע '+a+'?',s:mS(a),o:r.o,a:r.a,p:100,e:a+'×'+a+'='+s};}else{var a=randInt(3,10),b=randInt(2,8),s=a*b;var r=mkO(s,' סמ"ר',[2*(a+b),a+b,s+a]);return{t:'שטח מלבן '+a+'×'+b+'?',s:mR(a,b),o:r.o,a:r.a,p:100,e:a+'×'+b+'='+s};}}}
   ]}
 ];
 
@@ -2516,7 +2517,7 @@ var LV_G5_DEC = [
   ]},
   {name:'חיבור עשרוניים',emoji:'➕',bonus:90,topics:[
     {id:'g5d2',label:'חיבור',ex:{title:'חיבור עשרוניים',body:'מיישרים נקודה!',formula:'a.bc + d.ef'},pool:[],
-     gen:function(){var a=randInt(1,9),b=randInt(1,9),c=randInt(1,9),d=randInt(1,9);var n1=a+b/10,n2=c+d/10,ans=Math.round((n1+n2)*10)/10;var r=mkO(ans,'',[ans+0.1,ans-0.1,a+c]);return{t:n1.toFixed(1)+' + '+n2.toFixed(1)+' = ?',s:'',o:r.o,a:r.a,p:90,e:n1.toFixed(1)+'+'+n2.toFixed(1)+'='+ans};}}
+     gen:function(){var a=dRand(1,9),b=dRand(1,9),c=dRand(1,9),d=dRand(1,9);var n1=a+b/10,n2=c+d/10,ans=Math.round((n1+n2)*10)/10;var r=mkO(ans,'',[ans+0.1,ans-0.1,a+c]);return{t:n1.toFixed(1)+' + '+n2.toFixed(1)+' = ?',s:'',o:r.o,a:r.a,p:90,e:n1.toFixed(1)+'+'+n2.toFixed(1)+'='+ans};}}
   ]},
   {name:'חיסור עשרוניים',emoji:'➖',bonus:90,topics:[
     {id:'g5d3',label:'חיסור',ex:{title:'חיסור עשרוניים',body:'מיישרים נקודה!',formula:'a.b − c.d'},pool:[],
@@ -2524,11 +2525,11 @@ var LV_G5_DEC = [
   ]},
   {name:'כפל עשרוניים',emoji:'✖️',bonus:100,topics:[
     {id:'g5d4',label:'כפל ב-10/100',ex:{title:'כפל ב-10,100',body:'הנקודה זזה ימינה!',formula:'×10→ נקודה ימינה 1'},pool:[],
-     gen:function(){var a=randInt(1,99)/10,mul=[10,100][randInt(0,1)],ans=a*mul;var r=mkO(ans,'',[ans/10,ans*10,a+mul]);return{t:a+' × '+mul+' = ?',s:'',o:r.o,a:r.a,p:100,e:'נקודה ימינה '+(mul===10?'1':'2')+'→ '+ans};}}
+     gen:function(){var a=dRand(1,99)/10,mul=[10,100][randInt(0,1)],ans=a*mul;var r=mkO(ans,'',[ans/10,ans*10,a+mul]);return{t:a+' × '+mul+' = ?',s:'',o:r.o,a:r.a,p:100,e:'נקודה ימינה '+(mul===10?'1':'2')+'→ '+ans};}}
   ]},
   {name:'חילוק עשרוניים',emoji:'➗',bonus:110,topics:[
     {id:'g5d5',label:'חילוק ב-10/100',ex:{title:'חילוק ב-10,100',body:'הנקודה זזה שמאלה!',formula:'÷10→ נקודה שמאלה 1'},pool:[],
-     gen:function(){var base=randInt(1,50),mul=[10,100][randInt(0,1)],a=base*mul/10,ans=a/mul;var ansR=Math.round(ans*1000)/1000;var r=mkO(ansR,'',[ansR*10,ansR*100,ansR+1]);return{t:a+' ÷ '+mul+' = ?',s:'',o:r.o,a:r.a,p:110,e:'נקודה שמאלה '+(mul===10?'1':'2')+'→ '+ansR};}}
+     gen:function(){var base=dRand(1,50),mul=[10,100][randInt(0,1)],a=base*mul/10,ans=a/mul;var ansR=Math.round(ans*1000)/1000;var r=mkO(ansR,'',[ansR*10,ansR*100,ansR+1]);return{t:a+' ÷ '+mul+' = ?',s:'',o:r.o,a:r.a,p:110,e:'נקודה שמאלה '+(mul===10?'1':'2')+'→ '+ansR};}}
   ]}
 ];
 var LV_G5_FRAC = [
@@ -2560,19 +2561,19 @@ var LV_G5_FRAC = [
 var LV_G5_GEO = [
   {name:'שטח ריבוע',emoji:'🟦',bonus:90,topics:[
     {id:'g5g1',label:'שטח ריבוע',ex:{title:'שטח ריבוע',body:'צלע × צלע',formula:'S = a²'},pool:[],
-     gen:function(){var a=randInt(2,12),s=a*a;var r=mkO(s,' סמ"ר',[4*a,2*a*a,a+a]);return{t:'שטח ריבוע צלע '+a+'?',s:mS(a),o:r.o,a:r.a,p:90,e:a+'²='+s};}}
+     gen:function(){var a=dRand(2,12),s=a*a;var r=mkO(s,' סמ"ר',[4*a,2*a*a,a+a]);return{t:'שטח ריבוע צלע '+a+'?',s:mS(a),o:r.o,a:r.a,p:90,e:a+'²='+s};}}
   ]},
   {name:'שטח מלבן',emoji:'🟩',bonus:90,topics:[
     {id:'g5g2',label:'שטח מלבן',ex:{title:'שטח מלבן',body:'אורך × רוחב',formula:'S = a × b'},pool:[],
-     gen:function(){var a=randInt(3,12),b=randInt(2,10),s=a*b;var r=mkO(s,' סמ"ר',[2*(a+b),a+b,s+a]);return{t:'שטח מלבן '+a+'×'+b+'?',s:mR(a,b),o:r.o,a:r.a,p:90,e:a+'×'+b+'='+s};}}
+     gen:function(){var a=dRand(3,12),b=dRand(2,10),s=a*b;var r=mkO(s,' סמ"ר',[2*(a+b),a+b,s+a]);return{t:'שטח מלבן '+a+'×'+b+'?',s:mR(a,b),o:r.o,a:r.a,p:90,e:a+'×'+b+'='+s};}}
   ]},
   {name:'שטח משולש',emoji:'🔺',bonus:100,topics:[
     {id:'g5g3',label:'שטח משולש',ex:{title:'שטח משולש',body:'(בסיס×גובה)÷2',formula:'S = (b×h)÷2'},pool:[],
-     gen:function(){var b=randInt(4,12),h=randInt(3,10),s=b*h/2;var r=mkO(s,' סמ"ר',[b*h,b+h,(b+h)/2]);return{t:'משולש בסיס '+b+' גובה '+h+' — שטח?',s:mT(b,h),o:r.o,a:r.a,p:100,e:'('+b+'×'+h+')÷2='+s};}}
+     gen:function(){var b=dRand(4,12),h=dRand(3,10),s=b*h/2;var r=mkO(s,' סמ"ר',[b*h,b+h,(b+h)/2]);return{t:'משולש בסיס '+b+' גובה '+h+' — שטח?',s:mT(b,h),o:r.o,a:r.a,p:100,e:'('+b+'×'+h+')÷2='+s};}}
   ]},
   {name:'היקף ושטח — מעורב',emoji:'📐',bonus:110,topics:[
     {id:'g5g4',label:'מעורב',ex:{title:'היקף או שטח?',body:'היקף = סביב, שטח = בפנים',formula:'היקף = 2(a+b), שטח = a×b'},pool:[],
-     gen:function(){var a=randInt(3,10),b=randInt(3,10),isP=Math.random()>.5;if(isP){var ans=2*(a+b);var r=mkO(ans,' ס"מ',[a*b,a+b,4*a]);return{t:'היקף מלבן '+a+'×'+b+'?',s:mRP(a,b),o:r.o,a:r.a,p:100,e:'2×('+a+'+'+b+')='+ans};}else{var ans=a*b;var r=mkO(ans,' סמ"ר',[2*(a+b),a+b,ans+a]);return{t:'שטח מלבן '+a+'×'+b+'?',s:mR(a,b),o:r.o,a:r.a,p:100,e:a+'×'+b+'='+ans};}}}
+     gen:function(){var a=dRand(3,10),b=dRand(3,10),isP=Math.random()>.5;if(isP){var ans=2*(a+b);var r=mkO(ans,' ס"מ',[a*b,a+b,4*a]);return{t:'היקף מלבן '+a+'×'+b+'?',s:mRP(a,b),o:r.o,a:r.a,p:100,e:'2×('+a+'+'+b+')='+ans};}else{var ans=a*b;var r=mkO(ans,' סמ"ר',[2*(a+b),a+b,ans+a]);return{t:'שטח מלבן '+a+'×'+b+'?',s:mR(a,b),o:r.o,a:r.a,p:100,e:a+'×'+b+'='+ans};}}}
   ]}
 ];
 var LV_G5_PCT = [
@@ -2602,15 +2603,15 @@ var LV_G5_PCT = [
 var LV_G7_ALG = [
   {name:'ביטויים אלגבריים',emoji:'🔤',bonus:90,topics:[
     {id:'g7a1',label:'פישוט',ex:{title:'ביטויים',body:'מאחדים איברים דומים',formula:'3x+2x=5x'},pool:[],
-     gen:function(){var a=randInt(1,8),b=randInt(1,8),c=a+b;return{t:a+'x + '+b+'x = ?',s:'',o:[c+'x',(a*b)+'x',a+'x+'+b,(a-b)+'x'],a:0,p:90,e:a+'+'+b+'='+c+', אז '+c+'x'};}}
+     gen:function(){var a=dRand(1,8),b=dRand(1,8),c=a+b;return{t:a+'x + '+b+'x = ?',s:'',o:[c+'x',(a*b)+'x',a+'x+'+b,(a-b)+'x'],a:0,p:90,e:a+'+'+b+'='+c+', אז '+c+'x'};}}
   ]},
   {name:'הצבה בביטוי',emoji:'🔤',bonus:100,topics:[
     {id:'g7a2',label:'הצבה',ex:{title:'הצבה',body:'מציבים מספר במקום x',formula:'2x+3, x=4 → 2×4+3=11'},pool:[],
-     gen:function(){var a=randInt(2,5),b=randInt(1,9),x=randInt(1,6),ans=a*x+b;var r=mkO(ans,'',[a+b+x,a*x-b,a+x*b]);return{t:a+'x + '+b+' = ?  (x='+x+')',s:'',o:r.o,a:r.a,p:100,e:a+'×'+x+'+'+b+'='+ans};}}
+     gen:function(){var a=dRand(2,5),b=dRand(1,9),x=dRand(1,6),ans=a*x+b;var r=mkO(ans,'',[a+b+x,a*x-b,a+x*b]);return{t:a+'x + '+b+' = ?  (x='+x+')',s:'',o:r.o,a:r.a,p:100,e:a+'×'+x+'+'+b+'='+ans};}}
   ]},
   {name:'משוואה פשוטה',emoji:'⚖️',bonus:110,topics:[
     {id:'g7a3',label:'משוואה',ex:{title:'משוואות',body:'מבודדים את x',formula:'2x+3=11 → x=4'},pool:[],
-     gen:function(){var x=randInt(1,10),a=randInt(2,6),b=randInt(1,9),c=a*x+b;var r=mkO(x,'',[x+1,x-1,c/a]);return{t:a+'x + '+b+' = '+c+', x=?',s:'',o:r.o,a:r.a,p:120,e:c+'−'+b+'='+(c-b)+', '+(c-b)+'÷'+a+'='+x};}}
+     gen:function(){var x=dRand(1,10),a=dRand(2,6),b=dRand(1,9),c=a*x+b;var r=mkO(x,'',[x+1,x-1,c/a]);return{t:a+'x + '+b+' = '+c+', x=?',s:'',o:r.o,a:r.a,p:120,e:c+'−'+b+'='+(c-b)+', '+(c-b)+'÷'+a+'='+x};}}
   ]},
   {name:'משוואה עם x בשני צדדים',emoji:'⚖️',bonus:130,topics:[
     {id:'g7a4',label:'משוואה מתקדמת',ex:{title:'x בשני צדדים',body:'מעבירים x לצד אחד',formula:'5x+2=3x+10 → 2x=8 → x=4'},pool:[],
@@ -2618,25 +2619,25 @@ var LV_G7_ALG = [
   ]},
   {name:'אי-שוויון',emoji:'📊',bonus:120,topics:[
     {id:'g7a5',label:'אי-שוויון',ex:{title:'אי-שוויון',body:'כמו משוואה — אבל > או <',formula:'2x+1>7 → x>3'},pool:[],
-     gen:function(){var x=randInt(2,8),a=randInt(2,5),b=randInt(1,9),c=a*x+b;return{t:a+'x + '+b+' > '+c+', x>?',s:'',o:['x>'+x,'x>'+( x+1),'x>'+(x-1),'x<'+x],a:0,p:120,e:c+'−'+b+'='+(c-b)+', '+(c-b)+'÷'+a+'='+x};}}
+     gen:function(){var x=dRand(2,8),a=dRand(2,5),b=dRand(1,9),c=a*x+b;return{t:a+'x + '+b+' > '+c+', x>?',s:'',o:['x>'+x,'x>'+( x+1),'x>'+(x-1),'x<'+x],a:0,p:120,e:c+'−'+b+'='+(c-b)+', '+(c-b)+'÷'+a+'='+x};}}
   ]}
 ];
 var LV_G7_NEG = [
   {name:'מספרים שליליים',emoji:'❄️',bonus:90,topics:[
     {id:'g7n1',label:'סדר',ex:{title:'מספרים מכוונים',body:'ימינה = גדול, שמאלה = קטן',formula:'-3 < -1 < 0 < 2'},pool:[],
-     gen:function(){var a=-randInt(1,10),b=randInt(1,10);return{t:'מי גדול: '+a+' או '+b+'?',s:'',o:[String(b),String(a),'שווים','0'],a:0,p:80,e:b+' > '+a};}}
+     gen:function(){var a=-dRand(1,10),b=dRand(1,10);return{t:'מי גדול: '+a+' או '+b+'?',s:'',o:[String(b),String(a),'שווים','0'],a:0,p:80,e:b+' > '+a};}}
   ]},
   {name:'חיבור מכוונים',emoji:'➕',bonus:100,topics:[
     {id:'g7n2',label:'חיבור',ex:{title:'חיבור מכוונים',body:'(−3)+(+5) = 2',formula:'סימנים שונים → מחסרים'},pool:[],
-     gen:function(){var a=-randInt(1,10),b=randInt(1,15),c=a+b;var r=mkO(c,'',[a-b,b-a,Math.abs(a)+b]);return{t:'('+a+') + (+'+b+') = ?',s:'',o:r.o,a:r.a,p:100,e:a+'+'+b+'='+c};}}
+     gen:function(){var a=-dRand(1,10),b=dRand(1,15),c=a+b;var r=mkO(c,'',[a-b,b-a,Math.abs(a)+b]);return{t:'('+a+') + (+'+b+') = ?',s:'',o:r.o,a:r.a,p:100,e:a+'+'+b+'='+c};}}
   ]},
   {name:'חיסור מכוונים',emoji:'➖',bonus:100,topics:[
     {id:'g7n3',label:'חיסור',ex:{title:'חיסור מכוונים',body:'a−(−b) = a+b',formula:'מינוס מינוס = פלוס'},pool:[],
-     gen:function(){var a=randInt(1,10),b=randInt(1,10),c=a-(-b);var r=mkO(c,'',[a-b,-(a+b),a*b]);return{t:a+' − (−'+b+') = ?',s:'',o:r.o,a:r.a,p:100,e:a+'−(−'+b+')='+a+'+'+b+'='+c};}}
+     gen:function(){var a=dRand(1,10),b=dRand(1,10),c=a-(-b);var r=mkO(c,'',[a-b,-(a+b),a*b]);return{t:a+' − (−'+b+') = ?',s:'',o:r.o,a:r.a,p:100,e:a+'−(−'+b+')='+a+'+'+b+'='+c};}}
   ]},
   {name:'כפל מכוונים',emoji:'✖️',bonus:110,topics:[
     {id:'g7n4',label:'כפל',ex:{title:'כפל מכוונים',body:'(−)×(−)=(+), (−)×(+)=(−)',formula:'סימנים שווים→+, שונים→−'},pool:[],
-     gen:function(){var a=randInt(2,8),b=randInt(2,8),neg=Math.random()>.5;var n1=neg?-a:a,n2=-b,c=n1*n2;var r=mkO(c,'',[Math.abs(c),-Math.abs(c),n1+n2]);return{t:'('+n1+') × ('+n2+') = ?',s:'',o:r.o,a:r.a,p:110,e:n1+'×'+n2+'='+c};}}
+     gen:function(){var a=dRand(2,8),b=dRand(2,8),neg=Math.random()>.5;var n1=neg?-a:a,n2=-b,c=n1*n2;var r=mkO(c,'',[Math.abs(c),-Math.abs(c),n1+n2]);return{t:'('+n1+') × ('+n2+') = ?',s:'',o:r.o,a:r.a,p:110,e:n1+'×'+n2+'='+c};}}
   ]}
 ];
 var LV_G7_GEO = [
@@ -2650,15 +2651,15 @@ var LV_G7_GEO = [
   ]},
   {name:'זוויות במשולש',emoji:'🔺',bonus:100,topics:[
     {id:'g7g2',label:'זוויות במשולש',ex:{title:'סכום זוויות',body:'סכום = 180°',formula:'α + β + γ = 180°'},pool:[],
-     gen:function(){var a=randInt(30,80),b=randInt(30,80),c=180-a-b;if(c<10){a=50;b=60;c=70;}var r=mkO(c,'°',[180-a,a+b,90]);return{t:'במשולש: '+a+'° ו-'+b+'°. הזווית השלישית?',s:'',o:r.o,a:r.a,p:100,e:'180−'+a+'−'+b+'='+c};}}
+     gen:function(){var a=dRand(30,80),b=dRand(30,80),c=180-a-b;if(c<10){a=50;b=60;c=70;}var r=mkO(c,'°',[180-a,a+b,90]);return{t:'במשולש: '+a+'° ו-'+b+'°. הזווית השלישית?',s:'',o:r.o,a:r.a,p:100,e:'180−'+a+'−'+b+'='+c};}}
   ]},
   {name:'זוויות צמודות וקודקודיות',emoji:'📐',bonus:110,topics:[
     {id:'g7g3',label:'זוגות זוויות',ex:{title:'זוגות זוויות',body:'צמודות=180°, קודקודיות=שוות',formula:'α+β=180° | α=γ'},pool:[],
-     gen:function(){var a=randInt(30,150),b=180-a;var isAdj=Math.random()>.5;if(isAdj){var r=mkO(b,'°',[a,90,360-a]);return{t:'זווית של '+a+'°. הצמודה לה?',s:'',o:r.o,a:r.a,p:110,e:'180−'+a+'='+b};}else{var r=mkO(a,'°',[b,90,2*a]);return{t:'זווית של '+a+'°. הקודקודית לה?',s:'',o:r.o,a:r.a,p:100,e:'קודקודיות שוות = '+a+'°'};}}}
+     gen:function(){var a=dRand(30,150),b=180-a;var isAdj=Math.random()>.5;if(isAdj){var r=mkO(b,'°',[a,90,360-a]);return{t:'זווית של '+a+'°. הצמודה לה?',s:'',o:r.o,a:r.a,p:110,e:'180−'+a+'='+b};}else{var r=mkO(a,'°',[b,90,2*a]);return{t:'זווית של '+a+'°. הקודקודית לה?',s:'',o:r.o,a:r.a,p:100,e:'קודקודיות שוות = '+a+'°'};}}}
   ]},
   {name:'שטח ונפח',emoji:'📦',bonus:120,topics:[
     {id:'g7g4',label:'חישובים',ex:{title:'שטח ונפח',body:'נפח תיבה = א×ב×ג',formula:'V = a×b×c'},pool:[],
-     gen:function(){var a=randInt(2,8),b=randInt(2,8),c=randInt(2,6),v=a*b*c;var r=mkO(v,' סמ"ק',[a*b,a*b+c,2*(a*b+a*c+b*c)]);return{t:'נפח תיבה '+a+'×'+b+'×'+c+'?',s:'',o:r.o,a:r.a,p:120,e:a+'×'+b+'×'+c+'='+v};}}
+     gen:function(){var a=dRand(2,8),b=dRand(2,8),c=dRand(2,6),v=a*b*c;var r=mkO(v,' סמ"ק',[a*b,a*b+c,2*(a*b+a*c+b*c)]);return{t:'נפח תיבה '+a+'×'+b+'×'+c+'?',s:'',o:r.o,a:r.a,p:120,e:a+'×'+b+'×'+c+'='+v};}}
   ]}
 ];
 var LV_G7_FUNC = [
@@ -2684,11 +2685,11 @@ var LV_G7_FUNC = [
 var LV_G8_ALG = [
   {name:'פירוק לגורמים',emoji:'🔤',bonus:110,topics:[
     {id:'g8a1',label:'גורם משותף',ex:{title:'גורם משותף',body:'מוציאים את המשותף',formula:'6x+9 = 3(2x+3)'},pool:[],
-     gen:function(){var g=randInt(2,5),a=randInt(1,6),b=randInt(1,8),c1=g*a,c2=g*b;return{t:'פרקו: '+c1+'x + '+c2,s:'',o:[g+'('+a+'x+'+b+')',a+'('+g+'x+'+b+')',c1+'(x+'+c2+')',g+'('+a+'x−'+b+')'],a:0,p:120,e:'גורם משותף '+g+': '+g+'('+a+'x+'+b+')'};}}
+     gen:function(){var g=dRand(2,5),a=dRand(1,6),b=dRand(1,8),c1=g*a,c2=g*b;return{t:'פרקו: '+c1+'x + '+c2,s:'',o:[g+'('+a+'x+'+b+')',a+'('+g+'x+'+b+')',c1+'(x+'+c2+')',g+'('+a+'x−'+b+')'],a:0,p:120,e:'גורם משותף '+g+': '+g+'('+a+'x+'+b+')'};}}
   ]},
   {name:'כפל ביטויים',emoji:'🔤',bonus:120,topics:[
     {id:'g8a2',label:'(a+b)(c+d)',ex:{title:'כפל ביטויים',body:'פותחים סוגריים',formula:'(x+2)(x+3)=x²+5x+6'},pool:[],
-     gen:function(){var a=randInt(1,5),b=randInt(1,5);var c0=1,c1=a+b,c2=a*b;return{t:'(x+'+a+')(x+'+b+') = ?',s:'',o:['x²+'+c1+'x+'+c2,'x²+'+(c1+1)+'x+'+c2,'x²+'+c1+'x+'+(c2+1),'2x²+'+c1+'x+'+c2],a:0,p:130,e:'x²+'+(a)+'+'+b+')x+'+a+'×'+b+'=x²+'+c1+'x+'+c2};}}
+     gen:function(){var a=dRand(1,5),b=dRand(1,5);var c0=1,c1=a+b,c2=a*b;return{t:'(x+'+a+')(x+'+b+') = ?',s:'',o:['x²+'+c1+'x+'+c2,'x²+'+(c1+1)+'x+'+c2,'x²+'+c1+'x+'+(c2+1),'2x²+'+c1+'x+'+c2],a:0,p:130,e:'x²+'+(a)+'+'+b+')x+'+a+'×'+b+'=x²+'+c1+'x+'+c2};}}
   ]},
   {name:'מערכת משוואות',emoji:'⚖️',bonus:140,topics:[
     {id:'g8a3',label:'מע. משוואות',ex:{title:'מערכת משוואות',body:'שתי משוואות, שני נעלמים',formula:'x+y=7, x−y=3 → x=5,y=2'},pool:[
@@ -2700,7 +2701,7 @@ var LV_G8_ALG = [
   ]},
   {name:'חזקות',emoji:'📈',bonus:120,topics:[
     {id:'g8a4',label:'חוקי חזקות',ex:{title:'חזקות',body:'aⁿ×aᵐ=aⁿ⁺ᵐ',formula:'חוקי חזקות'},pool:[],
-     gen:function(){var b=randInt(2,5),e1=randInt(2,4),ans=Math.pow(b,e1);var r=mkO(ans,'',[b*e1,ans+b,ans-1]);return{t:b+'^'+e1+' = ?',s:'',o:r.o,a:r.a,p:110,e:b+'^'+e1+'='+ans};}}
+     gen:function(){var b=dRand(2,5),e1=dRand(2,4),ans=Math.pow(b,e1);var r=mkO(ans,'',[b*e1,ans+b,ans-1]);return{t:b+'^'+e1+' = ?',s:'',o:r.o,a:r.a,p:110,e:b+'^'+e1+'='+ans};}}
   ]}
 ];
 var LV_G8_GEO = [
@@ -2718,7 +2719,7 @@ var LV_G8_GEO = [
   ]},
   {name:'מעגל — מתקדם',emoji:'⭕',bonus:130,topics:[
     {id:'g8g3',label:'מעגל',ex:{title:'מעגל',body:'S=πr², P=2πr',formula:'שטח=πr², היקף=2πr'},pool:[],
-     gen:function(){var r=randInt(2,10),isArea=Math.random()>.5;if(isArea){var ans=Math.round(3.14*r*r*100)/100;var rr=mkO(ans,'',[2*3.14*r,r*r,3.14*r]);return{t:'שטח מעגל r='+r+'? (π≈3.14)',s:'',o:rr.o,a:rr.a,p:130,e:'π×'+r+'²='+ans};}else{var ans=Math.round(2*3.14*r*100)/100;var rr=mkO(ans,'',[3.14*r*r,r*2,3.14*r]);return{t:'היקף מעגל r='+r+'? (π≈3.14)',s:'',o:rr.o,a:rr.a,p:130,e:'2π×'+r+'='+ans};}}}
+     gen:function(){var r=dRand(2,10),isArea=Math.random()>.5;if(isArea){var ans=Math.round(3.14*r*r*100)/100;var rr=mkO(ans,'',[2*3.14*r,r*r,3.14*r]);return{t:'שטח מעגל r='+r+'? (π≈3.14)',s:'',o:rr.o,a:rr.a,p:130,e:'π×'+r+'²='+ans};}else{var ans=Math.round(2*3.14*r*100)/100;var rr=mkO(ans,'',[3.14*r*r,r*2,3.14*r]);return{t:'היקף מעגל r='+r+'? (π≈3.14)',s:'',o:rr.o,a:rr.a,p:130,e:'2π×'+r+'='+ans};}}}
   ]}
 ];
 var LV_G8_FUNC = [
@@ -2732,13 +2733,13 @@ var LV_G8_FUNC = [
   ]},
   {name:'שיפוע',emoji:'📈',bonus:130,topics:[
     {id:'g8f2',label:'שיפוע',ex:{title:'שיפוע',body:'m = (y2−y1)/(x2−x1)',formula:'שיפוע = עלייה/ריצה'},pool:[],
-     gen:function(){var x1=randInt(0,3),y1=randInt(0,5),x2=x1+randInt(1,4),m=randInt(1,4),y2=y1+m*(x2-x1);var r=mkO(m,'',[m+1,y2-y1,x2-x1]);return{t:'שיפוע דרך ('+x1+','+y1+') ו-('+x2+','+y2+')?',s:'',o:r.o,a:r.a,p:130,e:'('+y2+'−'+y1+')/('+x2+'−'+x1+')='+m};}}
+     gen:function(){var x1=dRand(0,3),y1=dRand(0,5),x2=x1+dRand(1,4),m=dRand(1,4),y2=y1+m*(x2-x1);var r=mkO(m,'',[m+1,y2-y1,x2-x1]);return{t:'שיפוע דרך ('+x1+','+y1+') ו-('+x2+','+y2+')?',s:'',o:r.o,a:r.a,p:130,e:'('+y2+'−'+y1+')/('+x2+'−'+x1+')='+m};}}
   ]}
 ];
 var LV_G8_STAT = [
   {name:'ממוצע',emoji:'📈',bonus:100,topics:[
     {id:'g8s1',label:'ממוצע',ex:{title:'ממוצע',body:'סכום ÷ כמות',formula:'ממוצע = Σ/n'},pool:[],
-     gen:function(){var n=randInt(3,5),vals=[],sum=0;for(var i=0;i<n;i++){var v=randInt(50,100);vals.push(v);sum+=v;}var avg=sum/n;if(avg!==Math.floor(avg)){sum+=(Math.ceil(avg)*n-sum);avg=Math.ceil(avg);vals[0]+=Math.ceil(avg)*n-sum;}avg=sum/n;var r=mkO(avg,'',[avg+1,Math.max.apply(null,vals),Math.min.apply(null,vals)]);return{t:'ממוצע: '+vals.join(', ')+'?',s:'',o:r.o,a:r.a,p:100,e:'סכום '+sum+' ÷ '+n+' = '+avg};}}
+     gen:function(){var n=dRand(3,5),vals=[],sum=0;for(var i=0;i<n;i++){var v=dRand(50,100);vals.push(v);sum+=v;}var avg=sum/n;if(avg!==Math.floor(avg)){sum+=(Math.ceil(avg)*n-sum);avg=Math.ceil(avg);vals[0]+=Math.ceil(avg)*n-sum;}avg=sum/n;var r=mkO(avg,'',[avg+1,Math.max.apply(null,vals),Math.min.apply(null,vals)]);return{t:'ממוצע: '+vals.join(', ')+'?',s:'',o:r.o,a:r.a,p:100,e:'סכום '+sum+' ÷ '+n+' = '+avg};}}
   ]},
   {name:'חציון',emoji:'📊',bonus:110,topics:[
     {id:'g8s2',label:'חציון',ex:{title:'חציון',body:'הערך האמצעי אחרי מיון',formula:'מסדרים → לוקחים אמצעי'},pool:[
@@ -2754,7 +2755,7 @@ var LV_G8_STAT = [
 var LV_G9_ALG = [
   {name:'משוואה ריבועית — בסיסי',emoji:'📈',bonus:130,topics:[
     {id:'g9a1',label:'x²=k',ex:{title:'משוואה ריבועית',body:'x²=9 → x=±3',formula:'x = ±√k'},pool:[],
-     gen:function(){var x=randInt(1,10),k=x*x;return{t:'x² = '+k+', x=?',s:'',o:['±'+x,''+x,'−'+x,'±'+(x+1)],a:0,p:120,e:'√'+k+'='+x+', אז x=±'+x};}}
+     gen:function(){var x=dRand(1,10),k=x*x;return{t:'x² = '+k+', x=?',s:'',o:['±'+x,''+x,'−'+x,'±'+(x+1)],a:0,p:120,e:'√'+k+'='+x+', אז x=±'+x};}}
   ]},
   {name:'נוסחת השורשים',emoji:'📈',bonus:150,topics:[
     {id:'g9a2',label:'ax²+bx+c=0',ex:{title:'פתרון ריבועית',body:'מפרקים או נוסחה',formula:'x = (−b±√Δ)/2a'},pool:[
@@ -2810,7 +2811,7 @@ var LV_G9_FUNC = [
   ]},
   {name:'ניתוח פרבולה',emoji:'📈',bonus:140,topics:[
     {id:'g9f2',label:'ניתוח',ex:{title:'ניתוח פרבולה',body:'קודקוד, ציר סימטריה, חיתוכים',formula:'ציר סימטריה: x=−b/2a'},pool:[],
-     gen:function(){var p=randInt(1,5),q=randInt(-5,5),a=1;var b=-2*p,c=p*p+q;return{t:'y=x²'+( b>=0?'+':'')+b+'x+'+c+': ערך מינימום?',s:'',o:[String(q),String(q+1),String(p),String(c)],a:0,p:140,e:'קודקוד x='+p+' → y='+q};}}
+     gen:function(){var p=dRand(1,5),q=dRand(-5,5),a=1;var b=-2*p,c=p*p+q;return{t:'y=x²'+( b>=0?'+':'')+b+'x+'+c+': ערך מינימום?',s:'',o:[String(q),String(q+1),String(p),String(c)],a:0,p:140,e:'קודקוד x='+p+' → y='+q};}}
   ]}
 ];
 var LV_G9_TRIG = [
@@ -2890,7 +2891,7 @@ var LV_G10_TRIG = [
 var LV_G10_SEQ = [
   {name:'סדרה חשבונית',emoji:'🔢',bonus:130,topics:[
     {id:'g10s1',label:'aₙ=a₁+(n−1)d',ex:{title:'סדרה חשבונית',body:'הפרש קבוע d',formula:'aₙ = a₁ + (n−1)·d'},pool:[],
-     gen:function(){var a1=randInt(1,10),d=randInt(2,6),n=randInt(5,12);var an=a1+(n-1)*d;return{t:'a₁='+a1+', d='+d+'. מהו a'+n+'?',s:'',o:[String(an),String(an+d),String(an-d),String(a1*n)],a:0,p:130,e:'a'+n+'='+a1+'+('+( n-1)+')'+'·'+d+'='+an};}}
+     gen:function(){var a1=dRand(1,10),d=dRand(2,6),n=dRand(5,12);var an=a1+(n-1)*d;return{t:'a₁='+a1+', d='+d+'. מהו a'+n+'?',s:'',o:[String(an),String(an+d),String(an-d),String(a1*n)],a:0,p:130,e:'a'+n+'='+a1+'+('+( n-1)+')'+'·'+d+'='+an};}}
   ]},
   {name:'סכום סדרה חשבונית',emoji:'📊',bonus:150,topics:[
     {id:'g10s2',label:'Sₙ=n(a₁+aₙ)/2',ex:{title:'סכום סדרה',body:'Sₙ = n·(a₁+aₙ)/2',formula:'Sₙ = n·(ראשון+אחרון)/2'},pool:[
