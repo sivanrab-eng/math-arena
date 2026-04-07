@@ -520,6 +520,42 @@ body{background-color:#1a0a3e;background:radial-gradient(ellipse at top, #2d1b69
 .gc-10{background:linear-gradient(135deg,#7f1d1d,#450a0a);border-color:#f87171;}
 .gc-10 .gc-badge{background:#ef4444;color:#fee2e2;}
 
+/* ===== TOPIC SELECTOR SCREEN ===== */
+#topic-screen{align-items:center;justify-content:flex-start;padding:20px 14px;gap:0;overflow-y:auto;}
+.ts-hdr{text-align:center;margin-bottom:14px;width:100%;}
+.ts-grade-pill{display:inline-flex;align-items:center;gap:5px;background:rgba(249,115,22,.12);border:1px solid rgba(249,115,22,.3);color:#fb923c;font-size:13px;font-weight:700;padding:5px 14px;border-radius:20px;margin-bottom:8px;}
+.ts-title{font-size:20px;font-weight:900;background:linear-gradient(135deg,#fff,#94a3b8);-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+.ts-sec{display:flex;align-items:center;gap:8px;margin:12px 0 8px;padding:0 4px;width:100%;}
+.ts-sec-icon{font-size:16px;}
+.ts-sec-label{font-size:13px;font-weight:800;color:rgba(255,255,255,.55);}
+.ts-sec-line{flex:1;height:1px;background:rgba(255,255,255,.08);}
+.ts-sec-toggle{font-size:10px;font-weight:700;font-family:inherit;color:rgba(255,255,255,.3);background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);border-radius:8px;padding:3px 10px;cursor:pointer;}
+.ts-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;width:100%;}
+.ts-card{display:flex;align-items:center;gap:8px;padding:10px;border-radius:14px;cursor:pointer;transition:all .2s;position:relative;}
+.ts-card.on{opacity:1;}
+.ts-card.off{opacity:.3;filter:grayscale(.7);}
+.ts-card .ts-emoji{font-size:22px;flex-shrink:0;}
+.ts-card .ts-info{flex:1;min-width:0;}
+.ts-card .ts-name{font-size:12px;font-weight:800;color:#fff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.ts-card .ts-lvl{font-size:10px;color:rgba(255,255,255,.35);}
+.ts-card .ts-chk{width:22px;height:22px;border-radius:7px;border:2px solid rgba(255,255,255,.15);background:rgba(255,255,255,.04);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:12px;transition:all .2s;color:transparent;}
+.ts-card.on .ts-chk{border-color:rgba(34,197,94,.6);background:rgba(34,197,94,.2);color:#22c55e;}
+.ts-c-pur{background:linear-gradient(135deg,rgba(124,58,237,.18),rgba(124,58,237,.06));border:1.5px solid rgba(124,58,237,.3);}
+.ts-c-grn{background:linear-gradient(135deg,rgba(34,197,94,.18),rgba(34,197,94,.06));border:1.5px solid rgba(34,197,94,.3);}
+.ts-c-org{background:linear-gradient(135deg,rgba(249,115,22,.18),rgba(249,115,22,.06));border:1.5px solid rgba(249,115,22,.3);}
+.ts-c-blu{background:linear-gradient(135deg,rgba(59,130,246,.18),rgba(59,130,246,.06));border:1.5px solid rgba(59,130,246,.3);}
+.ts-c-pnk{background:linear-gradient(135deg,rgba(236,72,153,.18),rgba(236,72,153,.06));border:1.5px solid rgba(236,72,153,.3);}
+.ts-c-cyn{background:linear-gradient(135deg,rgba(6,182,212,.18),rgba(6,182,212,.06));border:1.5px solid rgba(6,182,212,.3);}
+.ts-c-ylw{background:linear-gradient(135deg,rgba(234,179,8,.18),rgba(234,179,8,.06));border:1.5px solid rgba(234,179,8,.3);}
+.ts-new{position:absolute;top:-3px;left:-3px;background:linear-gradient(135deg,#f97316,#ec4899);color:#fff;font-size:8px;font-weight:900;padding:2px 6px;border-radius:6px;letter-spacing:.5px;}
+.ts-bottom{width:100%;margin-top:14px;}
+.ts-summary{text-align:center;font-size:12px;color:rgba(255,255,255,.35);margin-bottom:10px;}
+.ts-summary b{color:#fff;}
+.ts-go{width:100%;padding:14px;border-radius:16px;border:none;font-size:17px;font-weight:900;font-family:inherit;cursor:pointer;background:linear-gradient(135deg,#7c3aed,#3b82f6);color:#fff;box-shadow:0 4px 24px rgba(124,58,237,.4);}
+.ts-go:active{transform:scale(.97);}
+.ts-go.disabled{opacity:.4;pointer-events:none;}
+.ts-warn{text-align:center;font-size:11px;color:#f87171;margin-top:6px;display:none;}
+
 .arena-back-btn{
   padding:10px 24px;background:rgba(255,255,255,.06);
   border:1px solid rgba(255,255,255,.12);border-radius:14px;
@@ -1161,7 +1197,7 @@ body{background-color:#1a0a3e;background:radial-gradient(ellipse at top, #2d1b69
     <div class="grade-card gc-6" onclick="selectGrade(6)">
       <div class="gc-emoji">🔥</div>
       <div class="gc-name">כיתה ו׳</div>
-      <div class="gc-topics">גיאומטריה • שברים • אחוזים • ציר מספרים</div>
+      <div class="gc-topics">גיאומטריה • שברים • אחוזים • סדר פעולות • יחס ופרופורציה</div>
       <div class="gc-badge">יסודי</div>
     </div>
     <div class="grade-card gc-7" onclick="selectGrade(7)">
@@ -1192,6 +1228,21 @@ body{background-color:#1a0a3e;background:radial-gradient(ellipse at top, #2d1b69
   <button onclick="shareGameLink()" style="padding:10px 24px;background:rgba(59,130,246,.12);border:1.5px solid rgba(59,130,246,.35);border-radius:14px;color:#60a5fa;font-size:14px;font-weight:700;cursor:pointer;font-family:inherit;">🔗 שתף את המשחק</button>
 </div>
 
+<!-- TOPIC SELECTOR SCREEN -->
+<div id="topic-screen" class="screen">
+  <div class="ts-hdr">
+    <div class="ts-grade-pill" id="ts-grade-pill">🔥 כיתה ו׳</div>
+    <div class="ts-title">בחרו נושאים</div>
+  </div>
+  <div id="ts-sections"></div>
+  <div class="ts-bottom">
+    <div class="ts-summary">נבחרו <b id="ts-cnt">0</b> נושאים • <b id="ts-lvls">0</b> שלבים</div>
+    <button class="ts-go" id="ts-go-btn" onclick="applyTopicFilter()">🚀 יאללה!</button>
+    <div class="ts-warn" id="ts-warn">⚠️ בחרו לפחות נושא אחד</div>
+  </div>
+  <button onclick="showGradeScreen()" class="arena-back-btn" style="margin-top:8px;">◀ חזרה לבחירת כיתה</button>
+</div>
+
 <!-- ARENA SELECT SCREEN -->
 <div id="arena-screen" class="screen">
   <div class="arena-title">🏟️ Math Arena</div>
@@ -1204,7 +1255,7 @@ body{background-color:#1a0a3e;background:radial-gradient(ellipse at top, #2d1b69
   </div>
   <div class="arena-grid" id="arena-grid-dynamic"></div>
   <button onclick="shareGameLink()" style="padding:10px 24px;background:rgba(59,130,246,.12);border:1.5px solid rgba(59,130,246,.35);border-radius:14px;color:#60a5fa;font-size:14px;font-weight:700;cursor:pointer;font-family:inherit;">🔗 שתף את המשחק</button>
-  <button onclick="showGradeScreen()" class="arena-back-btn" style="margin-top:8px;">◀ חזרה לבחירת כיתה</button>
+  <button onclick="arenaGoBack()" class="arena-back-btn" style="margin-top:8px;">◀ חזרה</button>
 </div>
 
 <!-- LEADERBOARD OVERLAY -->
@@ -1427,7 +1478,7 @@ var GAME_URL = 'https://sivanrab-eng.github.io/math-arena/';
 
 // ===== HINT SYSTEM =====
 var hintUsed=false;
-var HINTS={'ra':'💡 כפלו אורך × רוחב!','ra2':'💡 כפלו אורך × רוחב!','rp':'💡 חברו אורך+רוחב, כפלו ב-2!','rp2':'💡 חברו אורך+רוחב, כפלו ב-2!','sq':'💡 שטח=צלע×צלע, היקף=צלע×4!','tri-p':'💡 חברו את 3 הצלעות!','rs':'💡 היקף÷4 או √שטח!','rra':'💡 שטח÷אורך!','rrp':'💡 (היקף÷2)−אורך!','rr':'💡 שטח÷אורך או (היקף÷2)−אורך!','par':'💡 בסיס × גובה (לא הצלע הנטויה!)','par-p':'💡 היקף = 2×(צלע+צלע)','tr':'💡 (בסיס×גובה)÷2','trap':'💡 (בסיס1+בסיס2)×גובה÷2','wd':'💡 שטיח=שטח, גדר=היקף!','combo':'💡 חשבו שטח והיקף בנפרד!','dec':'💡 אותן נוסחאות, עם עשרוניים!','circ-p':'💡 2×3.14×רדיוס','circ-a':'💡 3.14×r²','comp':'💡 פרקו לחלקים פשוטים!','units':'💡 1מ"ר=10,000סמ"ר, 1דונם=1,000מ"ר','vol':'💡 אורך×רוחב×גובה','fid':'💡 ספרו חלקים צבועים!','fcmp':'💡 הרחיבו למכנה משותף!','fred':'💡 חלקו מונה ומכנה באותו מספר!','fadd1':'💡 מכנה זהה? חברו מונים!','fsub1':'💡 מכנה זהה? חסרו מונים!','fadd2':'💡 הרחיבו למכנה משותף!','fsub2':'💡 הרחיבו למכנה משותף!','fwh':'💡 חלקו מונה÷מכנה!','fmul':'💡 מונה×מונה, מכנה×מכנה!','fwp':'💡 קראו→תרגמו→חשבו!','fmix':'💡 שימו לב לסימן!','ffin':'💡 כל סוגי השברים!','pid':'💡 אחוז=חלקים מ-100!','pof':'💡 N×אחוז÷100!','f2p':'💡 מונה÷מכנה×100!','p2f':'💡 שימו על 100, צמצמו!','pmon':'💡 מחיר×אחוז÷100!','pfind':'💡 חלק÷שלם×100!','pqty':'💡 כמות×אחוז÷100!','pchg':'💡 הפרש÷מקורי×100!','pmix':'💡 שימו לב לסוג!','pfin':'💡 כל הנוסחאות!','ndec':'💡 נקודה=שלמים|עשיריות!','nord':'💡 השוו ספרה ספרה!','nline':'💡 קפיצות שוות על הציר!','nadd':'💡 יישרו נקודות, חברו!','nsub':'💡 יישרו נקודות, חסרו!','nmul10':'💡 ×10=נקודה ימינה!','ndiv10':'💡 ÷10=נקודה שמאלה!','nd2f':'💡 0.5=5/10=1/2!','nneg':'💡 שמאלה מ-0=מינוס!','nfin':'💡 כל הנוסחאות!','g10an1':'💡 d=√(Δx²+Δy²)','g10an2':'💡 אמצע=ממוצע קואורדינטות!','g10an3':'💡 m=(y₂−y₁)/(x₂−x₁)','g10t1':'💡 sin=ניצב/יתר, cos=ניצב/יתר!','g10t2':'💡 S=½·a·b·sinC','g10t3':'💡 אלכסון תיבה=√(a²+b²+c²)','g10s1':'💡 aₙ=a₁+(n−1)·d','g10s2':'💡 Sₙ=n·(ראשון+אחרון)/2','g10s3':'💡 תרגמו לסדרה חשבונית!','g10st1':'💡 ממוצע=סכום÷כמות!','g10st2':'💡 P=רצויים÷אפשריים!','g10st3':'💡 פיזור גדול=σ גדולה!'};
+var HINTS={'ra':'💡 כפלו אורך × רוחב!','ra2':'💡 כפלו אורך × רוחב!','rp':'💡 חברו אורך+רוחב, כפלו ב-2!','rp2':'💡 חברו אורך+רוחב, כפלו ב-2!','sq':'💡 שטח=צלע×צלע, היקף=צלע×4!','tri-p':'💡 חברו את 3 הצלעות!','rs':'💡 היקף÷4 או √שטח!','rra':'💡 שטח÷אורך!','rrp':'💡 (היקף÷2)−אורך!','rr':'💡 שטח÷אורך או (היקף÷2)−אורך!','par':'💡 בסיס × גובה (לא הצלע הנטויה!)','par-p':'💡 היקף = 2×(צלע+צלע)','tr':'💡 (בסיס×גובה)÷2','trap':'💡 (בסיס1+בסיס2)×גובה÷2','wd':'💡 שטיח=שטח, גדר=היקף!','combo':'💡 חשבו שטח והיקף בנפרד!','dec':'💡 אותן נוסחאות, עם עשרוניים!','circ-p':'💡 2×3.14×רדיוס','circ-a':'💡 3.14×r²','comp':'💡 פרקו לחלקים פשוטים!','units':'💡 1מ"ר=10,000סמ"ר, 1דונם=1,000מ"ר','vol':'💡 אורך×רוחב×גובה','fid':'💡 ספרו חלקים צבועים!','fcmp':'💡 הרחיבו למכנה משותף!','fred':'💡 חלקו מונה ומכנה באותו מספר!','fadd1':'💡 מכנה זהה? חברו מונים!','fsub1':'💡 מכנה זהה? חסרו מונים!','fadd2':'💡 הרחיבו למכנה משותף!','fsub2':'💡 הרחיבו למכנה משותף!','fwh':'💡 חלקו מונה÷מכנה!','fmul':'💡 מונה×מונה, מכנה×מכנה!','fwp':'💡 קראו→תרגמו→חשבו!','fmix':'💡 שימו לב לסימן!','ffin':'💡 כל סוגי השברים!','pid':'💡 אחוז=חלקים מ-100!','pof':'💡 N×אחוז÷100!','f2p':'💡 מונה÷מכנה×100!','p2f':'💡 שימו על 100, צמצמו!','pmon':'💡 מחיר×אחוז÷100!','pfind':'💡 חלק÷שלם×100!','pqty':'💡 כמות×אחוז÷100!','pchg':'💡 הפרש÷מקורי×100!','pmix':'💡 שימו לב לסוג!','pfin':'💡 כל הנוסחאות!','ndec':'💡 נקודה=שלמים|עשיריות!','nord':'💡 השוו ספרה ספרה!','nline':'💡 קפיצות שוות על הציר!','nadd':'💡 יישרו נקודות, חברו!','nsub':'💡 יישרו נקודות, חסרו!','nmul10':'💡 ×10=נקודה ימינה!','ndiv10':'💡 ÷10=נקודה שמאלה!','nd2f':'💡 0.5=5/10=1/2!','nneg':'💡 שמאלה מ-0=מינוס!','nfin':'💡 כל הנוסחאות!','g10an1':'💡 d=√(Δx²+Δy²)','g10an2':'💡 אמצע=ממוצע קואורדינטות!','g10an3':'💡 m=(y₂−y₁)/(x₂−x₁)','g10t1':'💡 sin=ניצב/יתר, cos=ניצב/יתר!','g10t2':'💡 S=½·a·b·sinC','g10t3':'💡 אלכסון תיבה=√(a²+b²+c²)','g10s1':'💡 aₙ=a₁+(n−1)·d','g10s2':'💡 Sₙ=n·(ראשון+אחרון)/2','g10s3':'💡 תרגמו לסדרה חשבונית!','g10st1':'💡 ממוצע=סכום÷כמות!','g10st2':'💡 P=רצויים÷אפשריים!','g10st3':'💡 פיזור גדול=σ גדולה!','ang1':'💡 חדה<90, ישרה=90, קהה>90!','ang2':'💡 סכום זוויות במשולש=180°!','ang3':'💡 צמודות=180°, קודקודיות=שוות!','ang4':'💡 כל סוגי הזוויות!','ops1':'💡 כפל וחילוק קודם!','ops2':'💡 סוגריים תמיד ראשון!','ops3':'💡 סוגריים→כפל÷→חיבור−!','ops4':'💡 תרגמו למספרים!','ops5':'💡 כל הכללים ביחד!','rat1':'💡 צמצמו את שני הצדדים!','rat2':'💡 כפלו שני צדדים באותו מספר!','rat3':'💡 מכפלת אלכסונים שווה!','rat4':'💡 תרגמו ליחס!','rat5':'💡 כל סוגי היחס!'};
 function showHint(){if(typeof answered!=='undefined'&&answered)return;var tp=LV[lvlIdx].topics[tIdx];var h=HINTS[tp.id]||'💡 קראו שוב בזהירות!';var el=document.getElementById('hint-bubble');if(el.classList.contains('on')){el.classList.remove('on');return;}el.textContent=h;el.classList.add('on');hintUsed=true;setTimeout(function(){el.classList.remove('on');},4000);}
 function hideHintBubble(){document.getElementById('hint-bubble').classList.remove('on');}
 
@@ -2112,6 +2163,180 @@ var LV_GEO=[
   {name:'שלב 27 — 👑 GEOMETRY PRO!',emoji:'👑',bonus:500,topics:[
     {id:'fin',label:'הכל ביחד!',ex:{title:'Final Boss!',body:'שאלות מכל הנושאים! 👑',formula:'כל הנוסחאות!'},
      pool:[{t:'מלבן 11×7 — שטח?',s:mR(11,7),o:['77 סמ"ר','36 סמ"ר','18 סמ"ר','154 סמ"ר'],a:0,p:300,e:'11×7=77'},{t:'מעגל r=4 — היקף? (π≈3.14)',s:mCirc(4),o:['12.56','25.12','50.24','16'],a:1,p:300,e:'2×3.14×4=25.12'},{t:'טרפז: 5,11, גובה 6 — שטח?',s:mTrap(5,11,6),o:['96 סמ"ר','48 סמ"ר','33 סמ"ר','66 סמ"ר'],a:1,p:300,e:'(5+11)×6÷2=48'},{t:'קוביה צלע 7 — נפח?',s:mCube3D(7),o:['49 סמ"ק','343 סמ"ק','21 סמ"ק','147 סמ"ק'],a:1,p:300,e:'7³=343'},{t:'5 דונם = ? מ"ר',s:mUnits("5 דונם","?"),o:['500','5,000','50','50,000'],a:1,p:300,e:'5×1,000=5,000'}]}
+  ]}
+];
+
+// ===== GRADE 6 GEOMETRY SUB-ARENAS (slices of LV_GEO) =====
+var LV_G6_RECT = LV_GEO.slice(0,4);
+var LV_G6_PARA = LV_GEO.slice(4,6);
+var LV_G6_TRI  = LV_GEO.slice(6,10);
+var LV_G6_TRAP = LV_GEO.slice(10,12);
+var LV_G6_WORD = LV_GEO.slice(12,15);
+var LV_G6_CIRC = LV_GEO.slice(15,19);
+var LV_G6_COMP = LV_GEO.slice(19,21);
+var LV_G6_UNIT = LV_GEO.slice(21,23);
+var LV_G6_VOL  = LV_GEO.slice(23,27);
+
+// ===== ANGLES ARENA (NEW) =====
+var LV_G6_ANG=[
+  {name:'שלב 1 — סוגי זוויות',emoji:'📐',bonus:60,topics:[
+    {id:'ang1',label:'סוגי זוויות',ex:{title:'סוגי זוויות',body:'חדה < 90°, ישרה = 90°, קהה > 90°, שטוחה = 180°',formula:'0°→חדה→90°→קהה→180°'},
+     pool:[
+       {t:'זווית של 45° היא:',s:'',o:['חדה','ישרה','קהה','שטוחה'],a:0,p:80,e:'45°<90° → חדה'},
+       {t:'זווית של 90° היא:',s:'',o:['חדה','ישרה','קהה','שטוחה'],a:1,p:80,e:'בדיוק 90° → ישרה'},
+       {t:'זווית של 120° היא:',s:'',o:['חדה','ישרה','קהה','שטוחה'],a:2,p:80,e:'90°<120°<180° → קהה'},
+       {t:'זווית של 180° היא:',s:'',o:['חדה','ישרה','קהה','שטוחה'],a:3,p:80,e:'בדיוק 180° → שטוחה'},
+       {t:'זווית של 15° היא:',s:'',o:['חדה','ישרה','קהה','שטוחה'],a:0,p:80,e:'15°<90° → חדה'},
+       {t:'זווית של 135° היא:',s:'',o:['חדה','ישרה','קהה','שטוחה'],a:2,p:80,e:'90°<135°<180° → קהה'}
+     ],
+     gen:function(){var d=dRand(5,175);var type=d<90?'חדה':d===90?'ישרה':d<180?'קהה':'שטוחה';var ai=d<90?0:d===90?1:d<180?2:3;var opts=['חדה','ישרה','קהה','שטוחה'];return{t:'זווית של '+d+'° היא:',s:'',o:opts,a:ai,p:80,e:d+'° → '+type};}}
+  ]},
+  {name:'שלב 2 — סכום זוויות במשולש',emoji:'🔺',bonus:80,topics:[
+    {id:'ang2',label:'סכום זוויות משולש',ex:{title:'סכום זוויות',body:'סכום הזוויות במשולש תמיד 180°!',formula:'α + β + γ = 180°'},
+     pool:[
+       {t:'במשולש: 60° ו-70°. השלישית?',s:'',o:['40°','50°','60°','70°'],a:1,p:100,e:'180−60−70=50'},
+       {t:'במשולש: 90° ו-45°. השלישית?',s:'',o:['35°','45°','55°','65°'],a:1,p:100,e:'180−90−45=45'},
+       {t:'במשולש: 80° ו-40°. השלישית?',s:'',o:['50°','60°','70°','80°'],a:1,p:100,e:'180−80−40=60'},
+       {t:'במשולש שווה-צלעות — כל זווית?',s:'',o:['45°','60°','90°','120°'],a:1,p:100,e:'180÷3=60'}
+     ],
+     gen:function(){var a=dRand(25,80),b=dRand(25,130-a),c=180-a-b;if(c<15){a=50;b=60;c=70;}var r=mkO(c,'°',[180-a,a+b,90]);return{t:'במשולש: '+a+'° ו-'+b+'°. הזווית השלישית?',s:'',o:r.o,a:r.a,p:100,e:'180−'+a+'−'+b+'='+c};}}
+  ]},
+  {name:'שלב 3 — זוויות צמודות וקודקודיות',emoji:'🔀',bonus:100,topics:[
+    {id:'ang3',label:'צמודות וקודקודיות',ex:{title:'זוגות זוויות',body:'צמודות = 180°<br>קודקודיות = שוות!',formula:'α+β=180° | α=γ'},
+     pool:[
+       {t:'זווית 70°. הצמודה לה?',s:'',o:['70°','90°','110°','180°'],a:2,p:110,e:'180−70=110'},
+       {t:'זווית 130°. הצמודה לה?',s:'',o:['30°','50°','130°','180°'],a:1,p:110,e:'180−130=50'},
+       {t:'זווית 55°. הקודקודית לה?',s:'',o:['35°','55°','125°','180°'],a:1,p:100,e:'קודקודיות שוות=55°'},
+       {t:'זווית 90°. הצמודה לה?',s:'',o:['45°','90°','180°','270°'],a:1,p:100,e:'180−90=90'}
+     ],
+     gen:function(){var a=dRand(20,160);var isAdj=Math.random()>.5;if(isAdj){var b=180-a;var r=mkO(b,'°',[a,90,360-a]);return{t:'זווית '+a+'°. הצמודה לה?',s:'',o:r.o,a:r.a,p:110,e:'180−'+a+'='+b};}else{var r2=mkO(a,'°',[180-a,90,2*a]);return{t:'זווית '+a+'°. הקודקודית לה?',s:'',o:r2.o,a:r2.a,p:100,e:'קודקודיות שוות='+a+'°'};}}
+    }
+  ]},
+  {name:'שלב 4 — 👑 מיקס זוויות',emoji:'👑',bonus:200,topics:[
+    {id:'ang4',label:'מיקס זוויות',ex:{title:'מיקס זוויות',body:'כל סוגי הזוויות!',formula:'סוגים+משולש+צמודות'},
+     pool:[
+       {t:'זווית 88° היא:',s:'',o:['חדה','ישרה','קהה','שטוחה'],a:0,p:80,e:'88°<90° → חדה'},
+       {t:'במשולש: 35° ו-65°. השלישית?',s:'',o:['60°','70°','80°','90°'],a:2,p:100,e:'180−35−65=80'},
+       {t:'זווית 40°. הצמודה?',s:'',o:['40°','50°','130°','140°'],a:3,p:110,e:'180−40=140'},
+       {t:'במשולש ישר-זווית: זווית אחת 30°. השנייה?',s:'',o:['30°','45°','60°','90°'],a:2,p:120,e:'180−90−30=60'}
+     ],
+     gen:function(){var type=dRand(1,3);if(type===1){var d=dRand(10,170);var nm=d<90?'חדה':d===90?'ישרה':d<180?'קהה':'שטוחה';var ai=d<90?0:d===90?1:2;return{t:'זווית '+d+'° היא:',s:'',o:['חדה','ישרה','קהה'],a:ai,p:80,e:d+'° → '+nm};}else if(type===2){var a=dRand(25,75),b=dRand(25,130-a),c=180-a-b;var r=mkO(c,'°',[180-a,a+b,90]);return{t:'במשולש: '+a+'° ו-'+b+'°. השלישית?',s:'',o:r.o,a:r.a,p:100,e:'180−'+a+'−'+b+'='+c};}else{var a2=dRand(20,160),b2=180-a2;var r2=mkO(b2,'°',[a2,90,360-a2]);return{t:'זווית '+a2+'°. הצמודה?',s:'',o:r2.o,a:r2.a,p:110,e:'180−'+a2+'='+b2};}}}
+  ]}
+];
+
+// ===== ORDER OF OPERATIONS ARENA (NEW) =====
+var LV_G6_OPS=[
+  {name:'שלב 1 — כפל לפני חיבור',emoji:'🔣',bonus:60,topics:[
+    {id:'ops1',label:'כפל לפני חיבור',ex:{title:'סדר פעולות',body:'כפל וחילוק קודם!<br>אח\"כ חיבור וחיסור',formula:'× ÷ לפני + −'},
+     pool:[
+       {t:'3 + 4 × 2 = ?',s:'',o:['14','11','10','16'],a:1,p:80,e:'4×2=8, 3+8=11'},
+       {t:'10 − 2 × 3 = ?',s:'',o:['24','4','6','16'],a:1,p:80,e:'2×3=6, 10−6=4'},
+       {t:'5 + 6 × 3 = ?',s:'',o:['33','23','21','15'],a:1,p:80,e:'6×3=18, 5+18=23'},
+       {t:'20 − 12 ÷ 4 = ?',s:'',o:['2','17','14','8'],a:1,p:90,e:'12÷4=3, 20−3=17'},
+       {t:'7 + 8 ÷ 2 = ?',s:'',o:['7.5','11','4','15'],a:1,p:90,e:'8÷2=4, 7+4=11'},
+       {t:'2 × 5 + 3 × 4 = ?',s:'',o:['22','46','52','34'],a:0,p:100,e:'10+12=22'}
+     ],
+     gen:function(){var a=dRand(2,10),b=dRand(2,8),c=dRand(2,10);var ans=a+b*c;var r=mkO(ans,'',[a*b+c,(a+b)*c,a+b+c]);return{t:a+' + '+b+' × '+c+' = ?',s:'',o:r.o,a:r.a,p:90,e:b+'×'+c+'='+(b*c)+', '+a+'+'+(b*c)+'='+ans};}}
+  ]},
+  {name:'שלב 2 — סוגריים',emoji:'🔣',bonus:80,topics:[
+    {id:'ops2',label:'סוגריים',ex:{title:'סוגריים',body:'סוגריים תמיד קודם! 🥇',formula:'( ) קודם לכל'},
+     pool:[
+       {t:'(3 + 4) × 2 = ?',s:'',o:['11','14','10','24'],a:1,p:90,e:'(7)×2=14'},
+       {t:'(10 − 4) × 5 = ?',s:'',o:['30','46','25','50'],a:0,p:90,e:'(6)×5=30'},
+       {t:'3 × (8 − 5) = ?',s:'',o:['19','9','24','15'],a:1,p:90,e:'3×(3)=9'},
+       {t:'(2 + 3) × (4 + 1) = ?',s:'',o:['11','25','20','15'],a:1,p:100,e:'5×5=25'},
+       {t:'(12 − 4) ÷ 2 = ?',s:'',o:['4','10','8','6'],a:0,p:100,e:'(8)÷2=4'},
+       {t:'48 ÷ (2 + 6) = ?',s:'',o:['30','24','6','8'],a:2,p:100,e:'48÷(8)=6'}
+     ],
+     gen:function(){var a=dRand(2,8),b=dRand(2,8),c=dRand(2,6);var ans=(a+b)*c;var r=mkO(ans,'',[a+b*c,a*b*c,(a+b)+c]);return{t:'('+a+' + '+b+') × '+c+' = ?',s:'',o:r.o,a:r.a,p:100,e:'('+(a+b)+')×'+c+'='+ans};}}
+  ]},
+  {name:'שלב 3 — ביטויים מורכבים',emoji:'🧠',bonus:100,topics:[
+    {id:'ops3',label:'ביטויים מורכבים',ex:{title:'ביטויים מורכבים',body:'סוגריים → כפל/חילוק → חיבור/חיסור',formula:'( ) → × ÷ → + −'},
+     pool:[
+       {t:'2 × (3 + 4) − 5 = ?',s:'',o:['9','3','14','7'],a:0,p:110,e:'2×7−5=9'},
+       {t:'(8 − 3) × 4 + 2 = ?',s:'',o:['22','24','18','36'],a:0,p:110,e:'5×4+2=22'},
+       {t:'30 − (2 + 3) × 4 = ?',s:'',o:['108','10','16','20'],a:1,p:120,e:'30−5×4=10'},
+       {t:'(6 + 4) × (9 − 6) = ?',s:'',o:['33','30','36','24'],a:1,p:120,e:'10×3=30'},
+       {t:'100 ÷ (5 × 4) = ?',s:'',o:['80','5','25','20'],a:1,p:120,e:'100÷20=5'},
+       {t:'3 + 2 × (10 − 4) = ?',s:'',o:['30','15','12','21'],a:1,p:120,e:'3+2×6=15'}
+     ],
+     gen:function(){var a=dRand(2,6),b=dRand(2,8),c=dRand(1,5),d=dRand(2,9);var ans=a*(b+c)-d;if(ans<1){a=4;b=5;c=3;d=2;ans=30;}var r=mkO(ans,'',[(a+b)*c-d,a*b+c-d,a+b*c+d]);return{t:a+' × ('+b+' + '+c+') − '+d+' = ?',s:'',o:r.o,a:r.a,p:120,e:a+'×'+(b+c)+'−'+d+'='+ans};}}
+  ]},
+  {name:'שלב 4 — בעיות מילוליות',emoji:'📝',bonus:120,topics:[
+    {id:'ops4',label:'סדר פעולות מילולי',ex:{title:'בעיות מילוליות',body:'תרגמו למספרים ופתרו!',formula:'קראו → כתבו ביטוי → חשבו'},
+     pool:[
+       {t:'קניתי 3 חולצות ב-40₪ ו-2 מכנסיים ב-60₪. כמה שילמתי?',s:'',o:['100₪','240₪','200₪','300₪'],a:1,p:120,e:'3×40+2×60=120+120=240'},
+       {t:'ל-24 ילדים חילקו שוקולדים. כל אחד קיבל 3 ונשארו 5. כמה היו?',s:'',o:['72','77','27','67'],a:1,p:120,e:'24×3+5=77'},
+       {t:'בחנות: 5 מחברות ב-8₪ עם הנחה של 10₪. כמה לשלם?',s:'',o:['40₪','30₪','50₪','35₪'],a:1,p:130,e:'5×8−10=30'},
+       {t:'יש 4 שורות של 6 כיסאות. הוסיפו עוד 3 כיסאות. כמה סה\"כ?',s:'',o:['24','13','27','30'],a:2,p:100,e:'4×6+3=27'}
+     ]}
+  ]},
+  {name:'שלב 5 — 👑 סדר פעולות PRO',emoji:'👑',bonus:300,topics:[
+    {id:'ops5',label:'סדר פעולות מיקס',ex:{title:'מיקס PRO',body:'הכל ביחד!',formula:'כל הכללים'},
+     pool:[
+       {t:'(5 + 3) × 2 − 4 ÷ 2 = ?',s:'',o:['14','7','10','12'],a:0,p:130,e:'8×2−2=14'},
+       {t:'100 − 3 × (10 + 5) = ?',s:'',o:['55','1455','60','45'],a:0,p:130,e:'100−45=55'},
+       {t:'2 × 2 × 2 × 2 = ?',s:'',o:['8','12','16','32'],a:2,p:110,e:'2×2×2×2=16'},
+       {t:'(100 − 40) ÷ (2 + 4) = ?',s:'',o:['5','15','10','12'],a:2,p:130,e:'60÷6=10'}
+     ],
+     gen:function(){var a=dRand(2,5),b=dRand(3,8),c=dRand(2,6);var ans=(a+b)*c;var w1=a+b*c,w2=a*b+c;var r=mkO(ans,'',[w1,w2,ans+a]);return{t:'('+a+' + '+b+') × '+c+' = ?',s:'',o:r.o,a:r.a,p:130,e:'('+(a+b)+')×'+c+'='+ans};}}
+  ]}
+];
+
+// ===== RATIO & PROPORTION ARENA (NEW) =====
+var LV_G6_RAT=[
+  {name:'שלב 1 — מהו יחס?',emoji:'⚖️',bonus:60,topics:[
+    {id:'rat1',label:'יחס בסיסי',ex:{title:'יחס',body:'יחס = השוואה בין שני מספרים',formula:'a : b'},
+     pool:[
+       {t:'בכיתה 12 בנים ו-8 בנות. היחס בנים:בנות?',s:'',o:['12:8','8:12','3:2','2:3'],a:2,p:80,e:'12:8 = 3:2'},
+       {t:'6 תפוחים ו-9 תפוזים. היחס תפוחים:תפוזים?',s:'',o:['6:9','3:2','9:6','2:3'],a:3,p:80,e:'6:9 = 2:3'},
+       {t:'יחס 4:6 בצורה מצומצמת?',s:'',o:['4:6','1:2','2:3','3:4'],a:2,p:90,e:'÷2 → 2:3'},
+       {t:'יחס 10:15 בצורה מצומצמת?',s:'',o:['5:10','10:15','3:2','2:3'],a:3,p:90,e:'÷5 → 2:3'},
+       {t:'15 אדומים מתוך 25 סה\"כ. יחס אדום:כחול?',s:'',o:['3:5','3:2','5:3','2:3'],a:1,p:100,e:'15:10 = 3:2'},
+       {t:'יחס 8:12 בצורה מצומצמת?',s:'',o:['4:6','2:3','8:12','3:2'],a:1,p:90,e:'÷4 → 2:3'}
+     ]}
+  ]},
+  {name:'שלב 2 — הרחבת יחס',emoji:'🔢',bonus:80,topics:[
+    {id:'rat2',label:'הרחבת יחס',ex:{title:'הרחבת יחס',body:'כופלים את שני הצדדים באותו מספר!',formula:'a:b = (a×n):(b×n)'},
+     pool:[
+       {t:'יחס 2:3. הרחיבו ×4:',s:'',o:['6:9','8:12','4:6','2:12'],a:1,p:90,e:'2×4:3×4 = 8:12'},
+       {t:'יחס 1:5. הרחיבו ×3:',s:'',o:['3:15','3:5','1:15','5:15'],a:0,p:90,e:'1×3:5×3 = 3:15'},
+       {t:'יחס 3:4. הרחיבו ×5:',s:'',o:['8:20','15:20','9:12','15:25'],a:1,p:100,e:'3×5:4×5 = 15:20'},
+       {t:'יחס ?:12 = 2:3. מה החסר?',s:'',o:['6','8','4','9'],a:1,p:110,e:'12÷3=4, 2×4=8'},
+       {t:'יחס 5:? = 15:21. מה החסר?',s:'',o:['3','7','9','21'],a:1,p:110,e:'15÷5=3, 7×... → ?=7'},
+       {t:'יחס 4:? = 12:15. מה החסר?',s:'',o:['3','5','10','20'],a:1,p:110,e:'12÷4=3, 15÷3=5'}
+     ]}
+  ]},
+  {name:'שלב 3 — פרופורציה',emoji:'🔄',bonus:100,topics:[
+    {id:'rat3',label:'פרופורציה',ex:{title:'פרופורציה',body:'שני יחסים שווים!<br>מכפלת אלכסונים שווה',formula:'a/b = c/d → a×d = b×c'},
+     pool:[
+       {t:'2/5 = x/15. מה x?',s:'',o:['3','6','10','7.5'],a:1,p:110,e:'2×15÷5=6'},
+       {t:'3/4 = 9/x. מה x?',s:'',o:['3','12','27','16'],a:1,p:110,e:'9×4÷3=12'},
+       {t:'x/6 = 10/12. מה x?',s:'',o:['2','5','7','8'],a:1,p:120,e:'10×6÷12=5'},
+       {t:'4/x = 12/9. מה x?',s:'',o:['27','3','4','6'],a:1,p:120,e:'4×9÷12=3'},
+       {t:'5/8 = 15/x. מה x?',s:'',o:['3','20','24','40'],a:2,p:110,e:'15×8÷5=24'},
+       {t:'x/7 = 6/21. מה x?',s:'',o:['2','3','6','18'],a:0,p:120,e:'6×7÷21=2'}
+     ],
+     gen:function(){var a=dRand(2,8),b=dRand(2,8);if(a===b)b=a+1;var n=dRand(2,5);var c=a*n,d=b*n;var r=mkO(c,'',[a*d,b*n+a,a+d]);return{t:a+'/'+b+' = x/'+d+'. מה x?',s:'',o:r.o,a:r.a,p:120,e:a+'×'+d+'÷'+b+'='+c};}}
+  ]},
+  {name:'שלב 4 — בעיות מילוליות',emoji:'📝',bonus:120,topics:[
+    {id:'rat4',label:'יחס מילולי',ex:{title:'בעיות יחס',body:'תרגמו ליחס ופתרו!',formula:'קראו → יחס → פתרו'},
+     pool:[
+       {t:'מתכון: 2 כוסות קמח ל-3 ביצים. ל-9 ביצים כמה קמח?',s:'',o:['4','5','6','4.5'],a:2,p:120,e:'2:3 = ?:9 → 6'},
+       {t:'מכונית נוסעת 120 ק\"מ ב-2 שעות. כמה ב-5 שעות?',s:'',o:['240','300','360','600'],a:1,p:120,e:'60×5=300'},
+       {t:'3 פועלים מסיימים ב-12 ימים. 6 פועלים?',s:'',o:['24','6','4','8'],a:1,p:130,e:'3×12÷6=6'},
+       {t:'יחס בנים:בנות = 3:5. יש 24 ילדים. כמה בנים?',s:'',o:['9','12','15','8'],a:0,p:130,e:'24÷8=3, 3×3=9'}
+     ]}
+  ]},
+  {name:'שלב 5 — 👑 יחס ופרופורציה PRO',emoji:'👑',bonus:300,topics:[
+    {id:'rat5',label:'יחס מיקס',ex:{title:'מיקס PRO',body:'הכל ביחד!',formula:'כל הכללים'},
+     pool:[
+       {t:'יחס 15:25 בצורה מצומצמת?',s:'',o:['3:5','5:3','1:5','3:25'],a:0,p:100,e:'÷5 → 3:5'},
+       {t:'4/7 = x/28. מה x?',s:'',o:['16','12','8','20'],a:0,p:120,e:'4×28÷7=16'},
+       {t:'יחס 2:3:5. מתוך 40 כמה לחלק השלישי?',s:'',o:['8','12','20','15'],a:2,p:140,e:'40÷10×5=20'},
+       {t:'5 ק\"ג עולים 35₪. כמה ל-8 ק\"ג?',s:'',o:['40₪','48₪','56₪','64₪'],a:2,p:130,e:'35÷5×8=56'}
+     ],
+     gen:function(){var a=dRand(2,8),b=dRand(2,8);if(a===b)b=a+1;var n=dRand(2,5);var d=b*n,c=a*n;var r=mkO(c,'',[a*d,b*n+a,a+d]);return{t:a+'/'+b+' = x/'+d+'. מה x?',s:'',o:r.o,a:r.a,p:130,e:a+'×'+d+'÷'+b+'='+c};}}
   ]}
 ];
 
@@ -2992,10 +3217,21 @@ var GRADE_ARENAS = {
     pct:  {lv:LV_G5_PCT,  name:'אחוזים', emoji:'💯', color:'#f97316', levels:3}
   },
   6: {
-    geo:  {lv:LV_GEO, name:'גיאומטריה', emoji:'📐', color:'#7c3aed', levels:27},
-    frac: {lv:LV_FRAC, name:'שברים', emoji:'🍕', color:'#22c55e', levels:12},
-    pct:  {lv:LV_PCT, name:'אחוזים', emoji:'💯', color:'#f97316', levels:10},
-    num:  {lv:LV_NUM, name:'ציר המספרים', emoji:'📏', color:'#3b82f6', levels:10}
+    rect: {lv:LV_G6_RECT, name:'מלבן וריבוע', emoji:'🟦', color:'#7c3aed', levels:4, section:'geo'},
+    para: {lv:LV_G6_PARA, name:'מקבילית', emoji:'🔶', color:'#7c3aed', levels:2, section:'geo'},
+    tri:  {lv:LV_G6_TRI,  name:'משולש', emoji:'🔺', color:'#7c3aed', levels:4, section:'geo'},
+    trap: {lv:LV_G6_TRAP, name:'טרפז', emoji:'🔷', color:'#7c3aed', levels:2, section:'geo'},
+    circ: {lv:LV_G6_CIRC, name:'מעגל', emoji:'⭕', color:'#7c3aed', levels:4, section:'geo'},
+    comp: {lv:LV_G6_COMP, name:'צורות מורכבות', emoji:'🧩', color:'#7c3aed', levels:2, section:'geo'},
+    unit: {lv:LV_G6_UNIT, name:'יחידות מידה', emoji:'📏', color:'#7c3aed', levels:2, section:'geo'},
+    vol:  {lv:LV_G6_VOL,  name:'נפח', emoji:'📦', color:'#7c3aed', levels:4, section:'geo'},
+    word: {lv:LV_G6_WORD, name:'בעיות מילוליות', emoji:'📝', color:'#7c3aed', levels:3, section:'geo'},
+    ang:  {lv:LV_G6_ANG,  name:'זוויות', emoji:'📐', color:'#ec4899', levels:4, section:'geo', isNew:true},
+    frac: {lv:LV_FRAC, name:'שברים', emoji:'🍕', color:'#22c55e', levels:12, section:'arith'},
+    pct:  {lv:LV_PCT, name:'אחוזים', emoji:'💯', color:'#f97316', levels:10, section:'arith'},
+    num:  {lv:LV_NUM, name:'ציר המספרים', emoji:'📏', color:'#3b82f6', levels:10, section:'arith'},
+    ops:  {lv:LV_G6_OPS, name:'סדר פעולות', emoji:'🔣', color:'#eab308', levels:5, section:'arith', isNew:true},
+    rat:  {lv:LV_G6_RAT, name:'יחס ופרופורציה', emoji:'⚖️', color:'#06b6d4', levels:5, section:'arith', isNew:true}
   },
   7: {
     alg:  {lv:LV_G7_ALG,  name:'אלגברה', emoji:'🔤', color:'#7c3aed', levels:5},
@@ -3030,14 +3266,177 @@ function selectGrade(g){
   currentGrade = g;
   var ga = GRADE_ARENAS[g];
   if(!ga) return;
+  // Check if this grade has sections (topic selector)
+  var hasSection = false;
+  var keys = Object.keys(ga);
+  for(var i=0;i<keys.length;i++){if(ga[keys[i]].section){hasSection=true;break;}}
+  if(hasSection){
+    showTopicScreen(g);
+  } else {
+    applyFullGrade(ga);
+    buildArenaCards(ga);
+    showArenaScreen();
+  }
+}
+
+// Apply all arenas for a grade (no filter)
+function applyFullGrade(ga){
   ARENAS = {};
   var keys = Object.keys(ga);
   for(var i=0;i<keys.length;i++){
     var k=keys[i], ar=ga[k];
     ARENAS[k] = {lv:ar.lv, name:ar.name, emoji:ar.emoji, color:ar.color};
   }
-  // Build arena cards dynamically
-  buildArenaCards(ga);
+}
+
+// ===== TOPIC SELECTOR =====
+var _topicFilter = {}; // {gradeNum: {arenaId: true/false}}
+
+function getTopicFilter(g){
+  try{var raw=localStorage.getItem('mathArena_topicFilter_'+g);if(raw)return JSON.parse(raw);}catch(e){}
+  return null;
+}
+function saveTopicFilter(g,filter){
+  try{localStorage.setItem('mathArena_topicFilter_'+g,JSON.stringify(filter));}catch(e){}
+}
+
+function showTopicScreen(g){
+  var ga = GRADE_ARENAS[g];
+  if(!ga) return;
+  var saved = getTopicFilter(g);
+  // Build sections
+  var sections = {};
+  var sectionNames = {geo:{icon:'📐',label:'גיאומטריה'},arith:{icon:'🔢',label:'חשבון ומספרים'}};
+  var keys = Object.keys(ga);
+  for(var i=0;i<keys.length;i++){
+    var k=keys[i], ar=ga[k];
+    var sec = ar.section || 'other';
+    if(!sections[sec]) sections[sec]={items:[]};
+    var isOn = saved ? (saved[k]!==false) : true;
+    sections[sec].items.push({id:k, ar:ar, on:isOn});
+  }
+  // Render
+  var container = document.getElementById('ts-sections');
+  container.innerHTML = '';
+  var sectionOrder = ['geo','arith','other'];
+  for(var si=0;si<sectionOrder.length;si++){
+    var secKey = sectionOrder[si];
+    if(!sections[secKey]) continue;
+    var sn = sectionNames[secKey]||{icon:'📦',label:secKey};
+    var secDiv = document.createElement('div');
+    // Section header
+    var hdr = document.createElement('div');
+    hdr.className='ts-sec';
+    hdr.innerHTML='<span class="ts-sec-icon">'+sn.icon+'</span><span class="ts-sec-label">'+sn.label+'</span><span class="ts-sec-line"></span><button class="ts-sec-toggle" onclick="toggleTopicSection(\''+secKey+'\')">הכל</button>';
+    secDiv.appendChild(hdr);
+    // Grid
+    var grid = document.createElement('div');
+    grid.className='ts-grid';
+    grid.setAttribute('data-section',secKey);
+    var items = sections[secKey].items;
+    for(var j=0;j<items.length;j++){
+      var it=items[j];
+      var colorClass = 'ts-c-pur';
+      var c = it.ar.color;
+      if(c==='#22c55e') colorClass='ts-c-grn';
+      else if(c==='#f97316') colorClass='ts-c-org';
+      else if(c==='#3b82f6') colorClass='ts-c-blu';
+      else if(c==='#ec4899') colorClass='ts-c-pnk';
+      else if(c==='#06b6d4') colorClass='ts-c-cyn';
+      else if(c==='#eab308') colorClass='ts-c-ylw';
+      var card = document.createElement('div');
+      card.className='ts-card '+colorClass+(it.on?' on':' off');
+      card.setAttribute('data-id',it.id);
+      card.setAttribute('data-lvl',it.ar.levels||0);
+      card.setAttribute('onclick','toggleTopicCard(this)');
+      var inner = '';
+      if(it.ar.isNew) inner+='<div class="ts-new">NEW</div>';
+      inner+='<div class="ts-emoji">'+it.ar.emoji+'</div>';
+      inner+='<div class="ts-info"><div class="ts-name">'+it.ar.name+'</div><div class="ts-lvl">'+it.ar.levels+' שלבים</div></div>';
+      inner+='<div class="ts-chk">✓</div>';
+      card.innerHTML=inner;
+      grid.appendChild(card);
+    }
+    secDiv.appendChild(grid);
+    container.appendChild(secDiv);
+  }
+  // Update header
+  document.getElementById('ts-grade-pill').textContent=GRADE_EMOJIS[g]+' '+GRADE_NAMES[g];
+  updateTopicSummary();
+  showScreen('topic-screen');
+}
+
+function toggleTopicCard(el){
+  el.classList.toggle('on');
+  el.classList.toggle('off');
+  updateTopicSummary();
+}
+
+function toggleTopicSection(secKey){
+  var grid=document.querySelector('#ts-sections [data-section="'+secKey+'"]');
+  if(!grid) return;
+  var cards=grid.querySelectorAll('.ts-card');
+  var allOn=true;
+  for(var i=0;i<cards.length;i++){if(cards[i].classList.contains('off')){allOn=false;break;}}
+  for(var i=0;i<cards.length;i++){
+    if(allOn){cards[i].classList.remove('on');cards[i].classList.add('off');}
+    else{cards[i].classList.remove('off');cards[i].classList.add('on');}
+  }
+  updateTopicSummary();
+}
+
+function updateTopicSummary(){
+  var all=document.querySelectorAll('#ts-sections .ts-card');
+  var cnt=0,lvls=0;
+  for(var i=0;i<all.length;i++){
+    if(all[i].classList.contains('on')){
+      cnt++;
+      lvls+=parseInt(all[i].getAttribute('data-lvl'))||0;
+    }
+  }
+  document.getElementById('ts-cnt').textContent=cnt;
+  document.getElementById('ts-lvls').textContent=lvls;
+  var btn=document.getElementById('ts-go-btn');
+  var warn=document.getElementById('ts-warn');
+  if(cnt===0){btn.classList.add('disabled');warn.style.display='block';}
+  else{btn.classList.remove('disabled');warn.style.display='none';}
+}
+
+function applyTopicFilter(){
+  var ga = GRADE_ARENAS[currentGrade];
+  if(!ga) return;
+  // Read which topics are on
+  var cards=document.querySelectorAll('#ts-sections .ts-card');
+  var filter={};
+  var activeKeys=[];
+  for(var i=0;i<cards.length;i++){
+    var id=cards[i].getAttribute('data-id');
+    var isOn=cards[i].classList.contains('on');
+    filter[id]=isOn;
+    if(isOn) activeKeys.push(id);
+  }
+  if(activeKeys.length===0) return;
+  // Save filter
+  saveTopicFilter(currentGrade, filter);
+  // Build filtered ARENAS
+  ARENAS = {};
+  for(var i=0;i<activeKeys.length;i++){
+    var k=activeKeys[i], ar=ga[k];
+    ARENAS[k] = {lv:ar.lv, name:ar.name, emoji:ar.emoji, color:ar.color};
+  }
+  // If only 1 arena selected, go directly to game
+  if(activeKeys.length===1){
+    currentArena = activeKeys[0];
+    LV = ARENAS[activeKeys[0]].lv;
+    startGame();
+    return;
+  }
+  // Build filtered arena cards
+  var filteredGa = {};
+  for(var i=0;i<activeKeys.length;i++){
+    filteredGa[activeKeys[i]] = ga[activeKeys[i]];
+  }
+  buildArenaCards(filteredGa);
   showArenaScreen();
 }
 
@@ -3049,7 +3448,9 @@ function buildArenaCards(ga){
     '#22c55e': {bg:'linear-gradient(135deg,#0e4429,#064e3b)',border:'#22c55e',badge:'#16a34a',badgeText:'#dcfce7'},
     '#f97316': {bg:'linear-gradient(135deg,#7c2d12,#431407)',border:'#f97316',badge:'#ea580c',badgeText:'#ffedd5'},
     '#3b82f6': {bg:'linear-gradient(135deg,#1e3a5f,#172554)',border:'#3b82f6',badge:'#2563eb',badgeText:'#dbeafe'},
-    '#ec4899': {bg:'linear-gradient(135deg,#831843,#500724)',border:'#f472b6',badge:'#ec4899',badgeText:'#fce7f3'}
+    '#ec4899': {bg:'linear-gradient(135deg,#831843,#500724)',border:'#f472b6',badge:'#ec4899',badgeText:'#fce7f3'},
+    '#06b6d4': {bg:'linear-gradient(135deg,#164e63,#0e3a4a)',border:'#06b6d4',badge:'#0891b2',badgeText:'#cffafe'},
+    '#eab308': {bg:'linear-gradient(135deg,#713f12,#451a03)',border:'#eab308',badge:'#ca8a04',badgeText:'#fef9c3'}
   };
   var keys = Object.keys(ga);
   for(var i=0;i<keys.length;i++){
@@ -3071,6 +3472,12 @@ function buildArenaCards(ga){
 
 function showGradeScreen(){
   showScreen('grade-screen');
+}
+
+function arenaGoBack(){
+  var ga=GRADE_ARENAS[currentGrade];
+  if(ga){var ks=Object.keys(ga);for(var i=0;i<ks.length;i++){if(ga[ks[i]].section){showTopicScreen(currentGrade);return;}}}
+  showGradeScreen();
 }
 
 
@@ -4032,6 +4439,11 @@ function startDuel(){
     }
     currentArena = duelArenaId;
     var _arObj = ARENAS[duelArenaId];
+    // Legacy support: old duel links may use 'geo' for grade 6
+    if(!_arObj && duelArenaId==='geo' && currentGrade===6){
+      _arObj = {lv:LV_GEO, name:'גיאומטריה', emoji:'📐', color:'#7c3aed'};
+      ARENAS['geo'] = _arObj;
+    }
     if(_arObj) LV = _arObj.lv;
   }
   // Get name from duel name input
