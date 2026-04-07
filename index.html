@@ -520,41 +520,57 @@ body{background-color:#1a0a3e;background:radial-gradient(ellipse at top, #2d1b69
 .gc-10{background:linear-gradient(135deg,#7f1d1d,#450a0a);border-color:#f87171;}
 .gc-10 .gc-badge{background:#ef4444;color:#fee2e2;}
 
-/* ===== TOPIC SELECTOR SCREEN ===== */
-#topic-screen{align-items:center;justify-content:flex-start;padding:20px 14px;gap:0;overflow-y:auto;}
-.ts-hdr{text-align:center;margin-bottom:14px;width:100%;}
-.ts-grade-pill{display:inline-flex;align-items:center;gap:5px;background:rgba(249,115,22,.12);border:1px solid rgba(249,115,22,.3);color:#fb923c;font-size:13px;font-weight:700;padding:5px 14px;border-radius:20px;margin-bottom:8px;}
-.ts-title{font-size:20px;font-weight:900;background:linear-gradient(135deg,#fff,#94a3b8);-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
-.ts-sec{display:flex;align-items:center;gap:8px;margin:12px 0 8px;padding:0 4px;width:100%;}
-.ts-sec-icon{font-size:16px;}
-.ts-sec-label{font-size:13px;font-weight:800;color:rgba(255,255,255,.55);}
-.ts-sec-line{flex:1;height:1px;background:rgba(255,255,255,.08);}
-.ts-sec-toggle{font-size:10px;font-weight:700;font-family:inherit;color:rgba(255,255,255,.3);background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);border-radius:8px;padding:3px 10px;cursor:pointer;}
-.ts-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;width:100%;}
-.ts-card{display:flex;align-items:center;gap:8px;padding:10px;border-radius:14px;cursor:pointer;transition:all .2s;position:relative;}
-.ts-card.on{opacity:1;}
-.ts-card.off{opacity:.3;filter:grayscale(.7);}
-.ts-card .ts-emoji{font-size:22px;flex-shrink:0;}
-.ts-card .ts-info{flex:1;min-width:0;}
-.ts-card .ts-name{font-size:12px;font-weight:800;color:#fff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
-.ts-card .ts-lvl{font-size:10px;color:rgba(255,255,255,.35);}
-.ts-card .ts-chk{width:22px;height:22px;border-radius:7px;border:2px solid rgba(255,255,255,.15);background:rgba(255,255,255,.04);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:12px;transition:all .2s;color:transparent;}
-.ts-card.on .ts-chk{border-color:rgba(34,197,94,.6);background:rgba(34,197,94,.2);color:#22c55e;}
-.ts-c-pur{background:linear-gradient(135deg,rgba(124,58,237,.18),rgba(124,58,237,.06));border:1.5px solid rgba(124,58,237,.3);}
-.ts-c-grn{background:linear-gradient(135deg,rgba(34,197,94,.18),rgba(34,197,94,.06));border:1.5px solid rgba(34,197,94,.3);}
-.ts-c-org{background:linear-gradient(135deg,rgba(249,115,22,.18),rgba(249,115,22,.06));border:1.5px solid rgba(249,115,22,.3);}
-.ts-c-blu{background:linear-gradient(135deg,rgba(59,130,246,.18),rgba(59,130,246,.06));border:1.5px solid rgba(59,130,246,.3);}
-.ts-c-pnk{background:linear-gradient(135deg,rgba(236,72,153,.18),rgba(236,72,153,.06));border:1.5px solid rgba(236,72,153,.3);}
-.ts-c-cyn{background:linear-gradient(135deg,rgba(6,182,212,.18),rgba(6,182,212,.06));border:1.5px solid rgba(6,182,212,.3);}
-.ts-c-ylw{background:linear-gradient(135deg,rgba(234,179,8,.18),rgba(234,179,8,.06));border:1.5px solid rgba(234,179,8,.3);}
-.ts-new{position:absolute;top:-3px;left:-3px;background:linear-gradient(135deg,#f97316,#ec4899);color:#fff;font-size:8px;font-weight:900;padding:2px 6px;border-radius:6px;letter-spacing:.5px;}
-.ts-bottom{width:100%;margin-top:14px;}
-.ts-summary{text-align:center;font-size:12px;color:rgba(255,255,255,.35);margin-bottom:10px;}
-.ts-summary b{color:#fff;}
-.ts-go{width:100%;padding:14px;border-radius:16px;border:none;font-size:17px;font-weight:900;font-family:inherit;cursor:pointer;background:linear-gradient(135deg,#7c3aed,#3b82f6);color:#fff;box-shadow:0 4px 24px rgba(124,58,237,.4);}
-.ts-go:active{transform:scale(.97);}
-.ts-go.disabled{opacity:.4;pointer-events:none;}
-.ts-warn{text-align:center;font-size:11px;color:#f87171;margin-top:6px;display:none;}
+/* ===== WORLD MAP SCREEN ===== */
+#topic-screen{align-items:center;justify-content:flex-start;padding:0;gap:0;overflow:hidden;}
+.wm-header{padding:14px 16px 6px;flex-shrink:0;text-align:center;width:100%;position:relative;z-index:10;}
+.wm-grade{display:inline-flex;align-items:center;gap:5px;background:rgba(249,115,22,.12);border:1.5px solid rgba(249,115,22,.3);color:#fb923c;font-size:13px;font-weight:700;padding:5px 16px;border-radius:20px;margin-bottom:4px;}
+.wm-title{font-size:20px;font-weight:900;background:linear-gradient(135deg,#fff,#c4b5fd);-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+.wm-sub{font-size:11px;color:rgba(255,255,255,.35);margin-top:2px;}
+.wm-scroll{flex:1;overflow-y:auto;overflow-x:hidden;padding:8px 0 110px;-webkit-overflow-scrolling:touch;width:100%;}
+.wm-scroll::-webkit-scrollbar{display:none;}
+.wm-nodes{display:flex;flex-direction:column;align-items:center;gap:8px;padding:0 16px;}
+.wm-section{display:flex;align-items:center;gap:8px;width:100%;max-width:340px;padding:6px 0;margin:6px 0;}
+.wm-sec-icon{font-size:16px;}
+.wm-sec-label{font-size:12px;font-weight:800;color:rgba(255,255,255,.35);}
+.wm-sec-line{flex:1;height:1px;background:rgba(255,255,255,.06);}
+.wm-connector{display:flex;flex-direction:column;align-items:center;gap:3px;padding:1px 0;}
+.wm-cdot{width:4px;height:4px;border-radius:50%;background:rgba(167,139,250,.2);}
+.wm-connector.active .wm-cdot{background:rgba(167,139,250,.5);}
+.wm-connector.done .wm-cdot{background:rgba(34,197,94,.4);}
+.wm-node{display:flex;align-items:center;gap:12px;width:100%;max-width:340px;padding:12px 14px;border-radius:18px;cursor:pointer;transition:all .2s;position:relative;-webkit-tap-highlight-color:transparent;}
+.wm-node:active:not(.wm-locked){transform:scale(.97);}
+.wm-node:nth-child(odd){margin-right:12px;margin-left:auto;}
+.wm-node:nth-child(even){margin-left:12px;margin-right:auto;}
+.wm-node.wm-completed{background:linear-gradient(135deg,rgba(34,197,94,.15),rgba(34,197,94,.05));border:2px solid rgba(34,197,94,.35);}
+.wm-node.wm-current{background:linear-gradient(135deg,rgba(124,58,237,.3),rgba(59,130,246,.15));border:2px solid #a78bfa;box-shadow:0 4px 24px rgba(124,58,237,.35),0 0 40px rgba(167,139,250,.12);animation:wmPulse 2s ease-in-out infinite;}
+@keyframes wmPulse{0%,100%{box-shadow:0 4px 24px rgba(124,58,237,.35),0 0 40px rgba(167,139,250,.12);}50%{box-shadow:0 4px 32px rgba(124,58,237,.55),0 0 60px rgba(167,139,250,.2);}}
+.wm-node.wm-unlocked{background:linear-gradient(135deg,rgba(124,58,237,.15),rgba(124,58,237,.06));border:2px solid rgba(124,58,237,.3);}
+.wm-node.wm-locked{background:rgba(255,255,255,.02);border:2px solid rgba(255,255,255,.06);opacity:.45;cursor:default;filter:grayscale(.5);}
+.wm-icon{width:48px;height:48px;border-radius:14px;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:24px;position:relative;background:linear-gradient(135deg,rgba(255,255,255,.1),rgba(255,255,255,.03));border:2px solid rgba(255,255,255,.1);}
+.wm-completed .wm-icon{background:linear-gradient(135deg,rgba(34,197,94,.18),rgba(34,197,94,.06));border-color:rgba(34,197,94,.25);}
+.wm-locked .wm-icon{background:rgba(255,255,255,.03);border-color:rgba(255,255,255,.05);}
+.wm-lock{position:absolute;bottom:-3px;right:-3px;width:20px;height:20px;border-radius:7px;background:rgba(20,10,50,.9);border:2px solid rgba(255,255,255,.12);display:flex;align-items:center;justify-content:center;font-size:10px;}
+.wm-done-badge{position:absolute;top:-3px;right:-3px;width:20px;height:20px;border-radius:50%;background:linear-gradient(135deg,#22c55e,#16a34a);border:2px solid #86efac;display:flex;align-items:center;justify-content:center;font-size:10px;color:#fff;box-shadow:0 0 8px rgba(34,197,94,.4);}
+.wm-info{flex:1;min-width:0;}
+.wm-name{font-size:14px;font-weight:800;color:#fff;margin-bottom:1px;}
+.wm-locked .wm-name{color:rgba(255,255,255,.35);}
+.wm-lvls{font-size:11px;color:rgba(255,255,255,.35);font-weight:600;}
+.wm-completed .wm-lvls{color:rgba(34,197,94,.6);}
+.wm-stars{display:flex;gap:1px;margin-top:2px;}
+.wm-stars .wm-star{font-size:11px;opacity:.15;}
+.wm-stars .wm-star.earned{opacity:1;}
+.wm-prog{width:100%;height:3px;border-radius:2px;background:rgba(255,255,255,.06);margin-top:4px;overflow:hidden;}
+.wm-prog-fill{height:100%;border-radius:2px;background:linear-gradient(90deg,#7c3aed,#3b82f6);transition:width .3s;}
+.wm-completed .wm-prog-fill{background:linear-gradient(90deg,#22c55e,#4ade80);}
+.wm-arrow{font-size:16px;color:rgba(255,255,255,.15);flex-shrink:0;}
+.wm-current .wm-arrow{color:rgba(255,255,255,.5);}
+.wm-completed .wm-arrow{color:rgba(34,197,94,.4);}
+.wm-new{position:absolute;top:-5px;left:-5px;background:linear-gradient(135deg,#f97316,#ec4899);color:#fff;font-size:8px;font-weight:900;padding:2px 7px;border-radius:7px;letter-spacing:.5px;box-shadow:0 2px 8px rgba(249,115,22,.3);animation:wmNewB 2s ease-in-out infinite;}
+@keyframes wmNewB{0%,100%{transform:scale(1);}50%{transform:scale(1.08);}}
+.wm-bottom{width:100%;position:absolute;bottom:0;left:0;right:0;padding:14px 16px;background:linear-gradient(transparent,rgba(15,6,40,.95) 30%);z-index:20;display:flex;flex-direction:column;align-items:center;gap:6px;}
+.wm-go{width:100%;max-width:340px;padding:14px;border-radius:16px;border:none;font-size:17px;font-weight:900;font-family:inherit;cursor:pointer;background:linear-gradient(135deg,#7c3aed,#3b82f6);color:#fff;box-shadow:0 5px 0 #2e1065,0 8px 24px rgba(124,58,237,.35);transition:transform .1s,box-shadow .1s;}
+.wm-go:active{transform:translateY(3px);box-shadow:0 2px 0 #2e1065;}
+.wm-lock-toast{position:fixed;bottom:130px;left:50%;transform:translateX(-50%);background:rgba(0,0,0,.85);color:#fff;padding:10px 20px;border-radius:12px;font-size:13px;font-weight:700;z-index:100;opacity:0;transition:opacity .3s;pointer-events:none;border:1px solid rgba(255,255,255,.1);}
 
 .arena-back-btn{
   padding:10px 24px;background:rgba(255,255,255,.06);
@@ -1230,17 +1246,19 @@ body{background-color:#1a0a3e;background:radial-gradient(ellipse at top, #2d1b69
 
 <!-- TOPIC SELECTOR SCREEN -->
 <div id="topic-screen" class="screen">
-  <div class="ts-hdr">
-    <div class="ts-grade-pill" id="ts-grade-pill">🔥 כיתה ו׳</div>
-    <div class="ts-title">בחרו נושאים</div>
+  <div class="wm-header">
+    <div class="wm-grade" id="wm-grade-pill">🔥 כיתה ו׳</div>
+    <div class="wm-title">מפת המסע</div>
+    <div class="wm-sub">סיימו עולם כדי לפתוח את הבא!</div>
   </div>
-  <div id="ts-sections"></div>
-  <div class="ts-bottom">
-    <div class="ts-summary">נבחרו <b id="ts-cnt">0</b> נושאים • <b id="ts-lvls">0</b> שלבים</div>
-    <button class="ts-go" id="ts-go-btn" onclick="applyTopicFilter()">🚀 יאללה!</button>
-    <div class="ts-warn" id="ts-warn">⚠️ בחרו לפחות נושא אחד</div>
+  <div class="wm-scroll" id="wm-scroll">
+    <div class="wm-nodes" id="wm-nodes"></div>
   </div>
-  <button onclick="showGradeScreen()" class="arena-back-btn" style="margin-top:8px;">◀ חזרה לבחירת כיתה</button>
+  <div class="wm-bottom">
+    <button class="wm-go" id="wm-go-btn" onclick="wmPlay()">🚀 המשך לשחק</button>
+    <button onclick="showGradeScreen()" class="arena-back-btn">◀ חזרה לבחירת כיתה</button>
+  </div>
+  <div class="wm-lock-toast" id="wm-lock-toast">🔒 סיימו את העולם הקודם!</div>
 </div>
 
 <!-- ARENA SELECT SCREEN -->
@@ -3266,17 +3284,9 @@ function selectGrade(g){
   currentGrade = g;
   var ga = GRADE_ARENAS[g];
   if(!ga) return;
-  // Check if this grade has sections (topic selector)
-  var hasSection = false;
-  var keys = Object.keys(ga);
-  for(var i=0;i<keys.length;i++){if(ga[keys[i]].section){hasSection=true;break;}}
-  if(hasSection){
-    showTopicScreen(g);
-  } else {
-    applyFullGrade(ga);
-    buildArenaCards(ga);
-    showArenaScreen();
-  }
+  // All grades use world map now
+  applyFullGrade(ga);
+  showWorldMap(g);
 }
 
 // Apply all arenas for a grade (no filter)
@@ -3289,159 +3299,193 @@ function applyFullGrade(ga){
   }
 }
 
-// ===== TOPIC SELECTOR =====
-var _topicFilter = {}; // {gradeNum: {arenaId: true/false}}
+// ===== WORLD MAP =====
+var wmSelectedWorld = null;
+var wmWorldOrder = []; // ordered list of arena IDs for current grade
 
-function getTopicFilter(g){
-  try{var raw=localStorage.getItem('mathArena_topicFilter_'+g);if(raw)return JSON.parse(raw);}catch(e){}
+function getWorldProgress(id){
+  try{var s=JSON.parse(localStorage.getItem('mathArena_progress_'+id)||'null');if(s)return s;}catch(e){}
   return null;
 }
-function saveTopicFilter(g,filter){
-  try{localStorage.setItem('mathArena_topicFilter_'+g,JSON.stringify(filter));}catch(e){}
+
+function isWorldCompleted(id){
+  var p=getWorldProgress(id);
+  if(!p) return false;
+  var ga=GRADE_ARENAS[currentGrade];
+  if(!ga||!ga[id]) return false;
+  return p.lvlIdx >= ga[id].levels;
 }
 
-function showTopicScreen(g){
+function getWorldState(id){
+  if(isWorldCompleted(id)) return 'completed';
+  var p=getWorldProgress(id);
+  if(p && p.lvlIdx>0) return 'current';
+  // Check if previous world is completed (or this is first)
+  var idx=-1;
+  for(var i=0;i<wmWorldOrder.length;i++){if(wmWorldOrder[i]===id){idx=i;break;}}
+  if(idx===0) return 'current'; // First world always open
+  if(idx>0 && isWorldCompleted(wmWorldOrder[idx-1])) return 'unlocked';
+  // Also unlock if this world has progress
+  if(p && p.lvlIdx>0) return 'current';
+  return 'locked';
+}
+
+function showWorldMap(g){
   var ga = GRADE_ARENAS[g];
   if(!ga) return;
-  var saved = getTopicFilter(g);
-  // Build sections
-  var sections = {};
+  // Build ordered world list
+  wmWorldOrder = [];
   var sectionNames = {geo:{icon:'📐',label:'גיאומטריה'},arith:{icon:'🔢',label:'חשבון ומספרים'}};
+  var sections = {};
   var keys = Object.keys(ga);
   for(var i=0;i<keys.length;i++){
     var k=keys[i], ar=ga[k];
-    var sec = ar.section || 'other';
-    if(!sections[sec]) sections[sec]={items:[]};
-    var isOn = saved ? (saved[k]!==false) : true;
-    sections[sec].items.push({id:k, ar:ar, on:isOn});
+    var sec=ar.section||'main';
+    if(!sections[sec]) sections[sec]=[];
+    sections[sec].push(k);
   }
-  // Render
-  var container = document.getElementById('ts-sections');
+  // Build nodes
+  var container = document.getElementById('wm-nodes');
   container.innerHTML = '';
-  var sectionOrder = ['geo','arith','other'];
+  var sectionOrder = ['geo','arith','main','other'];
+  var isFirst = true;
+  wmWorldOrder = [];
+
   for(var si=0;si<sectionOrder.length;si++){
-    var secKey = sectionOrder[si];
+    var secKey=sectionOrder[si];
     if(!sections[secKey]) continue;
-    var sn = sectionNames[secKey]||{icon:'📦',label:secKey};
-    var secDiv = document.createElement('div');
-    // Section header
-    var hdr = document.createElement('div');
-    hdr.className='ts-sec';
-    hdr.innerHTML='<span class="ts-sec-icon">'+sn.icon+'</span><span class="ts-sec-label">'+sn.label+'</span><span class="ts-sec-line"></span><button class="ts-sec-toggle" onclick="toggleTopicSection(\''+secKey+'\')">הכל</button>';
-    secDiv.appendChild(hdr);
-    // Grid
-    var grid = document.createElement('div');
-    grid.className='ts-grid';
-    grid.setAttribute('data-section',secKey);
-    var items = sections[secKey].items;
-    for(var j=0;j<items.length;j++){
-      var it=items[j];
-      var colorClass = 'ts-c-pur';
-      var c = it.ar.color;
-      if(c==='#22c55e') colorClass='ts-c-grn';
-      else if(c==='#f97316') colorClass='ts-c-org';
-      else if(c==='#3b82f6') colorClass='ts-c-blu';
-      else if(c==='#ec4899') colorClass='ts-c-pnk';
-      else if(c==='#06b6d4') colorClass='ts-c-cyn';
-      else if(c==='#eab308') colorClass='ts-c-ylw';
-      var card = document.createElement('div');
-      card.className='ts-card '+colorClass+(it.on?' on':' off');
-      card.setAttribute('data-id',it.id);
-      card.setAttribute('data-lvl',it.ar.levels||0);
-      card.setAttribute('onclick','toggleTopicCard(this)');
-      var inner = '';
-      if(it.ar.isNew) inner+='<div class="ts-new">NEW</div>';
-      inner+='<div class="ts-emoji">'+it.ar.emoji+'</div>';
-      inner+='<div class="ts-info"><div class="ts-name">'+it.ar.name+'</div><div class="ts-lvl">'+it.ar.levels+' שלבים</div></div>';
-      inner+='<div class="ts-chk">✓</div>';
-      card.innerHTML=inner;
-      grid.appendChild(card);
+    var sn=sectionNames[secKey]||null;
+    // Section header (only for grades with sections)
+    if(sn && Object.keys(sections).length>1){
+      var sec=document.createElement('div');
+      sec.className='wm-section';
+      sec.innerHTML='<span class="wm-sec-icon">'+sn.icon+'</span><span class="wm-sec-label">'+sn.label+'</span><span class="wm-sec-line"></span>';
+      container.appendChild(sec);
     }
-    secDiv.appendChild(grid);
-    container.appendChild(secDiv);
+    var worldIds=sections[secKey];
+    for(var j=0;j<worldIds.length;j++){
+      var k=worldIds[j], ar=ga[k];
+      wmWorldOrder.push(k);
+      var state=getWorldState(k);
+      var p=getWorldProgress(k)||{};
+      // Connector dots
+      if(!isFirst){
+        var conn=document.createElement('div');
+        conn.className='wm-connector';
+        if(state==='completed') conn.className+=' done';
+        else if(state==='current'||state==='unlocked') conn.className+=' active';
+        conn.innerHTML='<div class="wm-cdot"></div><div class="wm-cdot"></div><div class="wm-cdot"></div>';
+        container.appendChild(conn);
+      }
+      isFirst=false;
+      var node=document.createElement('div');
+      node.className='wm-node wm-'+state;
+      node.setAttribute('data-id',k);
+      if(state==='locked'){
+        node.onclick=(function(){wmShowLockToast();});
+      } else {
+        node.onclick=(function(id){return function(){wmSelectWorld(id);};})(k);
+      }
+      var html='';
+      // Icon
+      html+='<div class="wm-icon"><span>'+ar.emoji+'</span>';
+      if(state==='locked') html+='<div class="wm-lock">🔒</div>';
+      if(state==='completed') html+='<div class="wm-done-badge">✓</div>';
+      html+='</div>';
+      // Info
+      html+='<div class="wm-info">';
+      html+='<div class="wm-name">'+ar.name+'</div>';
+      if(state==='completed'){
+        var sc=p.score||0;
+        html+='<div class="wm-lvls">✅ הושלם • '+sc+' נק׳</div>';
+        var stars=p.stars||0;
+        html+='<div class="wm-stars">';
+        for(var s=0;s<3;s++) html+='<span class="wm-star'+(s<stars?' earned':'')+'">⭐</span>';
+        html+='</div>';
+      } else if(state==='current'){
+        var prog=p.lvlIdx||0;
+        html+='<div class="wm-lvls">▶ שלב '+(prog+1)+' מתוך '+ar.levels+'</div>';
+        html+='<div class="wm-prog"><div class="wm-prog-fill" style="width:'+Math.round((prog/ar.levels)*100)+'%"></div></div>';
+      } else if(state==='unlocked'){
+        html+='<div class="wm-lvls">'+ar.levels+' שלבים</div>';
+      } else {
+        html+='<div class="wm-lvls">🔒 '+ar.levels+' שלבים</div>';
+      }
+      html+='</div>';
+      // Arrow
+      if(state!=='locked') html+='<div class="wm-arrow">◀</div>';
+      // NEW badge
+      if(ar.isNew) html+='<div class="wm-new">NEW</div>';
+      node.innerHTML=html;
+      container.appendChild(node);
+    }
   }
-  // Update header
-  document.getElementById('ts-grade-pill').textContent=GRADE_EMOJIS[g]+' '+GRADE_NAMES[g];
-  updateTopicSummary();
+  // Header
+  document.getElementById('wm-grade-pill').textContent=GRADE_EMOJIS[g]+' '+GRADE_NAMES[g];
+  // Auto-select first playable world
+  wmSelectedWorld=null;
+  for(var i=0;i<wmWorldOrder.length;i++){
+    var st=getWorldState(wmWorldOrder[i]);
+    if(st==='current'||st==='unlocked'){wmSelectedWorld=wmWorldOrder[i];break;}
+  }
+  if(!wmSelectedWorld && wmWorldOrder.length>0) wmSelectedWorld=wmWorldOrder[0];
+  wmUpdateGoBtn();
   showScreen('topic-screen');
+  // Scroll to current
+  setTimeout(function(){
+    var cur=document.querySelector('.wm-node.wm-current');
+    if(cur) cur.scrollIntoView({behavior:'smooth',block:'center'});
+  },300);
 }
 
-function toggleTopicCard(el){
-  el.classList.toggle('on');
-  el.classList.toggle('off');
-  updateTopicSummary();
+function wmSelectWorld(id){
+  wmSelectedWorld=id;
+  // Visual highlight
+  document.querySelectorAll('.wm-node').forEach(function(n){n.style.outline='';n.style.outlineOffset='';});
+  var el=document.querySelector('.wm-node[data-id="'+id+'"]');
+  if(el){el.style.outline='2px solid #a78bfa';el.style.outlineOffset='2px';}
+  wmUpdateGoBtn();
 }
 
-function toggleTopicSection(secKey){
-  var grid=document.querySelector('#ts-sections [data-section="'+secKey+'"]');
-  if(!grid) return;
-  var cards=grid.querySelectorAll('.ts-card');
-  var allOn=true;
-  for(var i=0;i<cards.length;i++){if(cards[i].classList.contains('off')){allOn=false;break;}}
-  for(var i=0;i<cards.length;i++){
-    if(allOn){cards[i].classList.remove('on');cards[i].classList.add('off');}
-    else{cards[i].classList.remove('off');cards[i].classList.add('on');}
+function wmUpdateGoBtn(){
+  var btn=document.getElementById('wm-go-btn');
+  if(!wmSelectedWorld){btn.textContent='🚀 בחרו עולם';return;}
+  var ga=GRADE_ARENAS[currentGrade];
+  var ar=ga[wmSelectedWorld];
+  var state=getWorldState(wmSelectedWorld);
+  if(state==='completed'){
+    btn.textContent='🔄 שחקו שוב — '+ar.name;
+    btn.style.background='linear-gradient(135deg,#22c55e,#16a34a)';
+    btn.style.boxShadow='0 5px 0 #15803d,0 8px 24px rgba(34,197,94,.35)';
+  } else {
+    btn.textContent='🚀 שחקו — '+ar.name;
+    btn.style.background='linear-gradient(135deg,#7c3aed,#3b82f6)';
+    btn.style.boxShadow='0 5px 0 #2e1065,0 8px 24px rgba(124,58,237,.35)';
   }
-  updateTopicSummary();
 }
 
-function updateTopicSummary(){
-  var all=document.querySelectorAll('#ts-sections .ts-card');
-  var cnt=0,lvls=0;
-  for(var i=0;i<all.length;i++){
-    if(all[i].classList.contains('on')){
-      cnt++;
-      lvls+=parseInt(all[i].getAttribute('data-lvl'))||0;
-    }
-  }
-  document.getElementById('ts-cnt').textContent=cnt;
-  document.getElementById('ts-lvls').textContent=lvls;
-  var btn=document.getElementById('ts-go-btn');
-  var warn=document.getElementById('ts-warn');
-  if(cnt===0){btn.classList.add('disabled');warn.style.display='block';}
-  else{btn.classList.remove('disabled');warn.style.display='none';}
+function wmPlay(){
+  if(!wmSelectedWorld) return;
+  selectArena(wmSelectedWorld);
 }
 
-function applyTopicFilter(){
-  var ga = GRADE_ARENAS[currentGrade];
-  if(!ga) return;
-  // Read which topics are on
-  var cards=document.querySelectorAll('#ts-sections .ts-card');
-  var filter={};
-  var activeKeys=[];
-  for(var i=0;i<cards.length;i++){
-    var id=cards[i].getAttribute('data-id');
-    var isOn=cards[i].classList.contains('on');
-    filter[id]=isOn;
-    if(isOn) activeKeys.push(id);
-  }
-  if(activeKeys.length===0) return;
-  // Save filter
-  saveTopicFilter(currentGrade, filter);
-  // Build filtered ARENAS
-  ARENAS = {};
-  for(var i=0;i<activeKeys.length;i++){
-    var k=activeKeys[i], ar=ga[k];
-    ARENAS[k] = {lv:ar.lv, name:ar.name, emoji:ar.emoji, color:ar.color};
-  }
-  // If only 1 arena selected, go directly to game
-  if(activeKeys.length===1){
-    currentArena = activeKeys[0];
-    LV = ARENAS[activeKeys[0]].lv;
-    startGame();
-    return;
-  }
-  // Build filtered arena cards
-  var filteredGa = {};
-  for(var i=0;i<activeKeys.length;i++){
-    filteredGa[activeKeys[i]] = ga[activeKeys[i]];
-  }
-  buildArenaCards(filteredGa);
-  showArenaScreen();
+function wmShowLockToast(){
+  var t=document.getElementById('wm-lock-toast');
+  t.style.opacity='1';
+  clearTimeout(t._tmr);
+  t._tmr=setTimeout(function(){t.style.opacity='0';},2000);
 }
+
+// Legacy compatibility stubs
+function showTopicScreen(g){showWorldMap(g);}
+function applyTopicFilter(){wmPlay();}
+function toggleTopicCard(){}
+function toggleTopicSection(){}
+function updateTopicSummary(){}
 
 function buildArenaCards(ga){
   var grid = document.getElementById('arena-grid-dynamic');
+  if(!grid) return;
   grid.innerHTML = '';
   var colors = {
     '#7c3aed': {bg:'linear-gradient(135deg,#4c1d95,#2d1b69)',border:'#7c3aed',badge:'#7c3aed',badgeText:'#e9d5ff'},
@@ -3475,9 +3519,7 @@ function showGradeScreen(){
 }
 
 function arenaGoBack(){
-  var ga=GRADE_ARENAS[currentGrade];
-  if(ga){var ks=Object.keys(ga);for(var i=0;i<ks.length;i++){if(ga[ks[i]].section){showTopicScreen(currentGrade);return;}}}
-  showGradeScreen();
+  showWorldMap(currentGrade);
 }
 
 
@@ -3501,24 +3543,7 @@ function selectArena(id){
 }
 
 function showArenaScreen(){
-  document.getElementById('arena-player-name').textContent='👋 '+playerName;
-  document.getElementById('arena-grade-label').textContent=GRADE_NAMES[currentGrade]+' '+GRADE_EMOJIS[currentGrade];
-  var total=0;
-  var ga=GRADE_ARENAS[currentGrade];
-  if(ga){var keys=Object.keys(ga);for(var i=0;i<keys.length;i++){var id=keys[i];
-    try{
-      var s=JSON.parse(localStorage.getItem('mathArena_progress_'+id)||'null');
-      var progEl=document.getElementById(id+'-prog');
-      if(s&&s.lvlIdx>0){
-        if(progEl) progEl.textContent=s.lvlIdx+'/';
-        total+=(s.score||0);
-      } else {
-        if(progEl) progEl.textContent='0/';
-      }
-    }catch(e){}
-  }}
-  document.getElementById('arena-total').textContent=total;
-  showScreen('arena-screen');
+  showWorldMap(currentGrade);
 }
 
 // Per-arena progress keys
