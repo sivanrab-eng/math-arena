@@ -43,6 +43,29 @@ html,body{width:100%;height:100%;overflow:hidden;font-family:system-ui,-apple-sy
 body{background-color:#1a0a3e;background:radial-gradient(ellipse at top, #2d1b69 0%, #1a0a3e 60%, #0f0628 100%);}
 
 .screen{position:fixed;top:0;right:0;bottom:0;left:0;display:none;flex-direction:column;align-items:center;background:radial-gradient(ellipse at top, #2d1b69 0%, #1a0a3e 60%, #0f0628 100%);background-color:#1a0a3e;}
+
+/* PWA Install Button */
+#pwa-install-btn{
+  display:none;position:fixed;bottom:24px;left:24px;z-index:9999;
+  width:56px;height:56px;border-radius:50%;border:3px solid #a78bfa;
+  background:linear-gradient(135deg,#7c3aed,#4c1d95);
+  color:#fff;font-size:28px;font-weight:900;line-height:50px;text-align:center;
+  cursor:pointer;box-shadow:0 4px 20px rgba(124,58,237,.7),0 0 30px rgba(167,139,250,.3);
+  animation:pwaFloat 2s ease-in-out infinite;
+  -webkit-tap-highlight-color:transparent;
+}
+#pwa-install-btn .pwa-label{
+  position:absolute;bottom:110%;left:50%;transform:translateX(-50%);
+  white-space:nowrap;font-size:12px;font-weight:800;color:#fff;
+  background:linear-gradient(135deg,#7c3aed,#4c1d95);border:2px solid #a78bfa;
+  padding:5px 12px;border-radius:10px;pointer-events:none;
+  box-shadow:0 3px 12px rgba(124,58,237,.5);
+}
+#pwa-install-btn .pwa-label::after{
+  content:'';position:absolute;top:100%;left:50%;transform:translateX(-50%);
+  border:6px solid transparent;border-top-color:#4c1d95;
+}
+@keyframes pwaFloat{0%,100%{transform:translateY(0);box-shadow:0 4px 20px rgba(124,58,237,.7),0 0 30px rgba(167,139,250,.3);}50%{transform:translateY(-6px);box-shadow:0 8px 30px rgba(124,58,237,.8),0 0 40px rgba(167,139,250,.4);}}
 .screen.on{display:flex;}
 
 /* ===== TOP BAR ===== */
@@ -4911,6 +4934,28 @@ function doConfetti(){
 }
 </script>
 <script>
+/* ─── PWA Install Prompt ─── */
+var deferredInstallPrompt = null;
+window.addEventListener('beforeinstallprompt', function(e){
+  e.preventDefault();
+  deferredInstallPrompt = e;
+  document.getElementById('pwa-install-btn').style.display = 'block';
+});
+window.addEventListener('appinstalled', function(){
+  document.getElementById('pwa-install-btn').style.display = 'none';
+  deferredInstallPrompt = null;
+});
+function pwaInstall(){
+  if(!deferredInstallPrompt) return;
+  deferredInstallPrompt.prompt();
+  deferredInstallPrompt.userChoice.then(function(res){
+    if(res.outcome === 'accepted'){ gaEvent('pwa_install',{result:'accepted'}); }
+    deferredInstallPrompt = null;
+    document.getElementById('pwa-install-btn').style.display = 'none';
+  });
+}
+</script>
+<script>
 if('serviceWorker' in navigator){
   window.addEventListener('load',function(){
     navigator.serviceWorker.register('sw.js').then(function(r){
@@ -4919,5 +4964,11 @@ if('serviceWorker' in navigator){
   });
 }
 </script>
+<!-- PWA Install Button -->
+<div id="pwa-install-btn" onclick="pwaInstall()" role="button" aria-label="התקן אפליקציה">
+  +
+  <span class="pwa-label">התקן אפליקציה 📲</span>
+</div>
+
 </body>
 </html>
