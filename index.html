@@ -255,6 +255,15 @@ body{background-color:#1a0a3e;background:radial-gradient(ellipse at top, #2d1b69
 .fb-answer{font-size:13px;color:rgba(255,255,255,.6);margin-top:8px;}
 .fb-answer span{color:#4ade80;font-weight:900;}
 #fb-cd{font-size:13px;color:rgba(255,255,255,.4);margin-top:8px;font-weight:700;}
+#fb-continue-btn{
+  display:none;margin:12px auto 0;padding:12px 40px;
+  background:linear-gradient(135deg,#8b5cf6,#7c3aed);color:#fff;
+  font-size:16px;font-weight:900;font-family:inherit;
+  border:none;border-radius:14px;cursor:pointer;
+  box-shadow:0 4px 0 #6d28d9,0 6px 20px rgba(139,92,246,.3);
+  transition:transform .1s;letter-spacing:.5px;
+}
+#fb-continue-btn:active{transform:scale(.95);box-shadow:0 2px 0 #6d28d9;}
 
 /* ===== LEVEL CUT ===== */
 #level-cut{
@@ -1346,6 +1355,7 @@ body{background-color:#1a0a3e;background:radial-gradient(ellipse at top, #2d1b69
       <div class="fb-answer" id="fb-answer"></div>
     </div>
     <div id="fb-cd"></div>
+    <button id="fb-continue-btn" onclick="fbContinueAction()">המשך ▶</button>
   </div>
 </div>
 
@@ -5128,13 +5138,12 @@ function pick(idx){
     updStreak();updHUD();
     if(lives<=0 && !isDuel){
       showFB(false,q,nearMiss);
-      autoID=setTimeout(function(){clearAuto();hideFB();showRevival();},2200);
+      showFBContinue(function(){clearAuto();hideFB();showRevival();});
       return;
     }
     showFB(false,q,nearMiss);
-    var secs=3;
-    document.getElementById('fb-cd').textContent='Similar question in '+secs+'...';
-    autoID=setInterval(function(){secs--;if(secs>0){document.getElementById('fb-cd').textContent='Similar question in '+secs+'...';}else{clearAuto();hideFB();fadeNext(loadQ);}},1000);
+    document.getElementById('fb-cd').textContent='';
+    showFBContinue(function(){clearAuto();hideFB();fadeNext(loadQ);});
   }
 }
 
@@ -5158,7 +5167,11 @@ function showFB(ok,q,nearMiss){
     fb.className='feedback on wfb';
   }else{box.style.display='none';fb.className='feedback on cfb';}
 }
-function hideFB(){document.getElementById('feedback').className='feedback';}
+function hideFB(){document.getElementById('feedback').className='feedback';document.getElementById('fb-continue-btn').style.display='none';}
+
+var _fbContinueFn=null;
+function showFBContinue(fn){_fbContinueFn=fn;document.getElementById('fb-continue-btn').style.display='block';}
+function fbContinueAction(){if(_fbContinueFn){var fn=_fbContinueFn;_fbContinueFn=null;fn();}}
 
 function advTopic(){
   sfxLevelUp();
@@ -5279,13 +5292,12 @@ function onTO(){
   if(navigator.vibrate)navigator.vibrate([100,50,100]);
   if(lives<=0 && !isDuel){
     showFB(false,prev);
-    autoID=setTimeout(function(){clearAuto();hideFB();showRevival();},2200);
+    showFBContinue(function(){clearAuto();hideFB();showRevival();});
     return;
   }
   showFB(false,prev);
-  var secs=3;
-  document.getElementById('fb-cd').textContent='⏰ Time\'s up! Similar question in '+secs+'...';
-  autoID=setInterval(function(){secs--;if(secs>0){document.getElementById('fb-cd').textContent='Similar question in '+secs+'...';}else{clearAuto();hideFB();fadeNext(loadQ);}},1000);
+  document.getElementById('fb-cd').textContent='⏰ !Time\'s up';
+  showFBContinue(function(){clearAuto();hideFB();fadeNext(loadQ);});
 }
 
 function scorePop(t){var p=document.getElementById('score-pop');p.textContent=t;p.classList.add('on');setTimeout(function(){p.classList.remove('on');},1300);}
