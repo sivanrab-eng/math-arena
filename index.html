@@ -3480,11 +3480,15 @@ function showWorldMap(g){
   // Build horizontal strip layout
   var container = document.getElementById('wm-nodes');
   container.innerHTML = '';
-  // Init marks: first 3 arith topics default marked
-  if(sections['arith']){
-    for(var mi=0;mi<Math.min(3,sections['arith'].length);mi++){
-      var mk=sections['arith'][mi];
-      if(!(mk in wmMarkedSet)) wmMarkedSet[mk]=true;
+  // Init marks: first 3 topics per section default marked
+  var markSections=['geo','arith'];
+  for(var ms=0;ms<markSections.length;ms++){
+    var msKey=markSections[ms];
+    if(sections[msKey]){
+      for(var mi=0;mi<Math.min(3,sections[msKey].length);mi++){
+        var mk=sections[msKey][mi];
+        if(!(mk in wmMarkedSet)) wmMarkedSet[mk]=true;
+      }
     }
   }
   for(var si=0;si<sectionOrder.length;si++){
@@ -3517,13 +3521,13 @@ function showWorldMap(g){
         node.onclick=(function(){wmShowLockToast();});
       } else {
         node.onclick=(function(id,sec){return function(){
-          if(sec==='arith'){wmToggleMark(id);}
+          wmToggleMark(id);
           wmSelectWorld(id);
         };})(k,secKey);
       }
       var html='';
       // Mark circle (arith topics)
-      if(secKey==='arith') html+='<div class="wm-mark"></div>';
+      html+='<div class="wm-mark"></div>';
       // Emoji
       html+='<div class="wm-node-emoji">'+ar.emoji;
       if(state==='locked') html+='<span class="wm-node-lock">🔒</span>';
