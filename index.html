@@ -1925,6 +1925,7 @@ function mUnits(from,to){
 // Helper for generators
 function randInt(a,b){return Math.floor(Math.random()*(b-a+1))+a;}
 function dRand(min,max){var boost=Math.min(Math.floor(pIdx*0.4),Math.max(2,Math.floor((max-min)*0.5)));return randInt(min,max+boost);}
+function fixBidi(t){if(!/[\u0590-\u05FF]/.test(t))return t;return t.replace(/(\d+\.?\d*)/g,'\u200F$1\u200F');}
 function mkO(correct,unit,distractors){
   var opts=[correct+''+unit];
   distractors.forEach(function(d){if(d!==correct)opts.push(d+''+unit);});
@@ -5209,7 +5210,7 @@ function loadQ(){
   _curQ=null; // clear cache so cQ() generates fresh
   var q=cQ(),tp=LV[lvlIdx].topics[tIdx];
   var diff=Math.floor((LV.slice(0,lvlIdx).reduce(function(a,l){return a+l.topics.length;},0)+tIdx)*.3+1);
-  var qtEl=document.getElementById('qtext');qtEl.textContent=q.t;qtEl.style.direction=/^[\d\(\-]/.test(q.t)?'ltr':'rtl';
+  var qtEl=document.getElementById('qtext');qtEl.textContent=fixBidi(q.t);qtEl.style.direction=/[\u0590-\u05FF]/.test(q.t)?'rtl':'ltr';
   document.getElementById('shape-area').innerHTML=q.s||'';
   document.getElementById('qbadge').textContent=tp.label;
   var opts=document.getElementById('opts');opts.innerHTML='';
@@ -5309,8 +5310,8 @@ function showFB(ok,q,nearMiss){
     box.style.display='block';
     document.getElementById('fb-ex-title').textContent='📖 '+ex.title;
     document.getElementById('fb-ex-body').innerHTML=ex.body+(nearMiss?'<div class="near-miss-text">היית קרוב! נסה שוב בזהירות 💪</div>':'');
-    document.getElementById('fb-formula').textContent=ex.formula;
-    document.getElementById('fb-answer').innerHTML='✅ Answer: <span>'+q.o[q.a]+'</span> — '+q.e+'<div style="margin-top:6px;font-size:12px;color:rgba(255,255,255,.5);">💪 Mistakes help us learn!</div>';
+    document.getElementById('fb-formula').textContent=fixBidi(ex.formula);
+    document.getElementById('fb-answer').innerHTML='✅ Answer: <span>'+q.o[q.a]+'</span> — '+fixBidi(q.e)+'<div style="margin-top:6px;font-size:12px;color:rgba(255,255,255,.5);">💪 Mistakes help us learn!</div>';
     fb.className='feedback on wfb';
   }else{box.style.display='none';fb.className='feedback on cfb';}
 }
