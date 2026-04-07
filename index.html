@@ -562,6 +562,9 @@ body{background-color:#1a0a3e;background:radial-gradient(ellipse at top, #2d1b69
 .wm-completed .wm-prog-fill{background:linear-gradient(90deg,#22c55e,#4ade80);}
 .wm-lvls{font-size:8px;color:rgba(255,255,255,.2);font-weight:600;}
 .wm-new{position:absolute;top:3px;left:3px;background:linear-gradient(135deg,#f97316,#ec4899);color:#fff;font-size:7px;font-weight:900;padding:1px 5px;border-radius:6px;letter-spacing:.3px;line-height:1.3;animation:wmNewB 2s ease-in-out infinite;}
+.wm-mark{position:absolute;top:3px;right:3px;width:16px;height:16px;border-radius:50%;background:rgba(124,58,237,.3);border:1.5px solid rgba(167,139,250,.4);display:flex;align-items:center;justify-content:center;font-size:8px;transition:all .2s;line-height:1;}
+.wm-marked .wm-mark{background:linear-gradient(135deg,#7c3aed,#3b82f6);border-color:#a78bfa;box-shadow:0 0 8px rgba(124,58,237,.4);}
+.wm-marked .wm-mark::after{content:'✓';color:#fff;font-weight:900;}
 @keyframes wmNewB{0%,100%{transform:scale(1);}50%{transform:scale(1.08);}}
 .wm-bottom{width:100%;position:absolute;bottom:0;left:0;right:0;padding:14px 16px;background:linear-gradient(transparent,rgba(15,6,40,.95) 30%);z-index:20;display:flex;flex-direction:column;align-items:center;gap:6px;}
 .wm-go{width:100%;max-width:340px;padding:14px;border-radius:16px;border:none;font-size:17px;font-weight:900;font-family:inherit;cursor:pointer;background:linear-gradient(135deg,#7c3aed,#3b82f6);color:#fff;box-shadow:0 5px 0 #2e1065,0 8px 24px rgba(124,58,237,.35);transition:transform .1s,box-shadow .1s;}
@@ -2359,7 +2362,131 @@ var LV_G6_RAT=[
 var LV_FRAC=[
   {name:'שלב 1 — זיהוי שברים',emoji:'🍕',bonus:60,topics:[
     {id:'fid',label:'זיהוי שבר',ex:{title:'זיהוי שבר',body:'כמה חלקים צבועים מתוך הכל? 🍕',formula:'שבר = צבוע / סה"כ'},
-     pool:[{t:'איזה שבר מוצג?',s:mFracPie(1,4),o:['1/4','1/2','1/3','3/4'],a:0,p:60,e:'חלק 1 מתוך 4'},{t:'איזה שבר מוצג?',s:mFracPie(3,4),o:['1/4','2/4','3/4','4/4'],a:2,p:60,e:'3 חלקים מתוך 4'},{t:'איזה שבר מוצג?',s:mFracPie(2,3),o:['1/3','2/3','3/3','1/2'],a:1,p:60,e:'2 חלקים מתוך 3'},{t:'איזה שבר מוצג?',s:mFracPie(1,2),o:['1/4','1/3','1/2','2/3'],a:2,p:60,e:'חצי = 1/2'},{t:'איזה שבר מוצג?',s:mFracBar(3,5),o:['2/5','3/5','4/5','1/5'],a:1,p:60,e:'3 מתוך 5'},{t:'איזה שבר מוצג?',s:mFracBar(5,8),o:['3/8','5/8','6/8','4/8'],a:1,p:70,e:'5 מתוך 8'}]}
+     pool:[
+       {t:'איזה שבר מוצג?',s:mFracPie(3,4),o:['1/4','2/4','3/4','4/4'],a:2,p:60,e:'3 חלקים מתוך 4'},
+       {t:'5 מתוך 8 עוגיות הן שוקולד. מהו השבר?',s:'',o:['5/8','3/8','8/5','5/3'],a:0,p:70,e:'5 מתוך 8 = 5/8'},
+       {t:'איזה חלק לא צבוע?',s:mFracPie(2,6),o:['2/6','4/6','1/6','3/6'],a:1,p:70,e:'4 חלקים לא צבועים מתוך 6'},
+       {t:'השבר 5/8 — גדול או קטן מ-½?',s:mFracBar(5,8),o:['גדול מ-½','קטן מ-½','שווה ל-½','אי אפשר לדעת'],a:0,p:80,e:'5/8 > 4/8 = ½'},
+       {t:'כמה עוד חלקים צריך לצבוע כדי להשלים שלם?',s:mFracPie(3,5),o:['2','3','5','1'],a:0,p:80,e:'צבועים 3 מתוך 5, חסרים 2'}
+     ],
+     gen:function(){
+       var type=randInt(0,11);
+       var d,n,vis,opts,c,tries;
+       if(type===0){
+         d=randInt(3,12);n=randInt(1,d-1);vis=randInt(0,1)?mFracPie(n,d):mFracBar(n,d);
+         opts=[fStr(n,d)];tries=0;
+         while(opts.length<4&&tries<20){tries++;var fn=randInt(1,d),fd=randInt(0,1)?d:randInt(2,12);fn=Math.min(fn,fd);var s=fStr(fn,fd);if(opts.indexOf(s)===-1)opts.push(s);}
+         while(opts.length<4)opts.push(fStr(randInt(1,5),randInt(2,10)));
+         c=opts[0];opts.sort(function(){return Math.random()-.5;});
+         return{t:'איזה שבר מוצג?',s:vis,o:opts,a:opts.indexOf(c),p:70,e:n+' חלקים מתוך '+d};
+       }
+       if(type===1){
+         d=randInt(4,12);n=randInt(1,d-1);vis=randInt(0,1)?mFracPie(n,d):mFracBar(n,d);
+         opts=[String(n)];tries=0;while(opts.length<4&&tries<15){tries++;var x=String(randInt(0,d));if(opts.indexOf(x)===-1)opts.push(x);}
+         while(opts.length<4)opts.push(String(opts.length+d));
+         c=opts[0];opts.sort(function(){return Math.random()-.5;});
+         return{t:'כמה חלקים צבועים מתוך '+d+'?',s:vis,o:opts,a:opts.indexOf(c),p:65,e:n+' חלקים צבועים'};
+       }
+       if(type===2){
+         d=randInt(4,12);n=randInt(1,d-1);vis=randInt(0,1)?mFracPie(n,d):mFracBar(n,d);
+         opts=[String(d)];tries=0;while(opts.length<4&&tries<15){tries++;var x=String(randInt(2,12));if(opts.indexOf(x)===-1)opts.push(x);}
+         while(opts.length<4)opts.push(String(opts.length+5));
+         c=opts[0];opts.sort(function(){return Math.random()-.5;});
+         return{t:'לכמה חלקים שווים מחולקת הצורה?',s:vis,o:opts,a:opts.indexOf(c),p:65,e:'הצורה מחולקת ל-'+d+' חלקים'};
+       }
+       if(type===3){
+         var items=['בלונים','כדורים','ילדים','עוגיות','פרחים','ספרים','תפוחים','ממתקים','כוכבים','דגים'];
+         var desc=['אדומים','כחולים','ירוקים','גדולים','קטנים','חדשים','זוהרים','שבורים'];
+         d=randInt(3,12);n=randInt(1,d-1);
+         var it=items[randInt(0,items.length-1)],dc=desc[randInt(0,desc.length-1)];
+         opts=[fStr(n,d)];tries=0;while(opts.length<4&&tries<20){tries++;var fn=randInt(1,10),fd=randInt(2,12);fn=Math.min(fn,fd);var s=fStr(fn,fd);if(opts.indexOf(s)===-1)opts.push(s);}
+         while(opts.length<4)opts.push(fStr(randInt(1,5),randInt(2,10)));
+         c=opts[0];opts.sort(function(){return Math.random()-.5;});
+         return{t:n+' מתוך '+d+' '+it+' הם '+dc+'. מהו השבר?',s:'',o:opts,a:opts.indexOf(c),p:75,e:n+'/'+d};
+       }
+       if(type===4){
+         d=randInt(3,10);n=randInt(1,d-1);var rest=d-n;
+         vis=randInt(0,1)?mFracPie(n,d):mFracBar(n,d);
+         opts=[fStr(rest,d)];tries=0;while(opts.length<4&&tries<20){tries++;var fn=randInt(1,d);var s=fStr(fn,d);if(opts.indexOf(s)===-1)opts.push(s);}
+         while(opts.length<4)opts.push(fStr(randInt(1,5),d));
+         c=opts[0];opts.sort(function(){return Math.random()-.5;});
+         return{t:'איזה חלק לא צבוע?',s:vis,o:opts,a:opts.indexOf(c),p:80,e:rest+' חלקים לא צבועים מתוך '+d};
+       }
+       if(type===5){
+         d=randInt(3,12);do{n=randInt(1,d-1);}while(n*2===d);
+         vis=randInt(0,1)?mFracPie(n,d):mFracBar(n,d);
+         var big=n/d>0.5;
+         opts=big?['גדול מ-½','קטן מ-½','שווה ל-½','אי אפשר לדעת']:['קטן מ-½','גדול מ-½','שווה ל-½','אי אפשר לדעת'];
+         return{t:'השבר המוצג — גדול או קטן מ-½?',s:vis,o:opts,a:0,p:85,e:fStr(n,d)+(big?' > ':' < ')+'½'};
+       }
+       if(type===6){
+         d=randInt(3,10);n=randInt(1,d-1);vis=randInt(0,1)?mFracPie(n,d):mFracBar(n,d);
+         var askN=randInt(0,1),ans=askN?n:d;
+         opts=[String(ans)];tries=0;while(opts.length<4&&tries<15){tries++;var x=String(randInt(1,12));if(opts.indexOf(x)===-1)opts.push(x);}
+         while(opts.length<4)opts.push(String(opts.length+3));
+         c=opts[0];opts.sort(function(){return Math.random()-.5;});
+         return{t:askN?'מהו המונה של השבר המוצג?':'מהו המכנה של השבר המוצג?',s:vis,o:opts,a:opts.indexOf(c),p:75,e:askN?'המונה הוא '+n+' (חלקים צבועים)':'המכנה הוא '+d+' (סה"כ חלקים)'};
+       }
+       if(type===7){
+         var base_d=randInt(2,6),base_n=randInt(1,base_d-1);
+         var mult=randInt(2,3);d=base_d*mult;n=base_n*mult;
+         vis=mFracBar(n,d);
+         opts=[fStr(base_n,base_d)];tries=0;while(opts.length<4&&tries<20){tries++;var fn=randInt(1,6),fd=randInt(2,8);fn=Math.min(fn,fd);var s=fStr(fn,fd);if(opts.indexOf(s)===-1&&(fn/fd!==base_n/base_d))opts.push(s);}
+         while(opts.length<4)opts.push(fStr(randInt(1,5),randInt(2,8)));
+         c=opts[0];opts.sort(function(){return Math.random()-.5;});
+         return{t:'איזה שבר שווה ערך ל-'+fStr(n,d)+'?',s:vis,o:opts,a:opts.indexOf(c),p:85,e:fStr(n,d)+' = '+fStr(base_n,base_d)};
+       }
+       if(type===8){
+         d=randInt(4,10);n=randInt(1,d-1);var need=d-n;
+         vis=mFracPie(n,d);
+         opts=[String(need)];tries=0;while(opts.length<4&&tries<15){tries++;var x=String(randInt(1,d));if(x!==String(need)&&opts.indexOf(x)===-1)opts.push(x);}
+         while(opts.length<4)opts.push(String(opts.length+1));
+         c=opts[0];opts.sort(function(){return Math.random()-.5;});
+         return{t:'כמה עוד חלקים צריך לצבוע כדי להשלים שלם?',s:vis,o:opts,a:opts.indexOf(c),p:85,e:'צבועים '+n+' מתוך '+d+', חסרים '+need};
+       }
+       if(type===9){
+         var scenes=[
+           {q:'פיצה חולקה ל-{d} משולשים. אכלו {n}. איזה חלק נשאר?',ans:'rest'},
+           {q:'בכיתה {d} תלמידים. {n} קיבלו ציון 100. מהו השבר שקיבל 100?',ans:'frac'},
+           {q:'שוקולד חולק ל-{d} חלקים. נתנו {n} לחבר. כמה נשאר?',ans:'rest'},
+           {q:'מתוך {d} שערים, {n} נכנסו. מהו שבר ההצלחה?',ans:'frac'},
+           {q:'בחניון {d} מקומות. {n} תפוסים. מהו שבר המקומות הפנויים?',ans:'rest'}
+         ];
+         d=randInt(4,12);n=randInt(1,d-2);var rest=d-n;
+         var sc=scenes[randInt(0,scenes.length-1)];
+         var ans=sc.ans==='rest'?fStr(rest,d):fStr(n,d);
+         var expN=sc.ans==='rest'?rest:n;
+         opts=[ans];tries=0;while(opts.length<4&&tries<20){tries++;var fn=randInt(1,d);var s=fStr(fn,d);if(opts.indexOf(s)===-1)opts.push(s);}
+         while(opts.length<4)opts.push(fStr(randInt(1,5),d));
+         c=opts[0];opts.sort(function(){return Math.random()-.5;});
+         return{t:sc.q.replace('{d}',d).replace('{n}',n),s:'',o:opts,a:opts.indexOf(c),p:85,e:expN+' מתוך '+d};
+       }
+       if(type===10){
+         d=randInt(4,10);
+         var n1=randInt(1,Math.floor(d/2)),n2=randInt(Math.ceil(d/2),d-1);
+         if(n1===n2)n2=Math.min(n1+1,d-1);
+         var bigger=fStr(n2,d),smaller=fStr(n1,d);
+         opts=[bigger];tries=0;while(opts.length<4&&tries<15){tries++;var fn=randInt(1,d-1);var s=fStr(fn,d);if(opts.indexOf(s)===-1)opts.push(s);}
+         while(opts.length<4)opts.push(fStr(randInt(1,5),d));
+         c=opts[0];opts.sort(function(){return Math.random()-.5;});
+         return{t:'מכנה זהה! מי גדול יותר: '+smaller+' או '+bigger+'?',s:'',o:opts,a:opts.indexOf(c),p:80,e:n2+'>'+n1+' → '+bigger+' > '+smaller};
+       }
+       // type===11: true/false conceptual
+       var concepts=[
+         {q:'3/5 גדול מ-3/8. נכון?',a:true,e:'מכנה קטן יותר = חלקים גדולים יותר'},
+         {q:'1/4 גדול מ-1/3. נכון?',a:false,e:'1/3 > 1/4 כי שליש גדול מרבע'},
+         {q:'2/6 שווה ל-1/3. נכון?',a:true,e:'2/6 = 1/3 (צמצום ב-2)'},
+         {q:'5/5 שווה ל-1. נכון?',a:true,e:'כשמונה=מכנה, זה שלם!'},
+         {q:'0/7 שווה ל-0. נכון?',a:true,e:'מונה 0 = אפס תמיד'},
+         {q:'4/8 שווה ל-1/2. נכון?',a:true,e:'4/8 = 1/2 (צמצום ב-4)'},
+         {q:'3/4 קטן מ-2/3. נכון?',a:false,e:'3/4=0.75 > 2/3≈0.67'},
+         {q:'7/10 גדול מ-1/2. נכון?',a:true,e:'7/10 > 5/10 = 1/2'}
+       ];
+       var cc=concepts[randInt(0,concepts.length-1)];
+       opts=cc.a?['נכון ✅','לא נכון ❌']:['לא נכון ❌','נכון ✅'];
+       opts.push(cc.a?'לא נכון ❌':'נכון ✅');opts.push('אי אפשר לדעת');
+       return{t:cc.q,s:'',o:opts,a:0,p:90,e:cc.e};
+     }}
   ]},
   {name:'שלב 2 — השוואת שברים',emoji:'⚖️',bonus:70,topics:[
     {id:'fcmp',label:'השוואת שברים',ex:{title:'השוואת שברים',body:'מרחיבים למכנה משותף ⚖️<br>או משווים בצלב!',formula:'a/b ? c/d → a×d ? c×b'},
@@ -3300,6 +3427,7 @@ function applyFullGrade(ga){
 var wmSelectedWorld = null;
 var wmWorldOrder = []; // ordered list of arena IDs for current grade
 var wmSectionFirsts = {}; // first world ID per section (auto-unlocked)
+var wmMarkedSet = {}; // toggled check-marks on arith topics
 
 function getWorldProgress(id){
   try{var s=JSON.parse(localStorage.getItem('mathArena_progress_'+id)||'null');if(s)return s;}catch(e){}
@@ -3351,6 +3479,13 @@ function showWorldMap(g){
   // Build horizontal strip layout
   var container = document.getElementById('wm-nodes');
   container.innerHTML = '';
+  // Init marks: first 3 arith topics default marked
+  if(sections['arith']){
+    for(var mi=0;mi<Math.min(3,sections['arith'].length);mi++){
+      var mk=sections['arith'][mi];
+      if(!(mk in wmMarkedSet)) wmMarkedSet[mk]=true;
+    }
+  }
   for(var si=0;si<sectionOrder.length;si++){
     var secKey=sectionOrder[si];
     if(!sections[secKey]) continue;
@@ -3375,13 +3510,19 @@ function showWorldMap(g){
       var p=getWorldProgress(k)||{};
       var node=document.createElement('div');
       node.className='wm-node wm-'+state;
+      if(wmMarkedSet[k]) node.classList.add('wm-marked');
       node.setAttribute('data-id',k);
       if(state==='locked'){
         node.onclick=(function(){wmShowLockToast();});
       } else {
-        node.onclick=(function(id){return function(){wmSelectWorld(id);};})(k);
+        node.onclick=(function(id,sec){return function(){
+          if(sec==='arith'){wmToggleMark(id);}
+          wmSelectWorld(id);
+        };})(k,secKey);
       }
       var html='';
+      // Mark circle (arith topics)
+      if(secKey==='arith') html+='<div class="wm-mark"></div>';
       // Emoji
       html+='<div class="wm-node-emoji">'+ar.emoji;
       if(state==='locked') html+='<span class="wm-node-lock">🔒</span>';
@@ -3454,6 +3595,12 @@ function wmUpdateGoBtn(){
 function wmPlay(){
   if(!wmSelectedWorld) return;
   selectArena(wmSelectedWorld);
+}
+
+function wmToggleMark(id){
+  wmMarkedSet[id]=!wmMarkedSet[id];
+  var el=document.querySelector('.wm-node[data-id="'+id+'"]');
+  if(el){if(wmMarkedSet[id])el.classList.add('wm-marked');else el.classList.remove('wm-marked');}
 }
 
 function wmShowLockToast(){
