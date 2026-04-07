@@ -3742,10 +3742,8 @@ function revivalInvite(){
   var _gn5 = GRADE_NAMES[currentGrade] || '';
   var _an5 = (_ga5 && _ga5[currentArena]) ? _ga5[currentArena].name : '';
   if(_gn5 && _an5) topicLine = ' ב' + _an5;
-  var msg = '⚔️ *Math Arena* — עזרה!\n\n' +
-            playerName + ' צריך/ה עזרה' + topicLine + '\n' +
-            'ניקוד: *' + score + '* — תצליח/י לנצח? 💪\n\n' +
-            '👇 שחקו עכשיו\n' +
+  var msg = '🆘 ' + playerName + ' צריך/ה עזרה' + topicLine + ' ב-*Math Arena*!\n' +
+            '🏆 ניקוד: *' + score + '* · תנצח/י? 💪\n' +
             duelUrl;
   
   // Try native share first, fallback to share popup
@@ -3952,12 +3950,22 @@ window.addEventListener('DOMContentLoaded', function(){
   // Legacy format: #b/base64data
   if(!challenger && hash && hash.indexOf('#b/') === 0){
     try {
-      var data = JSON.parse(decodeURIComponent(escape(atob(hash.substring(3)))));
-      challenger = data.n || null;
-      beatScore = data.s != null ? String(data.s) : null;
-      challState = data.st || null;
-      duelGrade = data.g || null;
-      duelArenaId = data.a || null;
+      var decoded = decodeURIComponent(escape(atob(hash.substring(3))));
+      if(decoded.indexOf('|') !== -1){
+        var bp = decoded.split('|');
+        challenger = bp[0] || null;
+        beatScore = bp[1] || null;
+        duelGrade = bp[2] || null;
+        duelArenaId = bp[3] || null;
+        if(bp[4]){var st=bp[4].split('.');challState={l:+st[0],t:+st[1],p:+st[2],sc:+st[3],ms:+st[4],tr:+st[5],ta:+st[6]};}
+      } else {
+        var data = JSON.parse(decoded);
+        challenger = data.n || null;
+        beatScore = data.s != null ? String(data.s) : null;
+        challState = data.st || null;
+        duelGrade = data.g || null;
+        duelArenaId = data.a || null;
+      }
     } catch(e){}
   }
   
@@ -4121,9 +4129,10 @@ function endDuel(){
 }
 
 function makeDuelUrl(name, score, includeState){
-  var parts=[encodeURIComponent(name),score,currentGrade,currentArena];
-  if(includeState) parts.push([lvlIdx,tIdx,pIdx,score,maxStr,totR,totA].join('.'));
-  return GAME_URL+'#d/'+parts.join('~');
+  var data = name+'|'+score+'|'+currentGrade+'|'+currentArena;
+  if(includeState) data += '|'+[lvlIdx,tIdx,pIdx,score,maxStr,totR,totA].join('.');
+  var b64 = btoa(unescape(encodeURIComponent(data)));
+  return GAME_URL+'#b/'+b64;
 }
 
 function shareDuelResult(){
@@ -4133,11 +4142,8 @@ function shareDuelResult(){
   var _gn3 = GRADE_NAMES[currentGrade] || '';
   var _an3 = (_ga3 && _ga3[currentArena]) ? _ga3[currentArena].name : '';
   if(_gn3 && _an3) topicLine = _gn3+' — '+_an3+' • ';
-  var text = '⚔️ *Math Arena* — תוצאה\n\n' +
-             '🎯 ' + playerName + ' vs ' + duelChallengerName + '\n' +
-             topicLine + '*' + duelScore + ' נק\'*\n' +
-             'מי ינצח הבא? 🔥\n\n' +
-             '👇 שחקו\n' +
+  var text = '⚔️ *Math Arena* · ' + playerName + ' vs ' + duelChallengerName + '\n' +
+             topicLine + '*' + duelScore + ' נק\'* · מי ינצח? 🔥\n' +
              duelUrl;
   showSharePopup(text);
 }
@@ -4150,10 +4156,8 @@ function shareDuelInvite(){
   var _gn2 = GRADE_NAMES[currentGrade] || '';
   var _an2 = (_ga2 && _ga2[currentArena]) ? _ga2[currentArena].name : '';
   if(_gn2 && _an2) topicLine = ' ב' + _an2;
-  var text = '⚔️ *Math Arena* — אתגר!\n\n' +
-             playerName + ' מאתגר/ת אותך' + topicLine + '\n' +
-             'ניקוד: *' + score + '* — תצליח/י לנצח? 💪\n\n' +
-             '👇 קבל/י את האתגר\n' +
+  var text = '⚔️ ' + playerName + ' מאתגר/ת אותך' + topicLine + ' ב-*Math Arena*!\n' +
+             '🏆 ניקוד: *' + score + '* · תנצח/י? 💪\n' +
              duelUrl;
   showSharePopup(text);
 }
@@ -4352,10 +4356,8 @@ function shareDuelFromLB(){
   var _gn4 = GRADE_NAMES[currentGrade] || '';
   var _an4 = (_ga4 && _ga4[currentArena]) ? _ga4[currentArena].name : '';
   if(_gn4 && _an4) topicLine = ' ב' + _an4;
-  var msg = '⚔️ *Math Arena* — אתגר!\n\n' +
-            playerName + ' מאתגר/ת אותך' + topicLine + '\n' +
-            'ניקוד: *' + score + '* — תצליח/י לנצח? 💪\n\n' +
-            '👇 קבל/י את האתגר\n' +
+  var msg = '⚔️ ' + playerName + ' מאתגר/ת אותך' + topicLine + ' ב-*Math Arena*!\n' +
+            '🏆 ניקוד: *' + score + '* · תנצח/י? 💪\n' +
             duelUrl;
   showSharePopup(msg);
 }
