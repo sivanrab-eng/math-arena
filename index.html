@@ -3741,15 +3741,11 @@ function revivalInvite(){
   var _ga5 = GRADE_ARENAS[currentGrade];
   var _gn5 = GRADE_NAMES[currentGrade] || '';
   var _an5 = (_ga5 && _ga5[currentArena]) ? _ga5[currentArena].name : '';
-  if(_gn5 && _an5) topicLine = '📚  '+_gn5+' — '+_an5+'\n';
-  var msg = '━━━━━━━━━━━━━━━\n' +
-            '⚔️  *Math Arena*  ⚔️\n' +
-            '━━━━━━━━━━━━━━━\n\n' +
-            '🆘  ' + playerName + ' צריך עזרה!\n\n' +
-            topicLine +
-            '🏆  ניקוד: *' + score + '*\n' +
-            '💪  בוא תנצח אותי!\n\n' +
-            '🎮 *Play Math Arena* 👇\n' +
+  if(_gn5 && _an5) topicLine = ' ב' + _an5;
+  var msg = '⚔️ *Math Arena* — עזרה!\n\n' +
+            playerName + ' צריך/ה עזרה' + topicLine + '\n' +
+            'ניקוד: *' + score + '* — תצליח/י לנצח? 💪\n\n' +
+            '👇 שחקו עכשיו\n' +
             duelUrl;
   
   // Try native share first, fallback to share popup
@@ -4136,15 +4132,12 @@ function shareDuelResult(){
   var _ga3 = GRADE_ARENAS[currentGrade];
   var _gn3 = GRADE_NAMES[currentGrade] || '';
   var _an3 = (_ga3 && _ga3[currentArena]) ? _ga3[currentArena].name : '';
-  if(_gn3 && _an3) topicLine = '📚  '+_gn3+' — '+_an3+'\n';
-  var text = '━━━━━━━━━━━━━━━\n' +
-             '⚔️  *Math Arena*  ⚔️\n' +
-             '━━━━━━━━━━━━━━━\n\n' +
-             '🎯  ' + playerName + ' vs ' + duelChallengerName + '\n\n' +
-             topicLine +
-             '🏆  תוצאה: *' + duelScore + ' נק\'*\n' +
-             '🔥  מי ינצח הבא?\n\n' +
-             '🎮 *Play Math Arena* 👇\n' +
+  if(_gn3 && _an3) topicLine = _gn3+' — '+_an3+' • ';
+  var text = '⚔️ *Math Arena* — תוצאה\n\n' +
+             '🎯 ' + playerName + ' vs ' + duelChallengerName + '\n' +
+             topicLine + '*' + duelScore + ' נק\'*\n' +
+             'מי ינצח הבא? 🔥\n\n' +
+             '👇 שחקו\n' +
              duelUrl;
   showSharePopup(text);
 }
@@ -4156,15 +4149,11 @@ function shareDuelInvite(){
   var _ga2 = GRADE_ARENAS[currentGrade];
   var _gn2 = GRADE_NAMES[currentGrade] || '';
   var _an2 = (_ga2 && _ga2[currentArena]) ? _ga2[currentArena].name : '';
-  if(_gn2 && _an2) topicLine = '📚  '+_gn2+' — '+_an2+'\n';
-  var text = '━━━━━━━━━━━━━━━\n' +
-             '⚔️  *Math Arena*  ⚔️\n' +
-             '━━━━━━━━━━━━━━━\n\n' +
-             '🤺  ' + playerName + ' מאתגר אותך!\n\n' +
-             topicLine +
-             '🏆  הניקוד שלי: *' + score + '*\n' +
-             '💪  תצליח לנצח?\n\n' +
-             '🎮 *Play Math Arena* 👇\n' +
+  if(_gn2 && _an2) topicLine = ' ב' + _an2;
+  var text = '⚔️ *Math Arena* — אתגר!\n\n' +
+             playerName + ' מאתגר/ת אותך' + topicLine + '\n' +
+             'ניקוד: *' + score + '* — תצליח/י לנצח? 💪\n\n' +
+             '👇 קבל/י את האתגר\n' +
              duelUrl;
   showSharePopup(text);
 }
@@ -4362,15 +4351,11 @@ function shareDuelFromLB(){
   var _ga4 = GRADE_ARENAS[currentGrade];
   var _gn4 = GRADE_NAMES[currentGrade] || '';
   var _an4 = (_ga4 && _ga4[currentArena]) ? _ga4[currentArena].name : '';
-  if(_gn4 && _an4) topicLine = '📚  '+_gn4+' — '+_an4+'\n';
-  var msg = '━━━━━━━━━━━━━━━\n' +
-            '⚔️  *Math Arena*  ⚔️\n' +
-            '━━━━━━━━━━━━━━━\n\n' +
-            '🤺  ' + playerName + ' מאתגר אותך!\n\n' +
-            topicLine +
-            '🏆  הניקוד שלי: *' + score + '*\n' +
-            '💪  תצליח לנצח?\n\n' +
-            '🎮 *Play Math Arena* 👇\n' +
+  if(_gn4 && _an4) topicLine = ' ב' + _an4;
+  var msg = '⚔️ *Math Arena* — אתגר!\n\n' +
+            playerName + ' מאתגר/ת אותך' + topicLine + '\n' +
+            'ניקוד: *' + score + '* — תצליח/י לנצח? 💪\n\n' +
+            '👇 קבל/י את האתגר\n' +
             duelUrl;
   showSharePopup(msg);
 }
@@ -4460,12 +4445,9 @@ window.addEventListener('DOMContentLoaded', function(){
 
 // ===== SHARE GAME (no challenge) =====
 function shareGameLink(){
-  var msg = '━━━━━━━━━━━━━━━\n' +
-            '🎮  *Math Arena*  🎮\n' +
-            '━━━━━━━━━━━━━━━\n\n' +
-            '📐🍕💯📏 מתמטיקה כיתה ו\'\n' +
-            '🔥  4 זירות • אתגרים • דו-קרבות\n\n' +
-            '🎮 *Play Math Arena* 👇\n' +
+  var msg = '⚡ *Math Arena* ⚡\n' +
+            'מתמטיקה כיתה ו׳ • 4 זירות • דו-קרבות\n\n' +
+            '🎮 שחקו עכשיו 👇\n' +
             GAME_URL;
   showSharePopup(msg);
 }
