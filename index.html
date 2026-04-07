@@ -526,46 +526,33 @@ body{background-color:#1a0a3e;background:radial-gradient(ellipse at top, #2d1b69
 .wm-grade{display:inline-flex;align-items:center;gap:5px;background:rgba(249,115,22,.12);border:1.5px solid rgba(249,115,22,.3);color:#fb923c;font-size:13px;font-weight:700;padding:5px 16px;border-radius:20px;margin-bottom:4px;}
 .wm-title{font-size:20px;font-weight:900;background:linear-gradient(135deg,#fff,#c4b5fd);-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
 .wm-sub{font-size:11px;color:rgba(255,255,255,.35);margin-top:2px;}
-.wm-scroll{flex:1;overflow-y:auto;overflow-x:hidden;padding:8px 0 110px;-webkit-overflow-scrolling:touch;width:100%;}
-.wm-scroll::-webkit-scrollbar{display:none;}
-.wm-nodes{display:flex;flex-direction:column;align-items:center;gap:8px;padding:0 16px;}
-.wm-section{display:flex;align-items:center;gap:8px;width:100%;max-width:340px;padding:6px 0;margin:6px 0;}
-.wm-sec-icon{font-size:16px;}
-.wm-sec-label{font-size:12px;font-weight:800;color:rgba(255,255,255,.35);}
+.wm-scroll{flex:1;display:flex;flex-direction:column;justify-content:center;gap:16px;padding:0 0 90px;overflow:hidden;width:100%;}
+.wm-nodes{display:flex;flex-direction:column;gap:16px;}
+.wm-section{display:flex;align-items:center;gap:6px;padding:0 16px;direction:rtl;}
+.wm-sec-icon{font-size:14px;}
+.wm-sec-label{font-size:12px;font-weight:800;color:rgba(255,255,255,.45);}
+.wm-sec-count{font-size:10px;color:rgba(255,255,255,.2);font-weight:600;}
 .wm-sec-line{flex:1;height:1px;background:rgba(255,255,255,.06);}
-.wm-connector{display:flex;flex-direction:column;align-items:center;gap:3px;padding:1px 0;}
-.wm-cdot{width:4px;height:4px;border-radius:50%;background:rgba(167,139,250,.2);}
-.wm-connector.active .wm-cdot{background:rgba(167,139,250,.5);}
-.wm-connector.done .wm-cdot{background:rgba(34,197,94,.4);}
-.wm-node{display:flex;align-items:center;gap:12px;width:100%;max-width:340px;padding:12px 14px;border-radius:18px;cursor:pointer;transition:all .2s;position:relative;-webkit-tap-highlight-color:transparent;}
-.wm-node:active:not(.wm-locked){transform:scale(.97);}
-.wm-node:nth-child(odd){margin-right:12px;margin-left:auto;}
-.wm-node:nth-child(even){margin-left:12px;margin-right:auto;}
+.wm-strip{display:flex;gap:8px;overflow-x:auto;padding:2px 16px 6px;direction:rtl;-webkit-overflow-scrolling:touch;scroll-snap-type:x mandatory;scrollbar-width:none;-ms-overflow-style:none;}
+.wm-strip::-webkit-scrollbar{display:none;}
+.wm-node{flex-shrink:0;width:72px;display:flex;flex-direction:column;align-items:center;gap:3px;padding:9px 4px 7px;border-radius:14px;cursor:pointer;transition:all .15s;position:relative;-webkit-tap-highlight-color:transparent;scroll-snap-align:start;}
+.wm-node:active:not(.wm-locked){transform:scale(.95);}
 .wm-node.wm-completed{background:linear-gradient(135deg,rgba(34,197,94,.15),rgba(34,197,94,.05));border:2px solid rgba(34,197,94,.35);}
-.wm-node.wm-current{background:linear-gradient(135deg,rgba(124,58,237,.3),rgba(59,130,246,.15));border:2px solid #a78bfa;box-shadow:0 4px 24px rgba(124,58,237,.35),0 0 40px rgba(167,139,250,.12);animation:wmPulse 2s ease-in-out infinite;}
-@keyframes wmPulse{0%,100%{box-shadow:0 4px 24px rgba(124,58,237,.35),0 0 40px rgba(167,139,250,.12);}50%{box-shadow:0 4px 32px rgba(124,58,237,.55),0 0 60px rgba(167,139,250,.2);}}
-.wm-node.wm-unlocked{background:linear-gradient(135deg,rgba(124,58,237,.15),rgba(124,58,237,.06));border:2px solid rgba(124,58,237,.3);}
-.wm-node.wm-locked{background:rgba(255,255,255,.02);border:2px solid rgba(255,255,255,.06);opacity:.45;cursor:default;filter:grayscale(.5);}
-.wm-icon{width:48px;height:48px;border-radius:14px;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:24px;position:relative;background:linear-gradient(135deg,rgba(255,255,255,.1),rgba(255,255,255,.03));border:2px solid rgba(255,255,255,.1);}
-.wm-completed .wm-icon{background:linear-gradient(135deg,rgba(34,197,94,.18),rgba(34,197,94,.06));border-color:rgba(34,197,94,.25);}
-.wm-locked .wm-icon{background:rgba(255,255,255,.03);border-color:rgba(255,255,255,.05);}
-.wm-lock{position:absolute;bottom:-3px;right:-3px;width:20px;height:20px;border-radius:7px;background:rgba(20,10,50,.9);border:2px solid rgba(255,255,255,.12);display:flex;align-items:center;justify-content:center;font-size:10px;}
-.wm-done-badge{position:absolute;top:-3px;right:-3px;width:20px;height:20px;border-radius:50%;background:linear-gradient(135deg,#22c55e,#16a34a);border:2px solid #86efac;display:flex;align-items:center;justify-content:center;font-size:10px;color:#fff;box-shadow:0 0 8px rgba(34,197,94,.4);}
-.wm-info{flex:1;min-width:0;}
-.wm-name{font-size:14px;font-weight:800;color:#fff;margin-bottom:1px;}
-.wm-locked .wm-name{color:rgba(255,255,255,.35);}
-.wm-lvls{font-size:11px;color:rgba(255,255,255,.35);font-weight:600;}
-.wm-completed .wm-lvls{color:rgba(34,197,94,.6);}
-.wm-stars{display:flex;gap:1px;margin-top:2px;}
-.wm-stars .wm-star{font-size:11px;opacity:.15;}
-.wm-stars .wm-star.earned{opacity:1;}
-.wm-prog{width:100%;height:3px;border-radius:2px;background:rgba(255,255,255,.06);margin-top:4px;overflow:hidden;}
-.wm-prog-fill{height:100%;border-radius:2px;background:linear-gradient(90deg,#7c3aed,#3b82f6);transition:width .3s;}
+.wm-node.wm-current{background:linear-gradient(135deg,rgba(124,58,237,.35),rgba(59,130,246,.2));border:2px solid rgba(167,139,250,.6);box-shadow:0 0 20px rgba(124,58,237,.2);animation:wmPulse 2s ease-in-out infinite;}
+@keyframes wmPulse{0%,100%{box-shadow:0 0 20px rgba(124,58,237,.2);}50%{box-shadow:0 0 28px rgba(124,58,237,.4);}}
+.wm-node.wm-unlocked{background:rgba(124,58,237,.08);border:2px solid rgba(124,58,237,.25);}
+.wm-node.wm-locked{background:rgba(255,255,255,.015);border:1.5px solid rgba(255,255,255,.05);opacity:.35;cursor:default;}
+.wm-node.wm-selected{border:2px solid #a78bfa;box-shadow:0 0 16px rgba(124,58,237,.4);}
+.wm-node-emoji{font-size:22px;line-height:1;position:relative;}
+.wm-node-lock{position:absolute;bottom:-2px;right:-6px;font-size:9px;}
+.wm-node-done{position:absolute;top:-4px;right:-6px;font-size:9px;}
+.wm-name{font-size:9px;font-weight:700;color:#fff;text-align:center;line-height:1.15;}
+.wm-locked .wm-name{color:rgba(255,255,255,.25);}
+.wm-prog{width:75%;height:2.5px;border-radius:2px;background:rgba(255,255,255,.08);overflow:hidden;}
+.wm-prog-fill{height:100%;border-radius:2px;background:linear-gradient(90deg,#7c3aed,#60a5fa);transition:width .3s;}
 .wm-completed .wm-prog-fill{background:linear-gradient(90deg,#22c55e,#4ade80);}
-.wm-arrow{font-size:16px;color:rgba(255,255,255,.15);flex-shrink:0;}
-.wm-current .wm-arrow{color:rgba(255,255,255,.5);}
-.wm-completed .wm-arrow{color:rgba(34,197,94,.4);}
-.wm-new{position:absolute;top:-5px;left:-5px;background:linear-gradient(135deg,#f97316,#ec4899);color:#fff;font-size:8px;font-weight:900;padding:2px 7px;border-radius:7px;letter-spacing:.5px;box-shadow:0 2px 8px rgba(249,115,22,.3);animation:wmNewB 2s ease-in-out infinite;}
+.wm-lvls{font-size:8px;color:rgba(255,255,255,.2);font-weight:600;}
+.wm-new{position:absolute;top:3px;left:3px;background:linear-gradient(135deg,#f97316,#ec4899);color:#fff;font-size:7px;font-weight:900;padding:1px 5px;border-radius:6px;letter-spacing:.3px;line-height:1.3;animation:wmNewB 2s ease-in-out infinite;}
 @keyframes wmNewB{0%,100%{transform:scale(1);}50%{transform:scale(1.08);}}
 .wm-bottom{width:100%;position:absolute;bottom:0;left:0;right:0;padding:14px 16px;background:linear-gradient(transparent,rgba(15,6,40,.95) 30%);z-index:20;display:flex;flex-direction:column;align-items:center;gap:6px;}
 .wm-go{width:100%;max-width:340px;padding:14px;border-radius:16px;border:none;font-size:17px;font-weight:900;font-family:inherit;cursor:pointer;background:linear-gradient(135deg,#7c3aed,#3b82f6);color:#fff;box-shadow:0 5px 0 #2e1065,0 8px 24px rgba(124,58,237,.35);transition:transform .1s,box-shadow .1s;}
@@ -3302,6 +3289,7 @@ function applyFullGrade(ga){
 // ===== WORLD MAP =====
 var wmSelectedWorld = null;
 var wmWorldOrder = []; // ordered list of arena IDs for current grade
+var wmSectionFirsts = {}; // first world ID per section (auto-unlocked)
 
 function getWorldProgress(id){
   try{var s=JSON.parse(localStorage.getItem('mathArena_progress_'+id)||'null');if(s)return s;}catch(e){}
@@ -3320,21 +3308,21 @@ function getWorldState(id){
   if(isWorldCompleted(id)) return 'completed';
   var p=getWorldProgress(id);
   if(p && p.lvlIdx>0) return 'current';
-  // Check if previous world is completed (or this is first)
+  // Check if first in its section — always open
+  if(wmSectionFirsts && wmSectionFirsts[id]) return 'current';
+  // Check if previous world in same section is completed
   var idx=-1;
   for(var i=0;i<wmWorldOrder.length;i++){if(wmWorldOrder[i]===id){idx=i;break;}}
-  if(idx===0) return 'current'; // First world always open
+  if(idx===0) return 'current';
   if(idx>0 && isWorldCompleted(wmWorldOrder[idx-1])) return 'unlocked';
-  // Also unlock if this world has progress
-  if(p && p.lvlIdx>0) return 'current';
   return 'locked';
 }
 
 function showWorldMap(g){
   var ga = GRADE_ARENAS[g];
   if(!ga) return;
-  // Build ordered world list
   wmWorldOrder = [];
+  wmSectionFirsts = {};
   var sectionNames = {geo:{icon:'📐',label:'גיאומטריה'},arith:{icon:'🔢',label:'חשבון ומספרים'}};
   var sections = {};
   var keys = Object.keys(ga);
@@ -3344,40 +3332,37 @@ function showWorldMap(g){
     if(!sections[sec]) sections[sec]=[];
     sections[sec].push(k);
   }
-  // Build nodes
+  // Mark first world per section
+  var sectionOrder = ['geo','arith','main','other'];
+  for(var si=0;si<sectionOrder.length;si++){
+    var secKey=sectionOrder[si];
+    if(sections[secKey] && sections[secKey].length>0) wmSectionFirsts[sections[secKey][0]]=true;
+  }
+  // Build horizontal strip layout
   var container = document.getElementById('wm-nodes');
   container.innerHTML = '';
-  var sectionOrder = ['geo','arith','main','other'];
-  var isFirst = true;
-  wmWorldOrder = [];
-
   for(var si=0;si<sectionOrder.length;si++){
     var secKey=sectionOrder[si];
     if(!sections[secKey]) continue;
     var sn=sectionNames[secKey]||null;
-    // Section header (only for grades with sections)
+    var secDiv=document.createElement('div');
+    // Section header
     if(sn && Object.keys(sections).length>1){
-      var sec=document.createElement('div');
-      sec.className='wm-section';
-      sec.innerHTML='<span class="wm-sec-icon">'+sn.icon+'</span><span class="wm-sec-label">'+sn.label+'</span><span class="wm-sec-line"></span>';
-      container.appendChild(sec);
+      var hdr=document.createElement('div');
+      hdr.className='wm-section';
+      var cnt=sections[secKey].length;
+      hdr.innerHTML='<span class="wm-sec-icon">'+sn.icon+'</span><span class="wm-sec-label">'+sn.label+'</span><span class="wm-sec-count">'+cnt+' נושאים</span><span class="wm-sec-line"></span>';
+      secDiv.appendChild(hdr);
     }
+    // Horizontal strip
+    var strip=document.createElement('div');
+    strip.className='wm-strip';
     var worldIds=sections[secKey];
     for(var j=0;j<worldIds.length;j++){
       var k=worldIds[j], ar=ga[k];
       wmWorldOrder.push(k);
       var state=getWorldState(k);
       var p=getWorldProgress(k)||{};
-      // Connector dots
-      if(!isFirst){
-        var conn=document.createElement('div');
-        conn.className='wm-connector';
-        if(state==='completed') conn.className+=' done';
-        else if(state==='current'||state==='unlocked') conn.className+=' active';
-        conn.innerHTML='<div class="wm-cdot"></div><div class="wm-cdot"></div><div class="wm-cdot"></div>';
-        container.appendChild(conn);
-      }
-      isFirst=false;
       var node=document.createElement('div');
       node.className='wm-node wm-'+state;
       node.setAttribute('data-id',k);
@@ -3387,38 +3372,29 @@ function showWorldMap(g){
         node.onclick=(function(id){return function(){wmSelectWorld(id);};})(k);
       }
       var html='';
-      // Icon
-      html+='<div class="wm-icon"><span>'+ar.emoji+'</span>';
-      if(state==='locked') html+='<div class="wm-lock">🔒</div>';
-      if(state==='completed') html+='<div class="wm-done-badge">✓</div>';
+      // Emoji
+      html+='<div class="wm-node-emoji">'+ar.emoji;
+      if(state==='locked') html+='<span class="wm-node-lock">🔒</span>';
+      if(state==='completed') html+='<span class="wm-node-done">✅</span>';
       html+='</div>';
-      // Info
-      html+='<div class="wm-info">';
+      // Name
       html+='<div class="wm-name">'+ar.name+'</div>';
-      if(state==='completed'){
-        var sc=p.score||0;
-        html+='<div class="wm-lvls">✅ הושלם • '+sc+' נק׳</div>';
-        var stars=p.stars||0;
-        html+='<div class="wm-stars">';
-        for(var s=0;s<3;s++) html+='<span class="wm-star'+(s<stars?' earned':'')+'">⭐</span>';
-        html+='</div>';
-      } else if(state==='current'){
+      // Progress or level count
+      if(state==='current'){
         var prog=p.lvlIdx||0;
-        html+='<div class="wm-lvls">▶ שלב '+(prog+1)+' מתוך '+ar.levels+'</div>';
         html+='<div class="wm-prog"><div class="wm-prog-fill" style="width:'+Math.round((prog/ar.levels)*100)+'%"></div></div>';
-      } else if(state==='unlocked'){
-        html+='<div class="wm-lvls">'+ar.levels+' שלבים</div>';
+      } else if(state==='completed'){
+        html+='<div class="wm-lvls">✅</div>';
       } else {
-        html+='<div class="wm-lvls">🔒 '+ar.levels+' שלבים</div>';
+        html+='<div class="wm-lvls">'+ar.levels+' שלבים</div>';
       }
-      html+='</div>';
-      // Arrow
-      if(state!=='locked') html+='<div class="wm-arrow">◀</div>';
       // NEW badge
       if(ar.isNew) html+='<div class="wm-new">NEW</div>';
       node.innerHTML=html;
-      container.appendChild(node);
+      strip.appendChild(node);
     }
+    secDiv.appendChild(strip);
+    container.appendChild(secDiv);
   }
   // Header
   document.getElementById('wm-grade-pill').textContent=GRADE_EMOJIS[g]+' '+GRADE_NAMES[g];
@@ -3429,21 +3405,22 @@ function showWorldMap(g){
     if(st==='current'||st==='unlocked'){wmSelectedWorld=wmWorldOrder[i];break;}
   }
   if(!wmSelectedWorld && wmWorldOrder.length>0) wmSelectedWorld=wmWorldOrder[0];
+  wmHighlightSelected();
   wmUpdateGoBtn();
   showScreen('topic-screen');
-  // Scroll to current
-  setTimeout(function(){
-    var cur=document.querySelector('.wm-node.wm-current');
-    if(cur) cur.scrollIntoView({behavior:'smooth',block:'center'});
-  },300);
+}
+
+function wmHighlightSelected(){
+  document.querySelectorAll('.wm-node').forEach(function(n){n.classList.remove('wm-selected');});
+  if(wmSelectedWorld){
+    var el=document.querySelector('.wm-node[data-id="'+wmSelectedWorld+'"]');
+    if(el) el.classList.add('wm-selected');
+  }
 }
 
 function wmSelectWorld(id){
   wmSelectedWorld=id;
-  // Visual highlight
-  document.querySelectorAll('.wm-node').forEach(function(n){n.style.outline='';n.style.outlineOffset='';});
-  var el=document.querySelector('.wm-node[data-id="'+id+'"]');
-  if(el){el.style.outline='2px solid #a78bfa';el.style.outlineOffset='2px';}
+  wmHighlightSelected();
   wmUpdateGoBtn();
 }
 
