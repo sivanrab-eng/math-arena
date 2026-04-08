@@ -1663,8 +1663,8 @@ function legoGrid(cols,rows,bw,bh,fill,stroke,ox,oy,showNums){
 function mR(w,h,wLabel,hLabel){
   var cols=typeof w==='number'?Math.min(Math.round(w),12):4;
   var rows=typeof h==='number'?Math.min(Math.round(h),10):3;
-  var bw=Math.max(10,Math.floor(190/cols)-1);
-  var bh=Math.max(9,Math.floor(130/rows)-1);
+  var bs=Math.max(9,Math.min(Math.floor(190/cols)-1,Math.floor(160/rows)-1));
+  var bw=bs, bh=bs;
   var gw=cols*(bw+2)-2, gh=rows*(bh+2)-2;
   var svgW=gw+80, svgH=gh+44;
   var ox=46, oy=6;
@@ -1714,8 +1714,8 @@ function mR(w,h,wLabel,hLabel){
 function mRP(w,h,wLabel,hLabel){
   var cols=typeof w==='number'?Math.min(Math.round(w),12):4;
   var rows=typeof h==='number'?Math.min(Math.round(h),10):3;
-  var bw=Math.max(10,Math.floor(190/cols)-1);
-  var bh=Math.max(9,Math.floor(130/rows)-1);
+  var bs=Math.max(9,Math.min(Math.floor(190/cols)-1,Math.floor(160/rows)-1));
+  var bw=bs, bh=bs;
   var gw=cols*(bw+2)-2, gh=rows*(bh+2)-2;
   var svgW=gw+86, svgH=gh+44;
   var ox=48, oy=6;
