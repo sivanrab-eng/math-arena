@@ -1189,6 +1189,7 @@ body{background-color:#1a0a3e;background:radial-gradient(ellipse at top, #2d1b69
   <div class="name-features"><div class="name-feat">🔥 Streaks</div><div class="name-feat">⚡ Speed Bonus</div><div class="name-feat">✂️ Powers</div><div class="name-feat">⚔️ Duels</div><div class="name-feat">🎵 Music</div><div class="name-feat">💥 Multipliers</div></div>
   <button id="btn-start" onclick="submitName()">🚀 LET'S GO!</button>
   <button onclick="shareGameLink()" style="margin-top:12px;padding:10px 24px;background:rgba(59,130,246,.12);border:1.5px solid rgba(59,130,246,.35);border-radius:14px;color:#60a5fa;font-size:14px;font-weight:700;cursor:pointer;font-family:inherit;">🔗 שתף את המשחק עם חבר</button>
+  <button onclick="launchTutorial()" style="margin-top:8px;padding:10px 24px;background:rgba(255,255,255,.06);border:1.5px solid rgba(255,255,255,.15);border-radius:14px;color:rgba(255,255,255,.55);font-size:13px;font-weight:600;cursor:pointer;font-family:inherit;">🎯 טיפים לניצחון</button>
 </div>
 
 <!-- NAME PROMPT POPUP (after level 1) -->
@@ -5198,6 +5199,16 @@ function shouldShowOnboarding(){
 }
 function markOnboardingDone(){
   try{localStorage.setItem('arena-onboarding-done','1');}catch(e){}
+}
+function launchTutorial(){
+  // Temporarily show game screen so HUD elements are visible for the tour
+  score=0;lives=3;gStr=0;
+  resetPowerUps();showChar();showScreen('game-screen');updHUD();
+  requestAnimationFrame(function(){requestAnimationFrame(function(){
+    showOnboarding(function(){
+      showScreen('name-screen');
+    });
+  });});
 }
 function showOnboarding(callback){
   obIdx=0;
