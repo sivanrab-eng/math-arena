@@ -5142,7 +5142,9 @@ function startGame(){
   _revivalCount=0;_gameOverCount=0;AdManager.resetGame();
   resetPowerUps();showChar();showScreen('game-screen');updHUD();
   if(shouldShowOnboarding()){
-    showOnboarding(function(){playCountdown(function(){loadQ();});});
+    requestAnimationFrame(function(){requestAnimationFrame(function(){
+      showOnboarding(function(){playCountdown(function(){loadQ();});});
+    });});
   } else {
     playCountdown(function(){loadQ();});
   }
