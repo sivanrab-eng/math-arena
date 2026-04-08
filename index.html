@@ -5255,27 +5255,33 @@ function startPractice(){
 }
 
 function _pracGenQuestion(){
-  // Cycle through all levels and topics, prefer gen() for variety
-  var allTopics=[];
-  for(var li=0;li<_pracLV.length;li++){
-    var lvl=_pracLV[li];
-    for(var ti=0;ti<lvl.topics.length;ti++){
-      allTopics.push({lvlIdx:li, tIdx:ti, topic:lvl.topics[ti]});
+  // Sequential difficulty: go through levels in order, cycling topics within each level
+  // _pracLvlIdx tracks current level, _pracTIdx tracks topic within level
+  if(!_pracLV||_pracLV.length===0) return null;
+  // Clamp level index
+  if(_pracLvlIdx>=_pracLV.length) _pracLvlIdx=_pracLV.length-1;
+  var lvl=_pracLV[_pracLvlIdx];
+  if(!lvl.topics||lvl.topics.length===0) return null;
+  // Clamp topic index
+  if(_pracTIdx>=lvl.topics.length){
+    _pracTIdx=0;
+    // Move to next level if available
+    if(_pracLvlIdx<_pracLV.length-1){
+      _pracLvlIdx++;
+      lvl=_pracLV[_pracLvlIdx];
     }
+    // else stay on last level and keep cycling its topics
   }
-  if(allTopics.length===0) return null;
-  // Pick a random topic
-  var pick=allTopics[Math.floor(Math.random()*allTopics.length)];
-  var tp=pick.topic;
+  var tp=lvl.topics[_pracTIdx];
+  _pracTIdx++;
   var q;
   if(tp.gen){
     q=tp.gen();
   } else {
-    // Shuffle pool pick
     q=tp.pool[Math.floor(Math.random()*tp.pool.length)];
   }
   q._topic=tp;
-  q._lvl=pick.lvlIdx;
+  q._lvl=_pracLvlIdx;
   return q;
 }
 
@@ -5291,7 +5297,7 @@ function practiceNextQ(){
   if(!_pracQ) return;
   var q=_pracQ;
 
-  document.getElementById('prac-badge').textContent=q._topic.label||'';
+  document.getElementById('prac-badge').textContent=(q._topic.label||'')+' • רמה '+(q._lvl+1);
   var qtEl=document.getElementById('prac-qtext');
   qtEl.textContent=fixBidi(q.t);
   qtEl.style.direction=/[\u0590-\u05FF]/.test(q.t)?'rtl':'ltr';
