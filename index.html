@@ -5190,6 +5190,8 @@ function showOnboarding(callback){
   obIdx=0;
   var overlay=document.getElementById('onboard-overlay');
   overlay.classList.add('on');
+  // Ensure hint button is visible for the tour
+  document.getElementById('hint-btn').classList.add('on');
   document.getElementById('ob-skip').onclick=function(){closeOnboarding(callback);};
   document.getElementById('ob-next').onclick=function(){
     if(obIdx<OB_STEPS.length-1){obIdx++;renderOBStep();}
@@ -5200,6 +5202,7 @@ function showOnboarding(callback){
 function closeOnboarding(callback){
   document.getElementById('onboard-overlay').classList.remove('on');
   document.getElementById('onboard-card').classList.remove('visible');
+  document.getElementById('hint-btn').classList.remove('on');
   markOnboardingDone();
   if(callback)callback();
 }
