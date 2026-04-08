@@ -1111,31 +1111,40 @@ body{background-color:#1a0a3e;background:radial-gradient(ellipse at top, #2d1b69
 #tut-overlay.on{display:block;}
 #tut-spot{
   position:fixed;border-radius:50%;z-index:9999;pointer-events:none;display:none;
-  box-shadow:0 0 0 200vmax rgba(3,3,20,.92),0 0 30px 4px rgba(0,229,255,.08);
+  box-shadow:0 0 0 200vmax rgba(3,3,20,.68),0 0 40px 8px rgba(0,229,255,.18),0 0 80px 16px rgba(0,229,255,.06);
   transition:top .55s cubic-bezier(.4,0,.2,1),left .55s cubic-bezier(.4,0,.2,1),
              width .4s ease,height .4s ease;
 }
 #tut-spot.on{display:block;}
 #tut-spot::after{
-  content:'';position:absolute;inset:-5px;border-radius:50%;
-  border:2.5px solid rgba(0,229,255,.4);
+  content:'';position:absolute;inset:-6px;border-radius:50%;
+  border:2.5px solid rgba(0,229,255,.55);
   animation:tutRing 1.5s ease infinite;
+  box-shadow:0 0 18px 4px rgba(0,229,255,.15);
 }
-@keyframes tutRing{0%,100%{opacity:.3;transform:scale(1);}50%{opacity:.85;transform:scale(1.04);}}
-/* Neumorphic bubble */
+@keyframes tutRing{0%,100%{opacity:.3;transform:scale(1);}50%{opacity:.95;transform:scale(1.06);}}
+/* Speech bubble */
 #tut-bubble{
-  position:fixed;left:50%;z-index:10001;
+  position:fixed;z-index:10001;
   width:calc(100% - 48px);max-width:300px;
   background:linear-gradient(145deg,#1e1350,#160c3a);
   border-radius:22px;padding:18px 18px 14px;text-align:center;
   box-shadow:8px 8px 22px rgba(0,0,0,.55),-6px -6px 18px rgba(70,50,140,.14),
     inset 0 1px 0 rgba(255,255,255,.06);
   opacity:0;pointer-events:none;display:none;
-  transform:translateX(-50%) translateY(10px);
-  transition:opacity .32s ease .12s,transform .38s cubic-bezier(.34,1.56,.64,1) .12s,top .45s cubic-bezier(.4,0,.2,1);
+  transform:translateY(10px);
+  transition:opacity .32s ease .12s,transform .38s cubic-bezier(.34,1.56,.64,1) .12s,top .45s cubic-bezier(.4,0,.2,1),left .45s cubic-bezier(.4,0,.2,1);
 }
 #tut-bubble.on{display:block;}
-#tut-bubble.visible{opacity:1;pointer-events:auto;transform:translateX(-50%) translateY(0);}
+#tut-bubble.visible{opacity:1;pointer-events:auto;transform:translateY(0);}
+#tut-bubble::before{
+  content:'';position:absolute;width:16px;height:16px;
+  background:linear-gradient(145deg,#1e1350,#160c3a);
+  transform:rotate(45deg);
+  transition:top .45s ease,bottom .45s ease,left .45s ease;
+}
+#tut-bubble.arrow-down::before{bottom:-7px;left:var(--arrow-x,50%);margin-left:-8px;box-shadow:4px 4px 8px rgba(0,0,0,.3);}
+#tut-bubble.arrow-up::before{top:-7px;left:var(--arrow-x,50%);margin-left:-8px;box-shadow:-4px -4px 8px rgba(0,0,0,.3);}
 .tut-b-emoji{font-size:30px;margin-bottom:3px;filter:drop-shadow(0 3px 8px rgba(0,0,0,.3));}
 .tut-b-title{font-size:19px;font-weight:900;color:#00e5ff;margin-bottom:5px;text-shadow:0 0 10px rgba(0,229,255,.2);}
 .tut-b-text{font-size:14px;color:rgba(255,255,255,.68);line-height:1.7;font-weight:500;white-space:pre-line;}
@@ -5216,8 +5225,8 @@ var TUT_STEPS = [
   { elId:'t-num', emoji:'⏱️', title:'זמן', text:'30 שניות לענות\nעונים מהר? בונוס מהירות! ⚡', pad:32 },
   { elId:'hud-score', emoji:'🪙', title:'נקודות', text:'ענו נכון ומהר\n= בונוס גדול יותר!', pad:30 },
   { elId:'hud-lives', emoji:'❤️', title:'חיים', text:'3 חיים. נגמרו?\nהזמינו חבר או צפו בפרסומת', pad:44 },
-  { elId:'streak-bar', emoji:'🔥', title:'רצף', text:'3 ברצף = כוח מיוחד חינם!\nהנקודות מוכפלות!', pad:20 },
-  { elId:'powerup-bar', emoji:'🎁', title:'כוחות', text:'✂️ 50/50   ⏱️ +Time   ×2 Double\nמרוויחים ברצפים!', pad:20 },
+  { elId:'streak-num', emoji:'🔥', title:'רצף', text:'3 ברצף = כוח מיוחד חינם!\nהנקודות מוכפלות!', pad:28 },
+  { elId:'pu-5050', emoji:'🎁', title:'כוחות', text:'✂️ 50/50   ⏱️ +Time   ×2 Double\nמרוויחים ברצפים!', pad:22 },
   { elId:'hint-btn', emoji:'💡', title:'רמז', text:'תקועים? לחצו לרמז!', pad:28 }
 ];
 var tutIdx=0;
@@ -5255,6 +5264,8 @@ function closeTutorial(){
   document.getElementById('tut-spot').classList.remove('on');
   document.getElementById('tut-bubble').classList.remove('on');
   document.getElementById('tut-bubble').classList.remove('visible');
+  document.getElementById('tut-bubble').classList.remove('arrow-up');
+  document.getElementById('tut-bubble').classList.remove('arrow-down');
   document.getElementById('tut-next-btn').classList.remove('on');
   document.getElementById('tut-skip-link').classList.remove('on');
   document.getElementById('hint-btn').classList.remove('on');
@@ -5281,17 +5292,36 @@ function renderTutStep(){
   document.getElementById('tut-b-emoji').textContent=s.emoji;
   document.getElementById('tut-b-title').textContent=s.title;
   document.getElementById('tut-b-text').textContent=s.text;
-  // Position bubble below or above spotlight
+  // Position bubble as speech bubble from the icon
   var bubble=document.getElementById('tut-bubble');
-  bubble.classList.remove('visible');
+  bubble.classList.remove('visible','arrow-down','arrow-up');
+  var bW=280;
+  var bH=160;
   var bBelow=cy<window.innerHeight*0.5;
-  bubble.style.top=bBelow?Math.min(cy+radius+20,window.innerHeight-180)+'px':Math.max(16,cy-radius-160)+'px';
+  // Vertical position
+  var bTop;
+  if(bBelow){
+    bTop=Math.min(cy+radius+18,window.innerHeight-bH-60);
+    bubble.classList.add('arrow-up');
+  }else{
+    bTop=Math.max(16,cy-radius-bH-10);
+    bubble.classList.add('arrow-down');
+  }
+  bubble.style.top=bTop+'px';
+  // Horizontal: center on the icon, clamped to screen
+  var bLeft=cx-bW/2;
+  var screenW=window.innerWidth;
+  bLeft=Math.max(24,Math.min(bLeft,screenW-bW-24));
+  bubble.style.left=bLeft+'px';
+  // Arrow points to center of icon
+  var arrowX=Math.max(20,Math.min(cx-bLeft,bW-20));
+  bubble.style.setProperty('--arrow-x',arrowX+'px');
   // Animate bubble in after spotlight starts moving
   setTimeout(function(){bubble.classList.add('visible');},120);
   // Update next button text
   var btn=document.getElementById('tut-next-btn');
   if(tutIdx<total-1){btn.textContent='הבא ←';btn.classList.remove('final');}
-  else{btn.textContent='יאללה נתחיל! 🚀';btn.classList.add('final');}
+  else{btn.textContent='צא לדרך! 🚀';btn.classList.add('final');}
 }
 // ===== COMBO GLOW =====
 function updateComboGlow(streak){
