@@ -4021,19 +4021,19 @@ var powerUps={
   'x2':0
 };
 var x2Active=false;
-var puEarnCounter=0; // counts correct answers; every 5 → earn a random PU
-
-function earnPowerUp(){
-  puEarnCounter++;
-  if(puEarnCounter % 5 !== 0) return;
+function giveRandomPU(msg){
   var types=['5050','time','x2'];
   var chosen=types[Math.floor(Math.random()*types.length)];
   powerUps[chosen]++;
   sfxPowerUp();
   updPUBar();
-  // Show mini notification
   var labels={'5050':'✂️ 50/50','time':'⏱️ +Time','x2':'×2 Double'};
-  charBubble('New power! '+labels[chosen]);
+  charBubble((msg||'New power!')+' '+labels[chosen]);
+}
+
+function earnPowerUp(){
+  // Award power-up at streak milestones: 3, 6, 9...
+  if(gStr>=3 && gStr%3===0) giveRandomPU('🔥 Streak '+gStr+'!');
 }
 
 function usePU(type){
@@ -4080,7 +4080,7 @@ function updPUBar(){
 
 function resetPowerUps(){
   powerUps={'5050':0,'time':0,'x2':0};
-  x2Active=false;puEarnCounter=0;updPUBar();
+  x2Active=false;updPUBar();
 }
 
 // ===== SPEED BONUS =====
@@ -5514,6 +5514,7 @@ function showLvlCut(){
   var prevLvl=lvlIdx;
   lvlIdx++;tIdx=0;pIdx=0;tStr=0;saveProgress();
   var next=LV[lvlIdx];
+  giveRandomPU('🎁 Level Up!');
   showPrizeBox('Level Up! 🔥', next.name, baseBonus, function(){
     // After first level, ask for name if still default
     if(prevLvl===0 && playerName==='שחקן'){
