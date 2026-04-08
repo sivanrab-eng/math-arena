@@ -1106,6 +1106,35 @@ body{background-color:#1a0a3e;background:radial-gradient(ellipse at top, #2d1b69
   color:rgba(255,255,255,.5);font-size:14px;
   box-shadow:none;
 }
+/* ===== ONBOARDING SPOTLIGHT ===== */
+#onboard-overlay{position:fixed;inset:0;z-index:9999;display:none;font-family:'Heebo',system-ui,sans-serif;direction:rtl;}
+#onboard-overlay.on{display:block;}
+#onboard-overlay svg.ob-mask{position:absolute;inset:0;width:100%;height:100%;}
+#onboard-card{position:absolute;left:50%;transform:translateX(-50%);width:calc(100% - 40px);max-width:320px;
+  background:rgba(10,5,40,.97);border:2px solid rgba(0,229,255,.4);border-radius:20px;padding:18px 18px 14px;
+  text-align:center;box-shadow:0 0 40px rgba(0,229,255,.15),0 20px 60px rgba(0,0,0,.5);
+  opacity:0;transform:translateX(-50%) translateY(20px);transition:opacity .35s ease,transform .4s cubic-bezier(.34,1.56,.64,1);}
+#onboard-card.visible{opacity:1;transform:translateX(-50%) translateY(0);}
+.ob-dots{display:flex;justify-content:center;gap:5px;margin-bottom:14px;}
+.ob-dot{height:6px;border-radius:3px;transition:all .3s ease;}
+.ob-dot.active{width:24px;background:#00e5ff;box-shadow:0 0 10px rgba(0,229,255,.5);}
+.ob-dot.done{width:6px;background:rgba(0,229,255,.5);}
+.ob-dot.future{width:6px;background:rgba(255,255,255,.12);}
+.ob-emoji{font-size:32px;margin-bottom:4px;}
+.ob-title{font-size:20px;font-weight:900;color:#00e5ff;margin-bottom:8px;text-shadow:0 0 12px rgba(0,229,255,.3);}
+.ob-text{font-size:15px;color:#e0e0e0;line-height:1.8;margin-bottom:18px;font-weight:500;white-space:pre-line;}
+.ob-counter{font-size:11px;color:#00e5ff;font-weight:700;margin-bottom:8px;opacity:.7;}
+.ob-btns{display:flex;gap:10px;}
+#ob-skip{flex:1;padding:11px 0;border-radius:12px;background:transparent;border:1px solid rgba(255,255,255,.1);
+  color:#666;font-size:14px;font-weight:700;cursor:pointer;font-family:'Heebo',system-ui,sans-serif;}
+#ob-next{flex:2;padding:11px 0;border-radius:12px;border:none;font-size:16px;font-weight:900;cursor:pointer;
+  font-family:'Heebo',system-ui,sans-serif;background:linear-gradient(135deg,#00e5ff,#00b8d4);color:#050510;
+  box-shadow:0 4px 20px rgba(0,229,255,.4);}
+#ob-next.final{background:linear-gradient(135deg,#ff0080,#ff3399);color:#fff;box-shadow:0 4px 20px rgba(255,0,128,.4);}
+#ob-arrow{position:absolute;left:50%;transform:translateX(-50%);font-size:22px;color:#00e5ff;text-shadow:0 0 10px rgba(0,229,255,.5);
+  opacity:0;transition:opacity .4s ease .2s;}
+#ob-arrow.visible{opacity:1;}
+@keyframes obGlow{0%,100%{opacity:.3;}50%{opacity:.9;}}
 </style>
 <meta name="description" content="Math Arena — כיתה א׳ עד י׳ — משחק מתמטיקה">
 <meta name="theme-color" content="#1a0a3e">
@@ -5112,7 +5141,11 @@ function startGame(){
   score=0;lives=3;answered=false;lvlIdx=0;tIdx=0;pIdx=0;tStr=0;gStr=0;maxStr=0;totR=0;totA=0;
   _revivalCount=0;_gameOverCount=0;AdManager.resetGame();
   resetPowerUps();showChar();showScreen('game-screen');updHUD();
-  playCountdown(function(){loadQ();});
+  if(shouldShowOnboarding()){
+    showOnboarding(function(){playCountdown(function(){loadQ();});});
+  } else {
+    playCountdown(function(){loadQ();});
+  }
   saveProgress();
 }
 function restartGame(){
@@ -5125,6 +5158,101 @@ function restartGame(){
 }
 // DOMContentLoaded handled in duel system above
 
+// ===== ONBOARDING SPOTLIGHT TOUR =====
+var OB_STEPS = [
+  { id:'timer', emoji:'⏱️', title:'זמן לתשובה',
+    text:'יש לכם 30 שניות לענות.\nככל שעונים מהר יותר — בונוס מהירות!\n⚡ בזק (3 שניות) = +50\n🔥 מהיר (5 שניות) = +30',
+    elId:'t-num', padX:60, padY:28 },
+  { id:'score', emoji:'🪙', title:'נקודות',
+    text:'אספו כמה שיותר נקודות!\nענו נכון ומהר = בונוס גדול יותר.',
+    elId:'hud-score', padX:55, padY:28 },
+  { id:'lives', emoji:'❤️', title:'חיים',
+    text:'מתחילים עם 3 ❤️\nכל טעות או שנגמר הזמן = מאבדים חיים.\nנגמרו? שלחו אתגר לחבר או צפו בפרסומת!',
+    elId:'hud-lives', padX:80, padY:24 },
+  { id:'streak', emoji:'🔥', title:'רצף בונוס',
+    text:'ענו 3 ברצף ותקבלו כוח מיוחד בחינם!\nהנקודות על הרצף מוכפלות.',
+    elId:'streak-bar', padX:160, padY:30 },
+  { id:'powerups', emoji:'🎁', title:'כוחות מיוחדים',
+    text:'✂️ 50/50 — מחיקת 2 תשובות שגויות\n⏱️ +Time — תוספת 15 שניות\n×2 Double — כפל נקודות\n\nמרוויחים ברצפים ובמעבר שלב!',
+    elId:'powerup-bar', padX:170, padY:34 },
+  { id:'hint', emoji:'💡', title:'רמז',
+    text:'תקועים בשאלה?\nלחצו על 💡 לקבלת רמז!',
+    elId:'hint-btn', padX:38, padY:38 }
+];
+var obIdx=0;
+function shouldShowOnboarding(){
+  try{return !localStorage.getItem('arena-onboarding-done');}catch(e){return true;}
+}
+function markOnboardingDone(){
+  try{localStorage.setItem('arena-onboarding-done','1');}catch(e){}
+}
+function showOnboarding(callback){
+  obIdx=0;
+  var overlay=document.getElementById('onboard-overlay');
+  overlay.classList.add('on');
+  document.getElementById('ob-skip').onclick=function(){closeOnboarding(callback);};
+  document.getElementById('ob-next').onclick=function(){
+    if(obIdx<OB_STEPS.length-1){obIdx++;renderOBStep();}
+    else{closeOnboarding(callback);}
+  };
+  renderOBStep();
+}
+function closeOnboarding(callback){
+  document.getElementById('onboard-overlay').classList.remove('on');
+  document.getElementById('onboard-card').classList.remove('visible');
+  markOnboardingDone();
+  if(callback)callback();
+}
+function renderOBStep(){
+  var s=OB_STEPS[obIdx];
+  var total=OB_STEPS.length;
+  // counter
+  document.getElementById('ob-counter').textContent=(obIdx+1)+' / '+total;
+  // dots
+  var dotsHTML='';
+  for(var i=0;i<total;i++){
+    var cls=i===obIdx?'ob-dot active':i<obIdx?'ob-dot done':'ob-dot future';
+    dotsHTML+='<div class="'+cls+'"></div>';
+  }
+  document.getElementById('ob-dots').innerHTML=dotsHTML;
+  // content
+  document.getElementById('ob-emoji').textContent=s.emoji;
+  document.getElementById('ob-title').textContent=s.title;
+  document.getElementById('ob-text').textContent=s.text;
+  // button state
+  var btn=document.getElementById('ob-next');
+  if(obIdx<total-1){btn.textContent='הבא ←';btn.classList.remove('final');}
+  else{btn.textContent='יאללה נתחיל! 🚀';btn.classList.add('final');}
+  // spotlight position
+  var el=document.getElementById(s.elId);
+  var card=document.getElementById('onboard-card');
+  var arrow=document.getElementById('ob-arrow');
+  card.classList.remove('visible');
+  arrow.classList.remove('visible');
+  if(el){
+    var r=el.getBoundingClientRect();
+    var cx=r.left+r.width/2;
+    var cy=r.top+r.height/2;
+    var rx=Math.max(s.padX,r.width/2+16);
+    var ry=Math.max(s.padY,r.height/2+10);
+    // SVG mask
+    var svg=document.getElementById('ob-svg');
+    svg.innerHTML='<defs><mask id="ob-mask"><rect width="100%" height="100%" fill="white"/>'+
+      '<ellipse cx="'+cx+'" cy="'+cy+'" rx="'+rx+'" ry="'+ry+'" fill="black"/></mask></defs>'+
+      '<rect width="100%" height="100%" fill="rgba(3,3,20,0.9)" mask="url(#ob-mask)"/>'+
+      '<ellipse cx="'+cx+'" cy="'+cy+'" rx="'+(rx+3)+'" ry="'+(ry+3)+'" fill="none" stroke="#00e5ff" stroke-width="2" opacity="0.5">'+
+      '<animate attributeName="opacity" values="0.3;0.9;0.3" dur="1.8s" repeatCount="indefinite"/></ellipse>';
+    // card + arrow position
+    var below=cy<300;
+    card.style.top=below?(cy+ry+50)+'px':Math.max(20,(cy-ry-280))+'px';
+    arrow.style.top=below?(cy+ry+8)+'px':(cy-ry-36)+'px';
+    arrow.style.left=cx+'px';
+    arrow.textContent=below?'👆':'👇';
+  }
+  requestAnimationFrame(function(){requestAnimationFrame(function(){
+    card.classList.add('visible');arrow.classList.add('visible');
+  });});
+}
 // ===== COMBO GLOW =====
 function updateComboGlow(streak){
   var el=document.getElementById('combo-glow');
@@ -5535,5 +5663,21 @@ if('serviceWorker' in navigator){
   <span class="pwa-label">התקן אפליקציה 📲</span>
 </div>
 
+<!-- ONBOARDING OVERLAY -->
+<div id="onboard-overlay">
+  <svg class="ob-mask" id="ob-svg"></svg>
+  <div id="ob-arrow"></div>
+  <div id="onboard-card">
+    <div class="ob-counter" id="ob-counter"></div>
+    <div class="ob-dots" id="ob-dots"></div>
+    <div class="ob-emoji" id="ob-emoji"></div>
+    <div class="ob-title" id="ob-title"></div>
+    <div class="ob-text" id="ob-text"></div>
+    <div class="ob-btns">
+      <button id="ob-skip">דלג</button>
+      <button id="ob-next">הבא ←</button>
+    </div>
+  </div>
+</div>
 </body>
 </html>
