@@ -1471,12 +1471,12 @@ body{background-color:#1a0a3e;background:radial-gradient(ellipse at top, #2d1b69
       <circle class="bg" cx="50" cy="50" r="44"/>
       <circle class="fg" id="revival-ring" cx="50" cy="50" r="44" stroke-dasharray="276.46" stroke-dashoffset="0"/>
     </svg>
-    <div class="revival-timer-num" id="revival-timer-num">30</div>
+    <div class="revival-timer-num" id="revival-timer-num">60</div>
   </div>
   <div class="revival-timer-lbl">המתן לחיים חינם ⏱️</div>
   <div class="revival-opts">
     <button class="revival-btn invite" onclick="revivalInvite()">📲 הזמן חבר = +1 חיים מיד!</button>
-    <button class="revival-btn coins" id="revival-coins-btn" onclick="revivalCoins()">🪙 שלם 300 מטבעות</button>
+    <button class="revival-btn coins" id="revival-coins-btn" onclick="revivalCoins()">🪙 קנה 3 ❤️ ב-3000 נק׳</button>
     <button class="revival-btn ad" id="revival-ad-btn" onclick="revivalWatchAd()">📺 צפה בפרסומת = +1 חיים!</button>
     <button class="revival-btn giveup" onclick="revivalGiveUp()">😔 ויתור</button>
   </div>
@@ -4248,8 +4248,8 @@ var _origAdvTopic = advTopic;
 var _revivalCount = 0;      // how many times revived this game
 var _maxRevivals = 2;       // max 2 revivals per game
 var _revivalTimerID = null;
-var _revivalCost = 300;     // coin cost for revival
-var _revivalWaitSec = 30;   // seconds to wait for free revival
+var _revivalCost = 3000;    // point cost for 3-life revival
+var _revivalWaitSec = 60;   // seconds to wait for free revival
 var _gameOverCount = 0;     // track total game-overs this session
 
 function canRevive(){
@@ -4271,10 +4271,10 @@ function showRevival(){
   var coinsBtn = document.getElementById('revival-coins-btn');
   if(score >= _revivalCost){
     coinsBtn.disabled = false;
-    coinsBtn.textContent = '🪙 שלם ' + _revivalCost + ' מטבעות (יש לך: ' + score + ')';
+    coinsBtn.textContent = '🪙 קנה 3 ❤️ ב-' + _revivalCost + ' נק׳ (יש לך: ' + score + ')';
   } else {
     coinsBtn.disabled = true;
-    coinsBtn.textContent = '🪙 ' + _revivalCost + ' מטבעות (חסר לך ' + (_revivalCost - score) + ')';
+    coinsBtn.textContent = '🪙 3 ❤️ = ' + _revivalCost + ' נק׳ (חסר לך ' + (_revivalCost - score) + ')';
   }
   
   // Update ad button
@@ -4362,9 +4362,20 @@ function revivalInvite(){
 function revivalCoins(){
   if(score < _revivalCost) return;
   score -= _revivalCost;
+  _revivalCount++;
+  lives = 3;
+  // Reset ring visual
+  document.getElementById('revival-ring').style.stroke = '#a78bfa';
+  document.getElementById('revival-timer-num').style.color = '#fff';
+  // Close overlay
+  document.getElementById('revival-overlay').classList.remove('on');
+  if(_revivalTimerID){ clearInterval(_revivalTimerID); _revivalTimerID = null; }
+  // Celebration
+  sfxPowerUp();
+  charSet('💪','bounce');
+  charBubble('3 חיים! 🔥');
   updHUD();
-  doRevive();
-  charBubble('-' + _revivalCost + ' 🪙');
+  fadeNext(loadQ);
 }
 
 function revivalGiveUp(){
@@ -5169,7 +5180,7 @@ var OB_STEPS = [
     text:'אספו כמה שיותר נקודות!\nענו נכון ומהר = בונוס גדול יותר.',
     elId:'hud-score', padX:55, padY:28 },
   { id:'lives', emoji:'❤️', title:'חיים',
-    text:'מתחילים עם 3 ❤️\nכל טעות או שנגמר הזמן = מאבדים חיים.\nנגמרו? שלחו אתגר לחבר או צפו בפרסומת!',
+    text:'מתחילים עם 3 ❤️\nכל טעות או שנגמר הזמן = מאבדים חיים.\nנגמרו? המתן דקה ל-1 חיים חינם,\nהזמן חבר, צפו בפרסומת,\nאו קנו 3 ❤️ ב-3000 נקודות!',
     elId:'hud-lives', padX:80, padY:24 },
   { id:'streak', emoji:'🔥', title:'רצף בונוס',
     text:'ענו 3 ברצף ותקבלו כוח מיוחד בחינם!\nהנקודות על הרצף מוכפלות.',
