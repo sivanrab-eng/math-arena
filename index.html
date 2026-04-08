@@ -4712,6 +4712,7 @@ function makeDuelUrl(name, score, includeState){
 }
 
 function shareDuelResult(){
+  gaEvent('duel_share_result',{grade:currentGrade,arena:currentArena,score:duelScore});
   var duelUrl = makeDuelUrl(playerName, duelScore, true);
   var topicLine = '';
   var _ga3 = GRADE_ARENAS[currentGrade];
@@ -4726,6 +4727,7 @@ function shareDuelResult(){
 
 function shareDuelInvite(){
   if(!playerName || playerName === 'שחקן'){ alert('הכנס שם קודם'); return; }
+  gaEvent('duel_invite',{method:'game_over',grade:currentGrade,arena:currentArena,score:score});
   var duelUrl = makeDuelUrl(playerName, score, true);
   var topicLine = '';
   var _ga2 = GRADE_ARENAS[currentGrade];
@@ -4926,6 +4928,7 @@ function showLB(heading, emoji, onContinue){
 
 function shareDuelFromLB(){
   if(!playerName){ playerName = 'Player'; }
+  gaEvent('duel_invite',{method:'leaderboard',grade:currentGrade,arena:currentArena,score:score});
   var duelUrl = makeDuelUrl(playerName, score, true);
   var topicLine = '';
   var _ga4 = GRADE_ARENAS[currentGrade];
@@ -4952,6 +4955,7 @@ function showSharePopup(text){
 }
 
 function copyShareText(){
+  gaEvent('share_method',{method:'copy_link'});
   var ta = document.getElementById('share-text');
   var text = ta.value;
   var btn = document.getElementById('btn-share-copy');
@@ -4991,6 +4995,7 @@ function fallbackCopy(ta, btn){
 }
 
 function openWhatsApp(){
+  gaEvent('share_method',{method:'whatsapp'});
   var text = document.getElementById('share-text').value;
   var waUrl = 'https://wa.me/?text=' + encodeURIComponent(text);
   window.open(waUrl, '_blank');
@@ -4998,6 +5003,7 @@ function openWhatsApp(){
 }
 
 function nativeShare(){
+  gaEvent('share_method',{method:'native'});
   var text = document.getElementById('share-text').value;
   // Extract URL from the text
   var urlMatch = text.match(/(https?:\/\/[^\s]+)/);
@@ -5023,6 +5029,7 @@ window.addEventListener('DOMContentLoaded', function(){
 
 // ===== SHARE GAME (no challenge) =====
 function shareGameLink(){
+  gaEvent('share_game_link',{method:'button',grade:currentGrade,arena:currentArena});
   showSharePopup(GAME_URL);
 }
 
