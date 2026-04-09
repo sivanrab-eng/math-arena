@@ -3649,6 +3649,7 @@ function showWorldMap(g){
     if(!sections[secKey]) continue;
     var sn=sectionNames[secKey]||null;
     var secDiv=document.createElement('div');
+    secDiv.style.width='100%';
     // Section header
     if(sn && Object.keys(sections).length>1){
       var hdr=document.createElement('div');
