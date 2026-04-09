@@ -1358,7 +1358,7 @@ body{background-color:#1a0a3e;background:radial-gradient(ellipse at top, #2d1b69
   <div class="wm-header">
     <div class="wm-grade" id="wm-grade-pill">🔥 כיתה ו׳</div>
     <div class="wm-title">מפת המסע</div>
-    <div class="wm-sub">סיימו עולם כדי לפתוח את הבא!</div>
+    <div class="wm-sub">בחרו נושאים ולחצו על התחל!</div>
   </div>
   <div class="wm-scroll" id="wm-scroll">
     <div class="wm-nodes" id="wm-nodes"></div>
@@ -1368,7 +1368,7 @@ body{background-color:#1a0a3e;background:radial-gradient(ellipse at top, #2d1b69
     <button class="wm-practice" id="wm-practice-btn" onclick="startPractice()" style="display:none;">📝 תרגול</button>
     <button onclick="showGradeScreen()" class="arena-back-btn">◀ חזרה לבחירת כיתה</button>
   </div>
-  <div class="wm-lock-toast" id="wm-lock-toast">🔒 סיימו את העולם הקודם!</div>
+  <div class="wm-lock-toast" id="wm-lock-toast" style="display:none;"></div>
 </div>
 
 <!-- ARENA SELECT SCREEN -->
@@ -3583,14 +3583,7 @@ function getWorldState(id){
   if(isWorldCompleted(id)) return 'completed';
   var p=getWorldProgress(id);
   if(p && p.lvlIdx>0) return 'current';
-  // Check if first in its section — always open
-  if(wmSectionFirsts && wmSectionFirsts[id]) return 'current';
-  // Check if previous world in same section is completed
-  var idx=-1;
-  for(var i=0;i<wmWorldOrder.length;i++){if(wmWorldOrder[i]===id){idx=i;break;}}
-  if(idx===0) return 'current';
-  if(idx>0 && isWorldCompleted(wmWorldOrder[idx-1])) return 'unlocked';
-  return 'locked';
+  return 'unlocked';
 }
 
 function showWorldMap(g){
@@ -3616,7 +3609,7 @@ function showWorldMap(g){
   // Build horizontal strip layout
   var container = document.getElementById('wm-nodes');
   container.innerHTML = '';
-  // Init marks: first 3 UNLOCKED topics per section default marked; remove marks from locked
+  // Init marks: first 3 topics per section default marked
   var markSections=['geo','arith'];
   for(var ms=0;ms<markSections.length;ms++){
     var msKey=markSections[ms];
@@ -3636,17 +3629,14 @@ function showWorldMap(g){
     if(sections[sk2]) for(var j2=0;j2<sections[sk2].length;j2++) _tempWO.push(sections[sk2][j2]);
   }
   wmWorldOrder=_tempWO;
-  // Now init marks properly
+  // Init marks: first 3 topics per section default marked
   for(var ms=0;ms<markSections.length;ms++){
     var msKey=markSections[ms];
     if(sections[msKey]){
       var initCount=0;
       for(var mi=0;mi<sections[msKey].length;mi++){
         var mk=sections[msKey][mi];
-        var mkState=getWorldState(mk);
-        if(mkState==='locked'){
-          delete wmMarkedSet[mk]; // remove mark from locked
-        } else if(!(mk in wmMarkedSet) && initCount<3){
+        if(!(mk in wmMarkedSet) && initCount<3){
           wmMarkedSet[mk]=true; initCount++;
         } else if(wmMarkedSet[mk]){
           initCount++;
@@ -3679,20 +3669,15 @@ function showWorldMap(g){
       node.className='wm-node wm-'+state;
       if(wmMarkedSet[k]) node.classList.add('wm-marked');
       node.setAttribute('data-id',k);
-      if(state==='locked'){
-        node.onclick=(function(){wmShowLockToast();});
-      } else {
-        node.onclick=(function(id){return function(){
+      node.onclick=(function(id){return function(){
           wmToggleMark(id);
           wmUpdateGoBtn();
         };})(k);
-      }
       var html='';
-      // Mark circle (arith topics)
+      // Mark circle
       html+='<div class="wm-mark"></div>';
       // Emoji
       html+='<div class="wm-node-emoji">'+ar.emoji;
-      if(state==='locked') html+='<span class="wm-node-lock">🔒</span>';
       if(state==='completed') html+='<span class="wm-node-done">✅</span>';
       html+='</div>';
       // Name
@@ -3753,15 +3738,14 @@ function wmUpdateGoBtn(){
   btn.style.boxShadow='0 5px 0 #2e1065,0 8px 24px rgba(124,58,237,.35)';
 }
 
-// Get all marked + unlocked arena IDs
+// Get all marked arena IDs
 function wmGetMarkedArenas(){
   var ids=[];
   var ga=GRADE_ARENAS[currentGrade];
   if(!ga) return ids;
   for(var k in wmMarkedSet){
     if(wmMarkedSet[k] && ga[k]){
-      var st=getWorldState(k);
-      if(st!=='locked') ids.push(k);
+      ids.push(k);
     }
   }
   return ids;
@@ -3814,8 +3798,6 @@ function wmPlay(){
 }
 
 function wmToggleMark(id){
-  var st=getWorldState(id);
-  if(st==='locked') return; // can't mark locked arenas
   wmMarkedSet[id]=!wmMarkedSet[id];
   var el=document.querySelector('.wm-node[data-id="'+id+'"]');
   if(el){if(wmMarkedSet[id])el.classList.add('wm-marked');else el.classList.remove('wm-marked');}
