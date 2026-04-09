@@ -536,14 +536,14 @@ body{background-color:#1a0a3e;background:radial-gradient(ellipse at top, #2d1b69
 .wm-grade{display:inline-flex;align-items:center;gap:5px;background:rgba(249,115,22,.12);border:1.5px solid rgba(249,115,22,.3);color:#fb923c;font-size:13px;font-weight:700;padding:5px 16px;border-radius:20px;margin-bottom:4px;}
 .wm-title{font-size:20px;font-weight:900;background:linear-gradient(135deg,#fff,#c4b5fd);-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
 .wm-sub{font-size:11px;color:rgba(255,255,255,.35);margin-top:2px;}
-.wm-scroll{flex:1;display:flex;flex-direction:column;justify-content:center;gap:16px;padding:0 0 90px;overflow-y:auto;width:100%;}
-.wm-nodes{display:flex;flex-direction:column;gap:16px;}
+.wm-scroll{flex:1;display:flex;flex-direction:column;justify-content:center;gap:16px;padding:0 0 90px;overflow-y:auto;overflow-x:hidden;width:100%;}
+.wm-nodes{display:flex;flex-direction:column;gap:16px;width:100%;overflow:hidden;}
 .wm-section{display:flex;align-items:center;gap:6px;padding:0 16px;direction:rtl;}
 .wm-sec-icon{font-size:14px;}
 .wm-sec-label{font-size:12px;font-weight:800;color:rgba(255,255,255,.45);}
 .wm-sec-count{font-size:10px;color:rgba(255,255,255,.2);font-weight:600;}
 .wm-sec-line{flex:1;height:1px;background:rgba(255,255,255,.06);}
-.wm-strip{display:flex;flex-wrap:wrap;gap:8px;padding:2px 16px 6px;direction:rtl;justify-content:center;}
+.wm-strip{display:flex;flex-wrap:wrap;gap:8px;padding:2px 16px 6px;direction:rtl;justify-content:center;width:100%;box-sizing:border-box;}
 .wm-strip::-webkit-scrollbar{display:none;}
 .wm-node{width:72px;display:flex;flex-direction:column;align-items:center;gap:3px;padding:9px 4px 7px;border-radius:14px;cursor:pointer;transition:all .15s;position:relative;-webkit-tap-highlight-color:transparent;}
 .wm-node:active:not(.wm-locked){transform:scale(.95);}
