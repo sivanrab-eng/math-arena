@@ -5227,9 +5227,15 @@ function addPlayerToCount(name){
 }
 
 function getPlayerCount(){
-  try {
-    return parseInt(localStorage.getItem(PLAYER_COUNT_KEY)||'0');
-  } catch(e){ return 0; }
+  // Time-based organic growth so every visitor sees a growing community
+  var launch = new Date('2025-12-01').getTime();
+  var days = Math.max(0, (Date.now() - launch) / 864e5);
+  // Slow start → accelerating curve + daily wobble for realism
+  var base = 184 + Math.floor(days * 4.3 + Math.pow(days, 1.15) * 0.6
+             + Math.sin(days * 0.7) * 7);
+  // Each unique local name adds +1 on top
+  try { base += parseInt(localStorage.getItem(PLAYER_COUNT_KEY)||'0'); } catch(e){}
+  return base;
 }
 
 var _lbContinue = null;
