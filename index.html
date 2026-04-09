@@ -5456,6 +5456,7 @@ function closeTutorial(){
   document.getElementById('tut-skip-link').classList.remove('on');
   document.getElementById('hint-btn').classList.remove('on');
   markOnboardingDone();
+  resetPowerUps();
   if(_tutCb){_tutCb();_tutCb=null;}
 }
 function renderTutStep(){
@@ -5474,6 +5475,9 @@ function renderTutStep(){
   spot.style.height=d+'px';
   spot.style.top=(cy-radius)+'px';
   spot.style.left=(cx-radius)+'px';
+  // Fake 50/50 power-up on the powers step so it looks earned
+  if(s.elId==='pu-5050'){powerUps['5050']=1;updPUBar();}
+  else if(powerUps['5050']>0 && !answered){powerUps['5050']=0;updPUBar();}
   // Update bubble content
   document.getElementById('tut-b-emoji').textContent=s.emoji;
   document.getElementById('tut-b-title').textContent=s.title;
