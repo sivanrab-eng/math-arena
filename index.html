@@ -543,7 +543,7 @@ body{background-color:#1a0a3e;background:radial-gradient(ellipse at top, #2d1b69
 .wm-sec-label{font-size:12px;font-weight:800;color:rgba(255,255,255,.45);}
 .wm-sec-count{font-size:10px;color:rgba(255,255,255,.2);font-weight:600;}
 .wm-sec-line{flex:1;height:1px;background:rgba(255,255,255,.06);}
-.wm-strip{display:flex;gap:8px;overflow-x:auto;padding:2px 16px 6px;direction:rtl;-webkit-overflow-scrolling:touch;scroll-snap-type:x mandatory;scrollbar-width:none;-ms-overflow-style:none;}
+.wm-strip{display:flex;gap:8px;overflow-x:auto;padding:2px 16px 6px;direction:rtl;-webkit-overflow-scrolling:touch;scroll-snap-type:x mandatory;scrollbar-width:none;-ms-overflow-style:none;justify-content:center;}
 .wm-strip::-webkit-scrollbar{display:none;}
 .wm-node{flex-shrink:0;width:72px;display:flex;flex-direction:column;align-items:center;gap:3px;padding:9px 4px 7px;border-radius:14px;cursor:pointer;transition:all .15s;position:relative;-webkit-tap-highlight-color:transparent;scroll-snap-align:start;}
 .wm-node:active:not(.wm-locked){transform:scale(.95);}
@@ -570,7 +570,7 @@ body{background-color:#1a0a3e;background:radial-gradient(ellipse at top, #2d1b69
 .wm-bottom{width:100%;position:absolute;bottom:0;left:0;right:0;padding:14px 16px;background:linear-gradient(transparent,rgba(15,6,40,.95) 30%);z-index:20;display:flex;flex-direction:column;align-items:center;gap:6px;}
 .wm-go{width:100%;max-width:340px;padding:14px;border-radius:16px;border:none;font-size:17px;font-weight:900;font-family:inherit;cursor:pointer;background:linear-gradient(135deg,#7c3aed,#3b82f6);color:#fff;box-shadow:0 5px 0 #2e1065,0 8px 24px rgba(124,58,237,.35);transition:transform .1s,box-shadow .1s;}
 .wm-go:active{transform:translateY(3px);box-shadow:0 2px 0 #2e1065;}
-.wm-practice{width:100%;max-width:340px;padding:12px;border-radius:14px;border:2px solid rgba(234,179,8,.4);font-size:15px;font-weight:800;font-family:inherit;cursor:pointer;background:rgba(234,179,8,.12);color:#facc15;transition:transform .1s;letter-spacing:.3px;}
+.wm-practice{width:100%;max-width:340px;padding:12px;border-radius:14px;border:2px solid rgba(255,255,255,.15);font-size:15px;font-weight:800;font-family:inherit;cursor:pointer;background:rgba(255,255,255,.95);color:#7c3aed;transition:transform .1s;letter-spacing:.3px;}
 .wm-practice:active{transform:translateY(2px);}
 
 /* ===== PRACTICE SCREEN ===== */
@@ -1357,7 +1357,7 @@ body{background-color:#1a0a3e;background:radial-gradient(ellipse at top, #2d1b69
 <div id="topic-screen" class="screen">
   <div class="wm-header">
     <div class="wm-grade" id="wm-grade-pill">🔥 כיתה ו׳</div>
-    <div class="wm-title">מפת המסע</div>
+    <div class="wm-title">בחר את הנושאים שלך</div>
     <div class="wm-sub">בחרו נושאים ולחצו על התחל!</div>
   </div>
   <div class="wm-scroll" id="wm-scroll">
