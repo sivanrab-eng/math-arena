@@ -3681,7 +3681,7 @@ function showWorldMap(g){
     sections[sec].push(k);
   }
   // Mark first world per section
-  var sectionOrder = ['geo','arith','exam','main','other'];
+  var sectionOrder = ['exam','geo','arith','main','other'];
   for(var si=0;si<sectionOrder.length;si++){
     var secKey=sectionOrder[si];
     if(sections[secKey] && sections[secKey].length>0) wmSectionFirsts[sections[secKey][0]]=true;
